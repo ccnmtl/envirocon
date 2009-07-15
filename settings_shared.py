@@ -34,6 +34,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.request',
+    'game.views.relative_root',
     )
 
 MIDDLEWARE_CLASSES = (
@@ -70,6 +71,8 @@ INSTALLED_APPS = (
     'typogrify',
     'survey',
     'tinymce',
+    'game',
+    'turns',
 )
 
 THUMBNAIL_SUBDIR = "thumbs"

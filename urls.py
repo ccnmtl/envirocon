@@ -15,4 +15,6 @@ urlpatterns = patterns('',
                        (r'^tinymce/', include('tinymce.urls')),
                        (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': site_media_root}),
                        (r'^uploads/(?P<path>.*)$','django.views.static.serve',{'document_root' : settings.MEDIA_ROOT}),
+
+                       ('^gamepages/',include('game.urls')),
 )

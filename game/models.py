@@ -9,6 +9,13 @@ class Activity(models.Model):
     page_id = None #blessed by view with name of the page
     
     #GAME code, we LOVE delegation!
+    @classmethod
+    def gamechoices(c):
+        return InstalledGames.GAME_NAMES
+
+    def gamename(self):
+        return InstalledGames.viewname(self.game)
+    
     def gamepages(self):
         if self.game:
             return InstalledGames.pages(self.game)

@@ -1,6 +1,7 @@
 # Create your views here.
 from django.template import RequestContext, loader
-from django.http import HttpResponse
+from django.http import HttpResponse,Http404
+from django.conf import settings
 
 from game.models import *
 
@@ -16,14 +17,27 @@ def relative_root(request):
             'GAME_MEDIA': relative_root_path + 'site_media/'
             }
 
-def game(request, game, page_id=None):
-    game.page_id = page_id #for easy access in template
+def gamelist(request):
+    pass
+
+def gamepage(request, gamename, page_id=None):
+    if gamename not in Activity.gamechoices():
+        raise Http404
+    activity = Activity.objects.create(game=gamename)
+    return game(request, activity, page_id)
+
+def game(request, activity, page_id=None):
+    activity.page_id = page_id #for easy access in template
     
-    template,game_context = game.template(page_id)
+    template,game_context = activity.gametemplate(page_id)
     
     t = loader.get_template(template)
     c = RequestContext(request,{
-        'game' :  game,
+        'game' :  activity,
         'game_context' : game_context,
+        #probably should query this from urls or something
+        'GAME_MEDIA' : "%s/%s/" % (getattr(settings,'GAME_MEDIA',
+                                           '/site_media'),
+                                   activity.game),
     })
     return HttpResponse(t.render(c))

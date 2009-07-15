@@ -72,6 +72,7 @@ INSTALLED_APPS = (
     'survey',
     'tinymce',
     'game',
+    'game_sample',
     'turns',
 )
 

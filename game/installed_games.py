@@ -18,19 +18,24 @@ class GameInterface:
 
 
 class InstalledGamesLazySingleton:
-    GAMES_INSTALLED = []
+    #GAMES_INSTALLED = []
     GAME_OBJECTS = dict()
+    GAME_NAMES = dict()    
 
     def register_game(self, game_code, view_name, game_obj):
-        self.GAMES_INSTALLED.append( (game_code,view_name,) )
+        #self.GAMES_INSTALLED.append( (game_code,view_name,) )
         self.GAME_OBJECTS[game_code] = game_obj
-
+        self.GAME_NAMES[game_code] = view_name
+        
         for p in game_obj.pages():
             if re.findall('\W',p):
                 raise "Game pages must have only word (web friendly) characters."
 
     def __iter__(self):
-        return iter(self.GAMES_INSTALLED)
+        return iter(self.GAME_NAMES.items())
+
+    def viewname(self,game_code):
+        return self.GAME_NAMES[game_code]
 
     #more delegation, 2nd round
     def pages(self,game_code):

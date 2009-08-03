@@ -1,6 +1,6 @@
 from django.db import models
 from game.models import Activity
-from teams import Team
+from teams.models import Team
 
 class Game(models.Model):
   #course = models.ForeignKey(Course)
@@ -22,6 +22,12 @@ class Shock(models.Model):
   def __unicode__(self):
     return name
 
+# breadcrumb - formerly ActivityTeamNode
+class Turn(models.Model):
+  team = models.ForeignKey(Team)
+  assignment = models.ForeignKey(Assignment)
+  shock = models.ForeignKey(Shock, null=True)
+  
 # singleton per team
 class State(models.Model):
   team = models.ForeignKey(Team)
@@ -34,9 +40,3 @@ class Submission(models.Model):
   turn = models.ForeignKey(Turn)
   published = models.BooleanField()
   data = models.TextField()  # submitted data
-
-# breadcrumb - formerly ActivityTeamNode
-class Turn(models.Model):
-  team = models.ForeignKey(Team)
-  assignment = models.ForeignKey(Assignment)
-  shock = models.ForeignKey(Shock, null=True)

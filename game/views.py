@@ -23,7 +23,7 @@ def gamelist(request):
 def gamepage(request, gamename, page_id=None):
     if gamename not in Activity.gamechoices():
         raise Http404
-    activity = Activity.objects.create(game=gamename)
+    activity = Activity.objects.create(app=gamename)
     return game(request, activity, page_id)
 
 def game(request, activity, page_id=None):
@@ -38,6 +38,6 @@ def game(request, activity, page_id=None):
         #probably should query this from urls or something
         'GAME_MEDIA' : "%s/%s/" % (getattr(settings,'GAME_MEDIA',
                                            '/site_media'),
-                                   activity.game),
+                                   activity.app),
     })
     return HttpResponse(t.render(c))

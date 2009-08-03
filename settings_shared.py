@@ -73,7 +73,8 @@ INSTALLED_APPS = (
     'tinymce',
     'game',
     'game_sample',
-    'turns',
+    'teams',
+    'user_profile',
 )
 
 THUMBNAIL_SUBDIR = "thumbs"

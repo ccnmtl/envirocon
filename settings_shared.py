@@ -73,6 +73,7 @@ INSTALLED_APPS = (
     'tinymce',
     'game',
     'game_sample',
+    'courseaffils',
     'teams',
     'user_profile',
 )

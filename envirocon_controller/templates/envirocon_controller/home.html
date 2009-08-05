@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block js %}
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{% block breadcrumbs %}
+{% endblock %}
+
+
+{% block content %}
+  {%for survey in todo %}
+    Please fill out <a href="{%url survey-detail survey.slug %}">{{survey.title}}</a>
+  {%endfor%}
+
+
+{% endblock %}

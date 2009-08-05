@@ -16,6 +16,7 @@ urlpatterns = patterns('',
                        (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': site_media_root}),
                        (r'^uploads/(?P<path>.*)$','django.views.static.serve',{'document_root' : settings.MEDIA_ROOT}),
 
-                       ('^gamepages/',include('game.urls')),
-                       ('^teams/',include('teams.urls')),
+                       (r'^gamepages/',include('game.urls')),
+                       (r'^teams/',include('teams.urls')),
+                       (r'', 'envirocon_controller.views.home'),
 )

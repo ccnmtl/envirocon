@@ -118,5 +118,5 @@ TINYMCE_DEFAULT_CONFIG = {'cols': 80,
 COURSEAFFILS_EXEMPT_PATHS = ('/accounts/',
                              '/site_media/',
                              '/admin/',
-                             re.compile(r'^/$'),
+                             #re.compile(r'^/$'),
                              )

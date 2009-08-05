@@ -8,7 +8,7 @@ from teams.models import *
 
 
 def team_admin(request):
-    c = request.course
+    c = request.actual_course_object
     teams = request.actual_course_object.team_set.all()
     
     return render_to_response('teams/teamassignment.html',

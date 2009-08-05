@@ -115,8 +115,8 @@ TINYMCE_DEFAULT_CONFIG = {'cols': 80,
                           'theme' : 'simple',
                           }
 #for courseaffils middleware override
-ANONYMOUS_PATHS = ('/accounts/',
-                   '/site_media/',
-                   '/admin/',
-                   re.compile(r'^/$'),
-                   )
+COURSEAFFILS_EXEMPT_PATHS = ('/accounts/',
+                             '/site_media/',
+                             '/admin/',
+                             re.compile(r'^/$'),
+                             )

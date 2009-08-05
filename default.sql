@@ -21,7 +21,7 @@ SELECT pg_catalog.setval('auth_user_id_seq', 1, true);
 -- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: sky
 --
 
-INSERT INTO auth_user VALUES (1, 'sbd12', 'Schuyler', 'Duveen', 'sbd12@columbia.edu', '!', true, true, true, '2009-08-05 12:11:29.362848-04', '2009-08-05 12:08:33.701895-04');
+INSERT INTO auth_user VALUES (1, 'sbd12', 'Schuyler', 'Duveen', 'sbd12@columbia.edu', '!', true, true, true, '2009-08-05 12:26:18.174869-04', '2009-08-05 12:08:33.701895-04');
 
 
 --
@@ -133,7 +133,7 @@ ALTER TABLE django_site ALTER COLUMN id SET DEFAULT nextval('django_site_id_seq'
 --
 
 COPY django_site (id, domain, name) FROM stdin;
-1	envirocon.ccnmtl.columbia.edu	envirocon.ccnmtl.columbia.edu
+1	example.com	example.com
 \.
 
 
@@ -165,7 +165,7 @@ SET search_path = public, pg_catalog;
 -- Name: courseaffils_course_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sky
 --
 
-SELECT pg_catalog.setval('courseaffils_course_id_seq', 1, true);
+SELECT pg_catalog.setval('courseaffils_course_id_seq', 2, true);
 
 
 --
@@ -173,7 +173,7 @@ SELECT pg_catalog.setval('courseaffils_course_id_seq', 1, true);
 --
 
 COPY courseaffils_course (id, group_id, title) FROM stdin;
-1	5	Environment & Conflict Resolution
+2	5	Environment & Conflict Resolution
 \.
 
 

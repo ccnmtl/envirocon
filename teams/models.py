@@ -3,12 +3,30 @@ from django.db import models
 Course = models.get_model('courseaffils','course')
 Group = models.get_model('auth','group')
 
+class TeamManager(models.Manager):
+    def by_user(self, user):
+        return Team.objects.filter(group__user__id__exact=user.id)
+        
+    def by_request(self, request):
+        c = getattr(request,'actual_course_object',None)
+        if c:
+            try:
+                return Team.objects.get(
+                    group__user__id__exact=request.user.id,
+                    course__id__exact=c.id
+                    )
+            except Team.DoesNotExist:
+                return None
+        return None
+        
+
 class Team(models.Model):
     course = models.ForeignKey(Course)
     
     group = models.OneToOneField(Group)
     name = models.CharField(max_length=64)
 
+    objects = TeamManager()
     class Meta:
         #so we have a 1,2,3,4, etc ref
         order_with_respect_to = 'course'

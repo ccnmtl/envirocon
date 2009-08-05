@@ -43,6 +43,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
+    'courseaffils.middleware.CourseManagerMiddleware',
 )
 
 ROOT_URLCONF = 'envirocon.urls'
@@ -89,7 +90,11 @@ AUTHENTICATION_BACKENDS = ('djangowind.auth.WindAuthBackend','django.contrib.aut
 WIND_BASE = "https://wind.columbia.edu/"
 WIND_SERVICE = "cnmtl_full_np"
 WIND_PROFILE_HANDLERS = ['djangowind.auth.CDAPProfileHandler']
-WIND_AFFIL_HANDLERS = ['djangowind.auth.AffilGroupMapper','djangowind.auth.StaffMapper','djangowind.auth.SuperuserMapper']
+WIND_AFFIL_HANDLERS = ['djangowind.auth.AffilGroupMapper',
+                       'djangowind.auth.StaffMapper',
+                       'djangowind.auth.SuperuserMapper',
+                       'courseaffils.listener.AutoGroupWindMapper',
+                       ]
 WIND_STAFF_MAPPER_GROUPS = ['tlc.cunix.local:columbia.edu']
 WIND_SUPERUSER_MAPPER_GROUPS = ['anp8','jb2410','zm4','sbd12','egr2107','kmh2124','sld2131','amm8','mar227','ed2198']
 
@@ -108,3 +113,9 @@ TINYMCE_DEFAULT_CONFIG = {'cols': 80,
                           'plugins':'table,spellchecker,paste,searchreplace',
                           'theme' : 'simple',
                           }
+#for courseaffils middleware override
+ANONYMOUS_PATHS = ('/accounts/',
+                   '/site_media/',
+                   '/admin/',
+                   '/',
+                   )

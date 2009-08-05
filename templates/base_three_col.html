@@ -2,18 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>envirocon: {% block title %}{% endblock %}</title>
+	<title>Django CCNMTL: {% block title %}{% endblock %}</title>
 	<link rel="stylesheet" href="/site_media/css/main.css" media="screen" />
 	<link rel="stylesheet" href="/site_media/css/print.css" media="print" />
 	<!--[if IE 6]>
-	<link rel="stylesheet" href="/site_media/css/main_ie6_1col.css" media="screen" />
+	<link rel="stylesheet" href="/site_media/css/main_ie6.css" media="screen" />
 	<![endif]-->
 	<link rel="shortcut icon" href="/site_media/img/favicon.ico" type="image/x-icon" />
 	{% block css %}{% endblock %}
 	{% block js %}{% endblock %}
 	{% block feeds %}{% endblock %}
 </head>
-<body class="one_column {% block widthtype %}fixed{% endblock %}">
+<body class="three_columns {% block widthtype %}fluid{% endblock %}">
 {% comment %}
 ###### FOR WIDTH TYPE--
    fixed : fixed width, doesn't change with browser resize
@@ -25,25 +25,12 @@
 <div id="container">
 
 
-{% block mastheadx %}
+{% block masthead %}
 	<!-- ###### Site banner ###### -->
 	<div id="header">
-		<!-- Project title/logo --><h1 id="logo_project"><a href="/" title="Project Title: Project Django"><span>Project Title: Project Django </span></a></h1>	
+		<!-- Project title/logo --><h1 id="logo_project"><a href="./" title="Project Title: Project Django"><span>Project Title: Project Django </span></a></h1>	
 		{% block standardnav %}
 		<ul id="standardnav">
-			<li>
-			  {%if user.is_anonymous %}
-			  <a href="/accounts/login/?next=/">LOGIN</a>
-			  {%else%}
-			  Hello {{user}}, 
-			  <a href="/accounts/logout/?next=/">LOGOUT</a>			  
-			  {%endif%}
-			</li>
-			<li>
-			  {%if user.is_staff %}
-			  <a href="/admin/">ADMIN</a>
-			  {%endif%}
-			</li>
 			<li><a href="#">About</a></li>
 			<li><a href="#">Help</a></li>
 			<li><a href="#">Contact</a></li>
@@ -89,11 +76,16 @@
 	<div id="pagebody">
 
 
+		<!-- ###### Left Sidebar ###### -->
+		<div id="sidebar_left">
+			{% block sidebarleft %}{% endblock %}
+		</div><!-- id="sidebar_left" -->
+
+
 		<!-- ###### Page Content ###### -->
 		<div id="content">
 			<div id="squish"><!-- Don't touch this div -->
 				<div class="block">
-				        {% block masthead %}{% endblock %}
 					{% block pagetitle %}{% endblock %}
 				
 					{% block content %}{% endblock %}
@@ -105,6 +97,11 @@
 			</div><!-- id="squish" -->
 		</div><!-- id="content" -->
 
+
+		<!-- ###### Right Sidebar ###### -->
+		<div id="sidebar_right">
+			{% block sidebarright %}{% endblock %}
+		</div><!-- id="sidebar_right" -->
 
 		<!-- ###### Don't touch this ###### -->
 		<div class="visualclear"></div>

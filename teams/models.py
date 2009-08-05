@@ -32,7 +32,7 @@ class Team(models.Model):
         #if not (hasattr(self,'Meta') \
         #        and hasattr(self.Meta,'order_with_respect_to')):
         #    return None
-        ordered_wrt = self.Meta.order_with_respect_to
+        ordered_wrt = self._meta.order_with_respect_to.name
         #even more generic
         #peers = getattr(getattr(self,ordered_wrt),
         #                'get_%s_order'%self.__class__.__name__.lower()

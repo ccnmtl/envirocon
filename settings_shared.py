@@ -1,5 +1,6 @@
 # Django settings for envirocon project.
 import os.path
+import re
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -117,5 +118,5 @@ TINYMCE_DEFAULT_CONFIG = {'cols': 80,
 ANONYMOUS_PATHS = ('/accounts/',
                    '/site_media/',
                    '/admin/',
-                   '/',
+                   re.compile(r'^/$'),
                    )

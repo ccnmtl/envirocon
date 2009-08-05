@@ -17,4 +17,5 @@ urlpatterns = patterns('',
                        (r'^uploads/(?P<path>.*)$','django.views.static.serve',{'document_root' : settings.MEDIA_ROOT}),
 
                        ('^gamepages/',include('game.urls')),
+                       ('^teams/',include('teams.urls')),
 )

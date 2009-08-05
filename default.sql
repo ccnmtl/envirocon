@@ -71,18 +71,110 @@ SET escape_string_warning = off;
 
 SET search_path = public, pg_catalog;
 
+ALTER TABLE ONLY public.django_site DROP CONSTRAINT django_site_pkey;
+ALTER TABLE public.django_site ALTER COLUMN id DROP DEFAULT;
+DROP SEQUENCE public.django_site_id_seq;
+DROP TABLE public.django_site;
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: django_site; Type: TABLE; Schema: public; Owner: sky; Tablespace: 
+--
+
+CREATE TABLE django_site (
+    id integer NOT NULL,
+    domain character varying(100) NOT NULL,
+    name character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.django_site OWNER TO sky;
+
+--
+-- Name: django_site_id_seq; Type: SEQUENCE; Schema: public; Owner: sky
+--
+
+CREATE SEQUENCE django_site_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_site_id_seq OWNER TO sky;
+
+--
+-- Name: django_site_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sky
+--
+
+ALTER SEQUENCE django_site_id_seq OWNED BY django_site.id;
+
+
 --
 -- Name: django_site_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sky
 --
 
-SELECT pg_catalog.setval('django_site_id_seq', 2, true);
+SELECT pg_catalog.setval('django_site_id_seq', 3, true);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: sky
+--
+
+ALTER TABLE django_site ALTER COLUMN id SET DEFAULT nextval('django_site_id_seq'::regclass);
 
 
 --
 -- Data for Name: django_site; Type: TABLE DATA; Schema: public; Owner: sky
 --
 
-INSERT INTO django_site VALUES (1, 'example.com', 'example.com');
+COPY django_site (id, domain, name) FROM stdin;
+1	envirocon.ccnmtl.columbia.edu	envirocon.ccnmtl.columbia.edu
+\.
+
+
+--
+-- Name: django_site_pkey; Type: CONSTRAINT; Schema: public; Owner: sky; Tablespace: 
+--
+
+ALTER TABLE ONLY django_site
+    ADD CONSTRAINT django_site_pkey PRIMARY KEY (id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: courseaffils_course_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sky
+--
+
+SELECT pg_catalog.setval('courseaffils_course_id_seq', 1, true);
+
+
+--
+-- Data for Name: courseaffils_course; Type: TABLE DATA; Schema: public; Owner: sky
+--
+
+COPY courseaffils_course (id, group_id, title) FROM stdin;
+1	5	Environment & Conflict Resolution
+\.
 
 
 --
@@ -137,7 +229,7 @@ SET search_path = public, pg_catalog;
 -- Name: django_flatpage_sites_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sky
 --
 
-SELECT pg_catalog.setval('django_flatpage_sites_id_seq', 2, true);
+SELECT pg_catalog.setval('django_flatpage_sites_id_seq', 5, true);
 
 
 --
@@ -145,6 +237,7 @@ SELECT pg_catalog.setval('django_flatpage_sites_id_seq', 2, true);
 --
 
 COPY django_flatpage_sites (id, flatpage_id, site_id) FROM stdin;
+5	1	1
 \.
 
 

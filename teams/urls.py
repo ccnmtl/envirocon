@@ -7,9 +7,13 @@ urlpatterns = patterns(
         'team_admin',
         name='team-admin'),
 
-    #url(r'^game/(?P<gamename>\w+)/(?P<page_id>\w+)?/?$',
-    #    'gamepage',
-    #    name='game-page'),
+    url(r'^create/(?P<course_id>\w+)?/?$',
+        'addteam',
+        name='team-create'),
+
+    url(r'^member/(?P<user_id>\w+)/(?P<team_id>\w+)?(/(?P<course_id>\w+))?/?$',
+        'addmember',
+        name='team-addmember'),
 
     )
 

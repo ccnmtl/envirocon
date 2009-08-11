@@ -19,8 +19,8 @@ def filled_out_a_profile(request):
     c = getattr(request,'actual_course_object',None)
     if Survey and c:
         surveys = Survey.objects.surveys_for(c)
-        return [s for s in surveys
-                if not s.has_answers_from(request.session.session_key)]
+        return [sy for sy in surveys
+                if not sy.has_answers_from(request.session.session_key)]
     else:
         return tuple()
         

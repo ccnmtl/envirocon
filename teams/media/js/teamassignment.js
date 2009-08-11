@@ -21,8 +21,18 @@ function getTeamListener(team) {
 		nums[j].setAttribute('class','');
 	}
 	team.setAttribute('class','on');
-	updateTeamDiversity(team.parentNode.parentNode.parentNode,oldteam,Number(newteam));
+	var member_tr = team.parentNode.parentNode.parentNode;
+	postMembership(member_tr.getAttribute('data-member'), 
+		       team.getAttribute('data-teamid'));
+	//updateTeamDiversity(member_tr,oldteam,Number(newteam));
     });    
+}
+
+function postMembership(user_id, team_id) {
+    var url = document.forms['team-addmember'].action.replace('user_id',user_id);
+    if (team_id) { url += team_id; }
+    doXHR(url,{method:'POST'});
+    
 }
 
 TableSortCasts["Team"] = function(cell){
@@ -52,8 +62,8 @@ function TeamsObject(cols) {
 			 cols:new template(cols)
 			};
     }
-    this.count_row = document.getElementById('teamtable').getElementsByTagName('tr')[1].getElementsByTagName('td');
-    this.diversity_row = document.getElementById('teamtable').getElementsByTagName('tr')[2].getElementsByTagName('td');
+    //this.count_row = document.getElementById('teamtable').getElementsByTagName('tr')[1].getElementsByTagName('td');
+    //this.diversity_row = document.getElementById('teamtable').getElementsByTagName('tr')[2].getElementsByTagName('td');
 }
 
 function updateTeamDiversity(member_tr,oldteam,newteam) {

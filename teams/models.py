@@ -4,16 +4,22 @@ Course = models.get_model('courseaffils','course')
 Group = models.get_model('auth','group')
 
 class TeamManager(models.Manager):
-    def by_user(self, user):
-        return Team.objects.filter(group__user__id__exact=user.id)
+    def by_user(self, user, course=None):
+        try:
+            kw = {'group__user__pk':user.pk}
+            if course:
+                kw['course__pk'] = course.pk
+            return Team.objects.get(**kw)
+        except Team.DoesNotExist:
+            return None
         
     def by_request(self, request):
         c = getattr(request,'actual_course_object',None)
         if c:
             try:
                 return Team.objects.get(
-                    group__user__id__exact=request.user.id,
-                    course__id__exact=c.id
+                    group__user__pk=request.user.pk,
+                    course__pk=c.pk
                     )
             except Team.DoesNotExist:
                 return None
@@ -37,7 +43,7 @@ class Team(models.Model):
     def save(self, *args, **kwargs):
         #auto-create group
         if self.group_id is None:
-            group_name = ['Team: ']
+            group_name = ['Team %d: ' % (Team.objects.count()+1) ]
             if self.course_id:
                 group_name.append(self.course.title)
             if self.name:

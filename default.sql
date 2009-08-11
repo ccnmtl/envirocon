@@ -14,14 +14,16 @@ SET search_path = public, pg_catalog;
 -- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sky
 --
 
-SELECT pg_catalog.setval('auth_user_id_seq', 1, true);
+SELECT pg_catalog.setval('auth_user_id_seq', 4, true);
 
 
 --
 -- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: sky
 --
 
-INSERT INTO auth_user VALUES (1, 'sbd12', 'Schuyler', 'Duveen', 'sbd12@columbia.edu', '!', true, true, true, '2009-08-05 12:26:18.174869-04', '2009-08-05 12:08:33.701895-04');
+INSERT INTO auth_user VALUES (3, 'stud', '', '', '', 'sha1$72714$cae614e80f17de59c607d720e9cb0501bb0220e1', false, true, false, '2009-08-05 17:32:16.022917-04', '2009-08-05 16:33:25-04');
+INSERT INTO auth_user VALUES (1, 'sky', '', '', 'hi@hi.com', 'sha1$dd6b8$7f6039da841ef979dc348528969a72b1acbe07e9', true, true, true, '2009-08-11 13:53:44.264455-04', '2009-08-11 13:52:08.983845-04');
+INSERT INTO auth_user VALUES (4, 'sbd12', 'Schuyler', 'Duveen', 'sbd12@columbia.edu', '!', true, true, true, '2009-08-11 13:54:15.147253-04', '2009-08-11 13:54:15.097573-04');
 
 
 --
@@ -165,15 +167,15 @@ SET search_path = public, pg_catalog;
 -- Name: courseaffils_course_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sky
 --
 
-SELECT pg_catalog.setval('courseaffils_course_id_seq', 2, true);
+SELECT pg_catalog.setval('courseaffils_course_id_seq', 1, true);
 
 
 --
 -- Data for Name: courseaffils_course; Type: TABLE DATA; Schema: public; Owner: sky
 --
 
-COPY courseaffils_course (id, group_id, title) FROM stdin;
-2	5	Environment & Conflict Resolution
+COPY courseaffils_course (id, group_id, title, faculty_group_id) FROM stdin;
+1	13	asdf	\N
 \.
 
 
@@ -205,7 +207,7 @@ SELECT pg_catalog.setval('django_flatpage_id_seq', 1, true);
 --
 
 COPY django_flatpage (id, url, title, content, enable_comments, template_name, registration_required) FROM stdin;
-1	/	Home page	This is to test whether we can make the home page with a flat page!	f		f
+1	/asdf	Home page	This is to test whether we can make the home page with a flat page!	f		f
 \.
 
 
@@ -229,7 +231,7 @@ SET search_path = public, pg_catalog;
 -- Name: django_flatpage_sites_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sky
 --
 
-SELECT pg_catalog.setval('django_flatpage_sites_id_seq', 5, true);
+SELECT pg_catalog.setval('django_flatpage_sites_id_seq', 6, true);
 
 
 --
@@ -237,7 +239,7 @@ SELECT pg_catalog.setval('django_flatpage_sites_id_seq', 5, true);
 --
 
 COPY django_flatpage_sites (id, flatpage_id, site_id) FROM stdin;
-5	1	1
+6	1	1
 \.
 
 
@@ -302,7 +304,6 @@ SELECT pg_catalog.setval('survey_question_id_seq', 11, true);
 
 COPY survey_question (id, survey_id, qtype, required, text, "order", image, choice_num_min, choice_num_max, qstyle, _order) FROM stdin;
 2	1	T	f	Other Program:	2		\N	\N		1
-1	1	R	t	Please list your current program of study.	1		1	1		0
 3	1	A	t	Please describe your previous academic experience and interests.	3		\N	\N		2
 4	1	C	t	Please check the box that best describes your area of expertise	5		\N	\N		3
 5	1	T	f	Other expertise	6		\N	\N		4
@@ -312,6 +313,7 @@ COPY survey_question (id, survey_id, qtype, required, text, "order", image, choi
 9	1	A	f	If yes, please detail and note how much time.	90		\N	\N		8
 10	1	R	t	Have you had any previous fieldwork in a post-conflict context or direct experiences in a conflict zone?	100		1	1		9
 11	1	A	f	If yes please detail.	110		\N	\N		10
+1	1	R	t	Please list your current *program* of study.	1		1	1		0
 \.
 
 

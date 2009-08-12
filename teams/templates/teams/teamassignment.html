@@ -124,4 +124,19 @@
       </tbody>
     </table>
 
+    
+    <h2>Delete Teams</h2>
+    <div id="team-delete">
+      {% for t in teams %}
+        <div id="team-delete-{{t.id}}">
+	  <form method="POST" 
+		action="{%url team-delete t.id %}"
+		onsubmit="return confirm('Are you sure?')"
+		>
+	    <input type="submit" value="Delete Team {{t.index}}" />
+	  </form>
+	</div>
+      {% endfor %}
+    </div>
+
 {% endblock %}

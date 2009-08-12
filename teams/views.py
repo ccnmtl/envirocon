@@ -42,6 +42,16 @@ def addmember(request, user_id, course_id=None, team_id=None):
         done = 'yes'
     return HttpResponse(done)
 
+def deleteteam(request, team_id, remove_group=False):
+    #TODO: test for addteam permission or faculty
+    #doesn't remove the group--
+    if request.method in ("POST","DELETE"):
+        team = get_object_or_404(Team, pk=team_id)
+        if remove_group:
+            team.group.delete()
+        team.delete()
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
 def team_admin(request):
     c = request.actual_course_object
     teams = request.actual_course_object.team_set.all()

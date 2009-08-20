@@ -78,6 +78,9 @@ INSTALLED_APPS = (
     'courseaffils',
     'teams',
     'envirocon_controller',
+    'statefulgame',
+
+    'turn1',
 )
 
 THUMBNAIL_SUBDIR = "thumbs"

@@ -9,18 +9,48 @@
 {% endblock %}
 
 {% block css %}
+   <link href="../../media/style.css" rel="stylesheet" type="text/css"></link>
+
+   <style type="text/css">
+     div#country-info {
+       border: 1px black solid;
+       width: 300px;
+       height: 1200px;
+       padding: 0 10px 10px 10px;
+       margin-right: 25px;
+       float: left;
+     }
+     ol { padding: 0 }
+     li {
+       margin-left: 10px;
+     }
+     ol li { margin-left: 250px; }
+   </style>   
+   
    <!-- Delegate to the particular game extra CSS it needs -->
    {% block game_css %}{% endblock %}
 {% endblock %}
 
 {% block breadcrumbs %}
     {%if game %}
-      <li><a href="{% url game-page game.game game.page_id %}">{{game.gamename}}</a></li>
+      <li><a href="{% url game-page game.app game.page_id %}">{{game.gamename}}</a></li>
     {%endif%}  
 {% endblock %}
 
-
 {% block content %}
+   <div id="country-info">
+     <h5>Current Country Conditions</h5>
+       <li>Infant Mortality: 87 deaths/1,000 live births</li>
+       <li>Forest Cover: 500 Ha</li>
+       <li>12 Month Rainfall: 16mm</li>
+
+     <h5>Map</h5>
+       <img src="/site_media/img/nimpala.jpg" style='width:280px;' />
+
+     <h5>Files</h5>
+       ** files go here **
+   </div>
+
    <div id="game-content">
      <!-- Delegate HTML to the particular game -->
      {% block game_content %}{% endblock %}

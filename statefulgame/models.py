@@ -1,10 +1,10 @@
 from django.db import models
 from game.models import Activity
-from teams.models import Team
+#from teams.models import Team
+Course = models.get_model('courseaffils','course')
 
 class Game(models.Model):
-  #course = models.ForeignKey(Course)
-  pass
+  course = models.ForeignKey(Course)
 
 # instance of an Activity for a specific class (has due date, etc.)
 class Assignment(Activity):
@@ -24,13 +24,13 @@ class Shock(models.Model):
 
 # breadcrumb - formerly ActivityTeamNode
 class Turn(models.Model):
-  team = models.ForeignKey(Team)
+  #team = models.ForeignKey(Team)
   assignment = models.ForeignKey(Assignment)
   shock = models.ForeignKey(Shock, null=True)
   
 # singleton per team
 class State(models.Model):
-  team = models.ForeignKey(Team)
+  #team = models.ForeignKey(Team)
   assignment = models.ForeignKey(Assignment)
   turn = models.ForeignKey(Turn)
   data = models.TextField()  # state data

@@ -9,7 +9,8 @@ class Week1(GameInterface):
         return ('index',)
 
     def template(self,page_id=None):
-        game_context = {'sampledata':"hello", 'duedate':datetime.datetime.today()}
+        game_context = {'sampledata':"hello", 'duedate':datetime.datetime.today(),
+                        'turn_id':1}  # TODO real due date, real turn ID
         return ('week1/index.html',game_context)
     
     def variables(self,page_id=None):

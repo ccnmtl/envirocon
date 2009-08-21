@@ -17,6 +17,7 @@ urlpatterns = patterns('',
                        (r'^uploads/(?P<path>.*)$','django.views.static.serve',{'document_root' : settings.MEDIA_ROOT}),
 
                        (r'^gamepages/',include('game.urls')),
+                       (r'^save_assignment','statefulgame.views.save_assignment'),
                        (r'^teams/',include('teams.urls')),
                        (r'', 'envirocon_controller.views.home'),
 )

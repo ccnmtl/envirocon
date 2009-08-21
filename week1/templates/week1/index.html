@@ -1,6 +1,6 @@
 {% extends "game/game.html" %}
 
-{% block title %}turn 1{% endblock %}
+{% block title %}week 1{% endblock %}
 
 {% block game_js %}
   <script type="text/javascript" src="{{GAME_MEDIA}}js/sample.js"></script>
@@ -44,11 +44,12 @@
 
 <p>Write or paste your answer in the box below.</p>
      
-     <form>
-     <textarea rows=20 cols=60 name="assignment"></textarea><br />
+     <form action="/save_assignment" method="POST">
+     <textarea rows=20 cols=60 name="data"></textarea><br />
      <input type="submit" value="Submit" />
      <input type="reset" />
      <input type="button" value="Save Draft" />
+     <input type="hidden" name="turn_id" value="{{ game_context.turn_id }}" /><!-- TODO -->
      </form>
    </div>
 {% endblock %}

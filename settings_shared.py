@@ -80,7 +80,7 @@ INSTALLED_APPS = (
     'envirocon_controller',
     'statefulgame',
 
-    'turn1',
+    'week1',
 )
 
 THUMBNAIL_SUBDIR = "thumbs"

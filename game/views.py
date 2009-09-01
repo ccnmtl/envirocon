@@ -4,7 +4,7 @@ from django.http import HttpResponse,Http404
 from django.conf import settings
 
 from game.models import *
-
+from game import signals as game_signals
 
 #CUSTOM CONTEXT PROCESSOR
 #see/set TEMPLATE_CONTEXT_PROCESSORS in settings_shared.py
@@ -30,11 +30,19 @@ def game(request, activity, page_id=None):
     activity.page_id = page_id #for easy access in template
     
     template,game_context = activity.gametemplate(page_id)
-    
+
+    world_state = dict()
+    for func,dict_val in game_signals.world_state.send(sender=activity,
+                                                       context=game_context,
+                                                       request=request):
+        for key in dict_val:
+            world_state[key] = dict_val[key]
+
     t = loader.get_template(template)
     c = RequestContext(request,{
         'game' :  activity,
         'game_context' : game_context,
+        'world_state' : world_state,
         #probably should query this from urls or something
         'GAME_MEDIA' : "%s/%s/" % (getattr(settings,'GAME_MEDIA',
                                            '/site_media'),

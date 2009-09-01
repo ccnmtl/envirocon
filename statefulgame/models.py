@@ -3,6 +3,10 @@ from game.models import Activity
 #from teams.models import Team
 Course = models.get_model('courseaffils','course')
 
+from game import signals as game_signals
+import datetime
+
+
 class Game(models.Model):
   course = models.ForeignKey(Course)
 
@@ -40,3 +44,12 @@ class Submission(models.Model):
   turn = models.ForeignKey(Turn)
   published = models.BooleanField()
   data = models.TextField()  # submitted data
+
+
+
+#SIGNAL SUPPORT
+def include_world_state(sender, context,request, **kwargs):
+    return { 'duedate':datetime.datetime.today(),
+             'turn_id':1}  # TODO real due date, real turn ID
+game_signals.world_state.connect(include_world_state)
+

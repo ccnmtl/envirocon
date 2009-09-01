@@ -8,3 +8,4 @@ def save_assignment(request):
     submission = Submission.objects.get_or_create(turn=turn_id)
     submission.data = data
     submission.save()
+

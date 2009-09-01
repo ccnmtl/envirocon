@@ -44,12 +44,12 @@
 
 <p>Write or paste your answer in the box below.</p>
      
-     <form action="/save_assignment" method="POST">
+     <form action="{%url save-assignment %}" method="POST">
      <textarea rows=20 cols=60 name="data"></textarea><br />
      <input type="submit" value="Submit" />
      <input type="reset" />
      <input type="button" value="Save Draft" />
-     <input type="hidden" name="turn_id" value="{{ game_context.turn_id }}" /><!-- TODO -->
+     <input type="hidden" name="turn_id" value="{{ world_state.turn_id }}" /><!-- TODO -->
      </form>
    </div>
 {% endblock %}

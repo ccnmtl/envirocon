@@ -1,0 +1,13 @@
+div#country-info {
+                   border: 1px black solid;
+                   width: 300px;
+                   height: 1200px;
+                   padding: 0 10px 10px 10px;
+                   margin-right: 25px;
+                   float: left;
+                   }
+ol { padding: 0 }
+li {
+     margin-left: 10px;
+     }
+ol li { margin-left: 250px; }

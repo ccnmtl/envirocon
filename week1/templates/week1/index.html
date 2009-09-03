@@ -11,9 +11,16 @@
 
 {% block game_content %}
    <div>
-   
-<h3>Instructions:</h3>
-
+         <div id="activity_title">
+     Week 1 Activity
+   </div>
+      
+      <div id="due_date">
+     DUE: {{ game_context.duedate|date:"D M d Y" }}
+   </div>
+<div id="short_instructions">Write a draft proposal of a post-conflict needs assessment memo. Justify your recommendations using evidence from cases.</div>
+<h3>Full Instructions:</h3>
+<div id="full_instructions_body" class="toggle">
 <p>After reading the background material, please write a draft proposal of a post-conflict needs assessment memo based on the information you have at your disposal. Be sure to include the following elements:</p>
 
 <ol>
@@ -39,13 +46,13 @@
  <li>Based on the initial background discussions, what specific studies or information would you need? From trade reports to climate change predictions to specific population movement?</li>
  <li>What limitations are there for collecting additional information? What strategy do you have for engaging the national government? What other partners would you approach (Universities, NGOs)</li>
 </ol></strong>
+</div>
 
-<p>Due Date: {{ game_context.duedate|date:"D M d Y" }}</p>   
 
 <p>Write or paste your answer in the box below.</p>
      
      <form action="{%url save-assignment %}" method="POST">
-     <textarea rows=20 cols=60 name="data"></textarea><br />
+     <textarea rows=17 cols=58 name="data"></textarea><br />
      <input type="submit" value="Submit" />
      <input type="reset" />
      <input type="button" value="Save Draft" />

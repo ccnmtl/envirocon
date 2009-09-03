@@ -30,6 +30,7 @@
 	<div id="header">
 		<!-- Project title/logo --><h1 id="logo_project"><a href="/" title="Project Title: Project Django"><span>Project Title: Project Django </span></a></h1>	
 		{% block standardnav %}
+		<div id="topnav_bar">
 		<ul id="standardnav">
 			<li>
 			  {%if user.is_anonymous %}
@@ -48,6 +49,7 @@
 			<li><a href="#">Help</a></li>
 			<li><a href="#">Contact</a></li>
 		</ul>
+		</div>
 		{% endblock %}
 		<!-- CCNMTL title/logo --><h4 id="logo_ccnmtl"><a href="http://ccnmtl.columbia.edu" target="_blank" title="Columbia Center for New Media Teaching and Learning"><span>Produced by the Columbia Center for New Media Teaching and Learning</span></a></h4>
 	</div><!-- id="header" -->
@@ -69,10 +71,9 @@
 
 			{% block primarynavtabs %}
 			<ul>
-				<li><a href="#">Item 1</a></li>
-				<li><a href="#">Item 2</a></li>
-				<li><a href="#">Item 3</a></li>
-				<li><a href="#">Item 4</a></li>
+				<li><a href="#">Geographic Data</a></li>
+				<li><a href="#">Files</a></li>
+
 			</ul><!-- id="primarynavtabs" -->
 			{% endblock %}
 			

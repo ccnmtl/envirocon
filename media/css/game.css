@@ -1,13 +1,134 @@
 div#country-info {
-                   border: 1px black solid;
-                   width: 300px;
-                   height: 1200px;
-                   padding: 0 10px 10px 10px;
-                   margin-right: 25px;
+                   
+                   width: 435px;
+                   margin: 0 15px 0 10px;
                    float: left;
+                
                    }
+
+ul#tabs
+{
+ list-style: none;
+ display: block;
+ height: 30px;
+ width: 435px;
+ margin: 0;
+}
+
+ul#tabs li
+{
+
+float: left;
+ display: block;
+ height: 25px;
+ width: 120px;
+ padding: 5px 5px 0 5px;
+ margin: 0 10px 0 0px;
+
+}
+
+ul#tabs li.on
+{
+background-color: #fff;
+}
+
+ul#tabs li.off
+{
+background-color: #ccc;
+}
+                 
+#country-info h2
+{
+	background-color: #CCC;
+	background-image: url(../img/bg_h2.jpg);
+	background-repeat: repeat-x;
+	font-size: 100%;
+	padding: 0px 10px;
+	border-bottom: 1px solid #ccc;
+	margin: 0;
+}
+
+#files_panel {display: none;}
+
+#data_panel {   
+	background-color: #fff;
+	width: 415px;
+    padding: 10px;
+    min-height: 200px;
+}
+
+#conditions {
+
+
+border: 1px solid #ccc;
+
+}
+
+#maps {
+
+
+border: 1px solid #ccc;
+margin-top: 10px;
+}
+                   
+#game-content {
+                   
+                   width: 470px;
+                   padding: 0 10px 10px 10px;
+                   float: left;
+                   background-color: #eaeaea;
+                   }
+                   
+#game-content h1{
+                   
+	background-color: #000;
+	color: #fff;
+	margin: 0 -10px;
+	font-size: 100%;
+	padding: 5px;
+	font-weight: bold;
+	
+}
+
+#game-content h3{
+                   
+	font-size: 100%;
+
+	
+}
+                   
 ol { padding: 0 }
 li {
      margin-left: 10px;
      }
-ol li { margin-left: 250px; }
+ol li { margin-left: 0px; }
+
+
+.floatright {
+		float: right;
+
+}
+
+#activity_title {
+
+	font-weight: bold;
+	margin: 10px;
+}
+
+#due_date {
+
+	font-weight: bold;
+	margin: 10px;
+	color: #135286
+}
+
+#short_instructions {
+	
+	font-size: 90%;
+	line-height: 110%;
+	margin: 10px;
+}
+
+.toggle {
+
+	display: none;}

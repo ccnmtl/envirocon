@@ -1,6 +1,6 @@
 {% extends "game/game.html" %}
 
-{% block title %}Conflict Assessment{% endblock %}
+{% block title %}Obtain Additional Information{% endblock %}
 
 {% block game_js %}
   <script type="text/javascript" src="{{GAME_MEDIA}}js/sample.js"></script>
@@ -18,41 +18,34 @@
       <div id="due_date">
      DUE: {{ game_context.duedate|date:"D M d Y" }}
    </div>
-<div id="short_instructions">Write a draft proposal of a post-conflict needs assessment memo. Justify your recommendations using evidence from cases.</div>
+<div id="short_instructions">As a group, choose five reports from the following list you would like to request.</div>
 <h3>Full Instructions:</h3>
 <div id="full_instructions_body" class="toggle">
-<p>After reading the background material, please write a draft proposal of a post-conflict needs assessment memo based on the information you have at your disposal. Be sure to include the following elements:</p>
+<p>This is a group exercise.</p>
 
-<ol>
-<li>Conflict and Needs Assessment (List, in order of risk, current threats to the country’s stability and challenges to its development.)</li>
-<li>Recommended Policy Responses</li>
-<li>Recommended Programming Options</li>
-</ol>
+<p>Please discuss as a group what information you require to make informed decisions about prioritization and allocation of limited reconstruction funding. Based on discussions in the course and readings, what information is critical to addressing both short and long-term needs, as well as confronting continued conflict stressors and potential relapses of conflict?</p>
 
-<p>Please divide your policy and programming recommendations into two sections, distinguishing between recommendations for government of Nimpala and recommendations for the international donor community.</p>
+<p>Your group will be able to request 5 reports from the following list of potential reports that can be prepared by the existing UN agencies on the ground to help with your decision making process.</p>
 
-<p>You may also want to distinguish between short-term “quick wins” versus longer-term responses. Please prioritize your recommendations with the understanding that the amount of aid to Nimpala has not yet been guaranteed or dispersed and available resources are quite limited.</p>
+<p>Please think carefully about which reports from the following list you would like to request and why that information is critical to your analysis. Please be prepared to discuss your selection briefly in class and write a memo with your team's rationale for purchasing each report.</p>
 
-<p>Justify your recommendations using evidence from cases. Such cases can be drawn from your professional experiences and/or class readings.</p>
-
-<p>These should be between 3 and 6 pages.</p>
-
-<h5>Initial Questions:</h5><strong><ol>
-
- <li>What information will you need to perform a post-conflict needs assessment?</li>
- <li>How will you go about collecting that information? What challenges do you expect to encounter?</li>
- <li>What role has the environment and natural resources played in this conflict? To what extent should environmental needs be prioritized in the context of Nimpala’s political and economic challenges?</li>
- <li>Who are the “dividers” and “connectors” in the conflict? Are there any potential spoilers.</li>
- <li>Based on the initial background discussions, what specific studies or information would you need? From trade reports to climate change predictions to specific population movement?</li>
- <li>What limitations are there for collecting additional information? What strategy do you have for engaging the national government? What other partners would you approach (Universities, NGOs)</li>
-</ol></strong>
 </div>
-
-
-<p>Write or paste your answer in the box below.</p>
+<p>Select your five choices below.</p>
      
      <form action="{%url save-assignment %}" method="POST">
-     <textarea rows=17 cols=58 name="data"></textarea><br />
+
+  <input type='checkbox' name='reports' value='water'/>Water Resources Management<br />
+  <input type='checkbox' name='reports' value='agriculture'/>Agricultural Practices<br />
+  <input type='checkbox' name='reports' value='economy'/>Economic Profile<br />
+  <input type='checkbox' name='reports' value='humanitarian'/>Humanitarian Situation<br />
+  <input type='checkbox' name='reports' value='political'/>Political Vulnerability Profile<br />
+  <input type='checkbox' name='reports' value='environment'/>Environmental Health<br />
+  <input type='checkbox' name='reports' value='disasters'/>Natural Disasters<br />
+  <input type='checkbox' name='reports' value='population'/>Population<br />
+  <input type='checkbox' name='reports' value='wildlife'/>Wildlife<br />
+  <input type='checkbox' name='reports' value='governance'/>Environmental Governance<br />
+  <input type='checkbox' name='reports' value='forest'/>Forest Resources<br />
+
      <input type="submit" value="Submit" />
      <input type="reset" />
      <input type="button" value="Save Draft" />

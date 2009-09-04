@@ -82,6 +82,7 @@ INSTALLED_APPS = (
 
     'week1',
     'conflict_assessment',
+    'obtain_additional_information',
 )
 
 THUMBNAIL_SUBDIR = "thumbs"

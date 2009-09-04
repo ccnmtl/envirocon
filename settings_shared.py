@@ -81,6 +81,7 @@ INSTALLED_APPS = (
     'statefulgame',
 
     'week1',
+    'conflict_assessment',
 )
 
 THUMBNAIL_SUBDIR = "thumbs"

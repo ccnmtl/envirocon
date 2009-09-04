@@ -5,12 +5,14 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.db import models
 
 Survey = models.get_model('survey','survey')
-# Create your views here.
+from game.installed_games import InstalledGames
 
 def home(request):
     todo = filled_out_a_profile(request)
     return render_to_response('envirocon_controller/home.html',
-                              {'todo':todo},
+                              {'todo':todo,
+                               'games':InstalledGames,
+                               },
                               context_instance=RequestContext(request))
 
 

@@ -15,5 +15,11 @@
     Please fill out <a href="{%url survey-detail survey.slug %}">{{survey.title}}</a>
   {%endfor%}
 
+  <h2>Temp game list</h2>
+  <ul>
+    {%for g in games %}
+    <li><a href="{%url game-page g.0 %}">{{g.1}}</a></li>
+    {%endfor%}
+  </ul>
 
 {% endblock %}

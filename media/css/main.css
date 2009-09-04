@@ -6,7 +6,11 @@ body
 	border: 0;
 	background-color: #000;
 	font: normal 0.88em/140% arial, helvetica, verdana, sans-serif;
-	color: #000;
+	color: #fff;
+  /*black on black is no fair as default
+     regions which change the background color to something light,
+     can specify color:black each time.
+     */
 }
 
 /* ########## Standard elements ########## */

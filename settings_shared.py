@@ -80,9 +80,10 @@ INSTALLED_APPS = (
     'envirocon_controller',
     'statefulgame',
 
-    'week1',
+    # week 1 activities
     'conflict_assessment',
     'obtain_additional_information',
+    'explain_your_report_selection',
 )
 
 THUMBNAIL_SUBDIR = "thumbs"

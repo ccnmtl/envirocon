@@ -136,3 +136,7 @@ ol li { margin-left: 0px; }
 .toggle {
 
 	display: none;}
+
+select {  
+         font-size:70%;
+}

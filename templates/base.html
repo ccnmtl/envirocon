@@ -10,7 +10,6 @@
 	<![endif]-->
 	<link rel="shortcut icon" href="/site_media/img/favicon.ico" type="image/x-icon" />
 	{% block css %}{% endblock %}
-	{% block js %}{% endblock %}
 	{% block feeds %}{% endblock %}
 </head>
 <body class="one_column {% block widthtype %}fixed{% endblock %}">
@@ -122,5 +121,8 @@
 
 
 </div><!-- id="container" -->
+
+<!--PUT Javascript on the bottom so we don't have to do onload... -->
+{% block js %}{% endblock %}
 </body>
 </html>

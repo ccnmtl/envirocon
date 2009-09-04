@@ -84,6 +84,8 @@ INSTALLED_APPS = (
     'conflict_assessment',
     'obtain_additional_information',
     'explain_your_report_selection',
+    # week 2 activities
+    'game_plot_sectors',
 )
 
 THUMBNAIL_SUBDIR = "thumbs"

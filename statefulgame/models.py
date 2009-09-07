@@ -9,6 +9,8 @@ import datetime
 
 
 class Game(models.Model):
+  def __unicode__(self):
+    return self.course.title
   course = models.ForeignKey(Course)
 
 # instance of an Activity for a specific class (has due date, etc.)
@@ -20,13 +22,17 @@ class Assignment(Activity):
   individual = models.BooleanField()  # True = individual assignment; False = group assignment
   # app (inherited from Activity)
 
+  def __unicode__(self):
+    return self.name
+
+
 # abstract
 class Shock(models.Model):
   name = models.CharField(max_length=100)
   outcome = models.TextField()
   
   def __unicode__(self):
-    return name
+    return self.name
 
 # breadcrumb - formerly ActivityTeamNode
 class Turn(models.Model):
@@ -52,7 +58,8 @@ class Submission(models.Model):
 
 #SIGNAL SUPPORT
 def include_world_state(sender, context,request, **kwargs):
-    return { 'duedate':datetime.datetime.today(),
-             'turn_id':1}  # TODO real due date, real turn ID
+    return { 'duedate':datetime.datetime.today(), # assignment.close_date
+             'individual':1,  # assignment.individual
+             'turn_id':1}  # TODO real turn ID
 game_signals.world_state.connect(include_world_state)
 

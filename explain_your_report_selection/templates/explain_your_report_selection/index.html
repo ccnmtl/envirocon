@@ -1,42 +1,16 @@
 {% extends "game/game.html" %}
 
-{% block title %}Explain Your Report Selection{% endblock %}
-
 {% block game_js %}
-  <script type="text/javascript" src="{{GAME_MEDIA}}js/sample.js"></script>
 {% endblock %}
 {% block game_css %}
   <!-- add css link here -->
 {% endblock %}
 
-{% block game_content %}
-   <div>
-         <div id="activity_title">
-     Explain Your Report Selection
-   </div>
-      
-      <div id="due_date">
-     DUE: {{ game_context.duedate|date:"D M d Y" }}
-   </div>
-<div id="short_instructions">Please write a one or two page justification for your selection of information reports.</div>
-<h3 class="toggle-control">Full Instructions</h3>
-<div id="full_instructions_body" class="toggle">
+{% block short-instructions %}Please write a one or two page justification for your selection of information reports.{% endblock %}
+
+{% block full-instructions %}
 <p>Please discuss the rationale for which reports you selected, how they will support your decision-making process and what information you needed
-to support the prioritization of needs in Nimpala.
+to support the prioritization of needs in Nimpala.</p>
 
-Please also summarize key points from the discussion your group has while trying to reach the decision of which reports to select.</p>
-
-</div>
-
-
-<p>Write or paste your answer in the box below.</p>
-     
-     <form action="{%url save-assignment %}" method="POST">
-     <textarea rows=17 cols=58 name="data"></textarea><br />
-     <input type="submit" value="Submit" />
-     <input type="reset" />
-     <input type="button" value="Save Draft" />
-     <input type="hidden" name="turn_id" value="{{ world_state.turn_id }}" /><!-- TODO -->
-     </form>
-   </div>
+<p>Please also summarize key points from the discussion your group has while trying to reach the decision of which reports to select.</p>
 {% endblock %}

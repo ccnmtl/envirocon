@@ -8,12 +8,77 @@
   <!-- add css link here -->
 {% endblock %}
 
-{% block game_content %}
-   <div id="short_instructions" class="short_instructions">
-     Based upon your group discussion, enter a number from 1-10 to rank the impact and relevance of each of the sectors. 1=low impact/relevant and 10=high impact/relevance. The resulting chart will provide a visual representation of your group's priorities and serve as a guide as you fund interventions in the future.
-   </div>
+  {% block short-instructions %}
+     Based upon your group discussion, rank the impact and relevance of each of the sectors.  The resulting chart will provide a visual representation of your group's priorities and serve as a guide as you fund interventions in the future.
+  {% endblock %}
+
+  {% block full-instructions %}
+<p>The following are the primary sectors we will analyze and consider in our reconstruction allocation process. These sectors were identified by the country team as critical areas for your assessment. Please think about how these sectors are critical for both short and long term recovery and development. How are these sectors linked to the conflict, either directly or indirectly?</p>
+
+<p>Please discuss within your groups the strengths and weaknesses of previous management strategies both based on the context presented from background documents and comparative cases from your knowledge.</p>
+
+<p>Are there other sectors that should be included and if so please discuss their relevance in the multiple aspects of recovery (spatial impacts, temporal, humanitarian needs, conflict prevention/reconciliation, reconstruction of infrastructure, sustainable natural resource management, economic development, political stability, etc).</p>
+
+<table>
+  <thead>
+    <tr>
+      <td><span style="font-weight:bold;">Environmental Category</span></td>
+      <td><span style="font-weight:bold;">Concern</span></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan='3'>Environmental Health and Basic Services</td>
+      <td>Water Supply</td>
+    </tr>
+    <tr>
+      <td>Sanitation Access</td>
+    </tr>
+    <tr>
+      <td>Waste Management</td>
+    </tr>
+    <tr>
+      <td rowspan='2'>Forestry</td>
+      <td>Illegal Timber</td>
+    </tr>
+    <tr>
+      <td>Deforestation (Charcoal Production)</td>
+    </tr>
+    <tr>
+      <td rowspan='2'>Land Management</td>
+      <td>Land Tenure</td>
+    </tr>
+    <tr>
+      <td>Nomadic Rights</td>
+    </tr>
+    <tr>
+      <td rowspan='2'>Agriculture</td>
+      <td>Agricultural Practices</td>
+    </tr>
+    <tr>
+      <td>Desertification</td>
+    </tr>
+    <tr>
+      <td>Wildlife and Biodiversity</td>
+      <td>Habitat Protection</td>
+    </tr>
+    <tr>
+      <td>Water Resources</td>
+      <td>Integrated Water Resource Management</td>
+    </tr>
+    <tr>
+      <td>Environmental Institutions</td>
+      <td>Capacity Building</td>
+    </tr>
+  </tbody>
+</table>
+{% endblock %}
    
-   <form action="{%url save-assignment %}" method="POST" >
+{% block form-instructions %}
+<p>Enter a number from 1-10 to rank the impact and relevance of each sector, from 1 (low impact/relevance) to 10 (high impact/relevance).</p> 
+{% endblock %}
+
+  {% block form-inputs %}
      <table class="sortable" onclick="sortColumn(event)">
        <thead>
 	 <tr>
@@ -196,9 +261,5 @@
      
      <img id="scatterplot" src="http://chart.apis.google.com/chart?cht=s&chd=t:12,87,75,41,23,96,68,71,34,9|98,60,27,34,56,79,58,74,18,76|84,23,69,81,47,94,60,93,64,54&chxt=x,y&chxl=0:|0|20|30|40|50|60|70|80|90|10|1:|0|25|50|75|100&chs=400x125" />
 
-     <input type="submit" value="Submit" />
-     <input type="reset" />
-     <input type="button" value="Save Draft" />
-     <input type="hidden" name="turn_id" value="{{ world_state.turn_id }}" /><!-- TODO -->
+     {% endblock %}
    </form>
-{% endblock %}

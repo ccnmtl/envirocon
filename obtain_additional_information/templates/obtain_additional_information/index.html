@@ -1,7 +1,5 @@
 {% extends "game/game.html" %}
 
-{% block title %}Obtain Additional Information{% endblock %}
-
 {% block game_js %}
   <script type="text/javascript" src="{{GAME_MEDIA}}js/game_obtain_additional_information.js"></script>
 {% endblock %}
@@ -9,31 +7,19 @@
   <!-- add css link here -->
 {% endblock %}
 
-{% block game_content %}
-   <div>
-         <div id="activity_title">
-     Conflict Assessment
-   </div>
-      
-      <div id="due_date">
-     DUE: {{ game_context.duedate|date:"D M d Y" }}
-   </div>
-<div id="short_instructions">As a group, choose five reports from the following list you would like to request.</div>
-<h3 class="toggle-control">Full Instructions:</h3>
-<div id="full_instructions_body" class="toggle">
-<p>This is a group exercise.</p>
+{% block short-instructions %}As a group, choose five reports from the following list you would like to request.{% endblock %}
 
-<p>Please discuss as a group what information you require to make informed decisions about prioritization and allocation of limited reconstruction funding. Based on discussions in the course and readings, what information is critical to addressing both short and long-term needs, as well as confronting continued conflict stressors and potential relapses of conflict?</p>
+{% block full-instructions %}
+  <p>Please discuss as a group what information you require to make informed decisions about prioritization and allocation of limited reconstruction funding. Based on discussions in the course and readings, what information is critical to addressing both short and long-term needs, as well as confronting continued conflict stressors and potential relapses of conflict?</p>
 
-<p>Your group will be able to request 5 reports from the following list of potential reports that can be prepared by the existing UN agencies on the ground to help with your decision making process.</p>
+  <p>Your group will be able to request 5 reports from the following list of potential reports that can be prepared by the existing UN agencies on the ground to help with your decision making process.</p>
 
-<p>Please think carefully about which reports from the following list you would like to request and why that information is critical to your analysis. Please be prepared to discuss your selection briefly in class and write a memo with your team's rationale for purchasing each report.</p>
+  <p>Please think carefully about which reports from the following list you would like to request and why that information is critical to your analysis. Please be prepared to discuss your selection briefly in class and write a memo with your team's rationale for purchasing each report.</p>
+{% endblock %}
 
-</div>
-<p>Select your five choices below.</p>
+{% block form-instructions %}<p>Select your five choices below.</p>{% endblock %}
      
-     <form action="{%url save-assignment %}" method="POST" id="assignment-form">
-
+{% block form-inputs %}
   <input type='checkbox' name='reports' value='water'/>Water Resources Management<br />
   <input type='checkbox' name='reports' value='agriculture'/>Agricultural Practices<br />
   <input type='checkbox' name='reports' value='economy'/>Economic Profile<br />
@@ -45,11 +31,4 @@
   <input type='checkbox' name='reports' value='wildlife'/>Wildlife<br />
   <input type='checkbox' name='reports' value='governance'/>Environmental Governance<br />
   <input type='checkbox' name='reports' value='forest'/>Forest Resources<br />
-
-     <input type="submit" value="Submit" />
-     <input type="reset" />
-     <input type="button" value="Save Draft" />
-     <input type="hidden" name="turn_id" value="{{ world_state.turn_id }}" /><!-- TODO -->
-     </form>
-   </div>
 {% endblock %}

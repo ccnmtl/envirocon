@@ -3,7 +3,7 @@
 {% block title %}Obtain Additional Information{% endblock %}
 
 {% block game_js %}
-  <script type="text/javascript" src="{{GAME_MEDIA}}js/sample.js"></script>
+  <script type="text/javascript" src="{{GAME_MEDIA}}js/game_obtain_additional_information.js"></script>
 {% endblock %}
 {% block game_css %}
   <!-- add css link here -->
@@ -32,7 +32,7 @@
 </div>
 <p>Select your five choices below.</p>
      
-     <form action="{%url save-assignment %}" method="POST">
+     <form action="{%url save-assignment %}" method="POST" id="assignment-form">
 
   <input type='checkbox' name='reports' value='water'/>Water Resources Management<br />
   <input type='checkbox' name='reports' value='agriculture'/>Agricultural Practices<br />

@@ -76,9 +76,9 @@ INSTALLED_APPS = (
     'game',
     'game_sample',
     'courseaffils',
-    'teams',
     'envirocon_controller',
     'statefulgame',
+    'teams',
 
     # week 1 activities
     'conflict_assessment',

@@ -1,11 +1,13 @@
 from django.db import models
+from django.db.models.signals import post_save
 from game.models import Activity
-#from teams.models import Team
+from game import signals as game_signals
+import datetime
+
+Team = models.get_model('teams','team')
 Course = models.get_model('courseaffils','course')
 User = models.get_model('auth','user')
 
-from game import signals as game_signals
-import datetime
 
 
 class Game(models.Model):
@@ -23,7 +25,10 @@ class Assignment(Activity):
   # app (inherited from Activity)
 
   def __unicode__(self):
-    return self.name
+    return "%s (due %s)" % (self.name, self.close_date)
+    
+  class Meta:
+    order_with_respect_to = 'game'
 
 
 # abstract
@@ -36,16 +41,20 @@ class Shock(models.Model):
 
 # breadcrumb - formerly ActivityTeamNode
 class Turn(models.Model):
-  #team = models.ForeignKey(Team)
+  team = models.ForeignKey(Team)
   assignment = models.ForeignKey(Assignment)
   shock = models.ForeignKey(Shock, null=True)
   
-# singleton per team
 class State(models.Model):
-  #team = models.ForeignKey(Team)
-  assignment = models.ForeignKey(Assignment)
-  turn = models.ForeignKey(Turn)
-  data = models.TextField()  # state data
+  team = models.OneToOneField(Team)  # singleton per team
+  #assignment = models.ForeignKey(Assignment)
+  turn = models.ForeignKey(Turn, null=True)
+  #world_state = models.TextField()  # state data
+  
+  @property
+  def assignment(self):
+    return self.turn.assignment
+
 
 # breadcrumb
 class Submission(models.Model):
@@ -57,9 +66,21 @@ class Submission(models.Model):
 
 
 #SIGNAL SUPPORT
+def create_state_for_team(sender, instance, created, **kwargs):
+  if isinstance(instance,Team) and created:
+    State.objects.create(team=instance) # turn=null to begin with
+
+post_save.connect(create_state_for_team, sender=Team)
+
 def include_world_state(sender, context,request, **kwargs):
-    return { 'duedate':datetime.datetime.today(), # assignment.close_date
-             'individual':1,  # assignment.individual
-             'turn_id':1}  # TODO real turn ID
+  activity = sender
+  user = request.user
+  team = Team.objects.by_user(user, getattr(request,"course",None))
+  if team.state.assignment != activity:
+    raise "Activity does not match assignment for this turn."
+  return { 'duedate':team.state.assignment.close_date,
+             'individual':team.state.assignment.individual,
+             'turn_id':team.state.turn.id
+         }
 game_signals.world_state.connect(include_world_state)
 

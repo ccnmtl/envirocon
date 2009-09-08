@@ -1,6 +1,16 @@
-from statefulgame.models import Submission, Turn
+from statefulgame.models import Submission, Turn, Assignment
 from django.http import HttpResponse,Http404,HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.db import models
 import simplejson as json
+
+from game.views import game
+Team = models.get_model('teams','team')
+
+def assignment_page(request,assignment_id):
+  assignment = get_object_or_404(Assignment,pk=assignment_id,game__course=getattr(request,"course",None))
+  #team = Team.objects.by_user(request.user, getattr(request,"course",None))
+  return game(request,assignment)
 
 # saves an assignment blob to the database
 def save_assignment(request):
@@ -29,5 +39,7 @@ def current_turn(request):
   team = Team.objects.by_user(user, getattr(request,"course",None))
   turn = team.state.turn
   
+  # TODO: "wait" page if current turn pending
+  
   # TODO: url lookup
-  return HttpResponseRedirect("/gamepages/game/%s" % turn.assignment.app)
+  return HttpResponseRedirect("/assignment/%s" % turn.assignment.id)

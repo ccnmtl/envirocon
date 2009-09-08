@@ -7,3 +7,6 @@ from django.contrib import admin
 admin.site.register(Game)
 admin.site.register(Assignment)
 admin.site.register(Shock)
+admin.site.register(Turn)
+admin.site.register(State)
+admin.site.register(Submission)

@@ -43,12 +43,13 @@ class Shock(models.Model):
 class Turn(models.Model):
   team = models.ForeignKey(Team)
   assignment = models.ForeignKey(Assignment)
-  shock = models.ForeignKey(Shock, null=True)
+  shock = models.ForeignKey(Shock, null=True, blank=True)
+  #needs unicode
   
 class State(models.Model):
   team = models.OneToOneField(Team)  # singleton per team
   #assignment = models.ForeignKey(Assignment)
-  turn = models.ForeignKey(Turn, null=True)
+  turn = models.ForeignKey(Turn, null=True, blank=True)
   #world_state = models.TextField()  # state data
   
   @property
@@ -76,11 +77,17 @@ def include_world_state(sender, context,request, **kwargs):
   activity = sender
   user = request.user
   team = Team.objects.by_user(user, getattr(request,"course",None))
-  if team.state.assignment != activity:
+  import pdb
+  pdb.set_trace()
+  if isinstance(activity, Assignment):
+    turn = Turn.objects.get(team=team, assignment=activity)
+  elif team.state.assignment.app == activity.app:
+    turn = team.state.turn
+  else:
     raise "Activity does not match assignment for this turn."
-  return { 'duedate':team.state.assignment.close_date,
-             'individual':team.state.assignment.individual,
-             'turn_id':team.state.turn.id
+  return { 'duedate':turn.assignment.close_date,
+             'individual':turn.assignment.individual,
+             'turn_id':turn.id
          }
 game_signals.world_state.connect(include_world_state)
 

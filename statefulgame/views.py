@@ -18,21 +18,25 @@ def save_assignment(request):
   turn_id = request.POST['turn_id']
   turn = Turn.objects.get(id=turn_id)
   if turn.assignment.individual:
-    submission = Submission.objects.get_or_create(author=user,turn=turn)
+    submission,created = Submission.objects.get_or_create(author=request.user,turn=turn)
   else:
-    submission = Submission.objects.get_or_create(turn=turn)
+    submission,created = Submission.objects.get_or_create(turn=turn)
   submission.data = data
   submission.save()
+  return HttpResponse(created)
 
 def get_assignment_data(request,turn_id):
   user = request.user
   team = Team.objects.by_user(user, getattr(request,"course",None))
   turn = Turn.objects.get(pk=turn_id,team=team)
   if turn.assignment.individual:
-    submission = Submission.objects.get(author=user,turn=turn)
+    submission = get_object_or_404(Submission, author=user,turn=turn)
   else:
-    submission = Submission.objects.get(turn=turn)
-  return HttpResponse(json.dumps(submission.data), mimetype="application/json")
+    submission = get_object_or_404(Submission, turn=turn)
+  jsondata=json.dumps(submission.data)
+  if request.GET.has_key("jsonp"):
+    return HttpResponse("%s(%s)" % (request.GET["jsonp"], jsondata), mimetype="application/json")
+  return HttpResponse(jsondata, mimetype="application/json")
   
 def current_turn(request):
   user = request.user

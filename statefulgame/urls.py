@@ -10,7 +10,7 @@ urlpatterns = patterns(
         'save_assignment',
         name='save-assignment'),
 
-    url(r'^get_assignment',
+    url(r'^get_assignment/(?P<turn_id>\d+)/?$',
         'get_assignment_data',
         name='get-assignment'),
 

@@ -12,7 +12,7 @@ class ConflictAssessment(GameInterface):
         return ('conflict_assessment/index.html',game_context)
     
     def variables(self,page_id=None):
-        return []
+        return ['conflict_assessment']
 
 InstalledGames.register_game('conflict_assessment',
                              'Conflict Assessment',

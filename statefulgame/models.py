@@ -44,7 +44,9 @@ class Turn(models.Model):
   team = models.ForeignKey(Team)
   assignment = models.ForeignKey(Assignment)
   shock = models.ForeignKey(Shock, null=True, blank=True)
-  #needs unicode
+  
+  def __unicode__(self):
+    return "Turn ID %s for Team %s (%s)" % (self.id, self.team, self.assignment)
   
 class State(models.Model):
   team = models.OneToOneField(Team)  # singleton per team
@@ -55,6 +57,11 @@ class State(models.Model):
   @property
   def assignment(self):
     return self.turn.assignment
+   
+  def save(self,*args,**kwargs):
+    if self.turn:
+      assert(self.turn.team == self.team)
+    return super(State,self).save(*args,**kwargs)
 
 
 # breadcrumb
@@ -77,8 +84,6 @@ def include_world_state(sender, context,request, **kwargs):
   activity = sender
   user = request.user
   team = Team.objects.by_user(user, getattr(request,"course",None))
-  import pdb
-  pdb.set_trace()
   if isinstance(activity, Assignment):
     turn = Turn.objects.get(team=team, assignment=activity)
   elif team.state.assignment.app == activity.app:

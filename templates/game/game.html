@@ -9,6 +9,8 @@
    </script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/mochikit/MochiKit/MochiKit.js"></script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/toggle_full_info.js"></script>
+   <script type="text/javascript" src="{{GAME_MEDIA}}/js/statefulgame.js"></script>
+   <script type="text/javascript" src="{%url get-assignment world_state.turn_id %}?jsonp=GameSystem.loadState"></script>
    {% block game_js %}{% endblock %}
 {% endblock %}
 

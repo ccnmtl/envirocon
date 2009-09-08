@@ -17,16 +17,17 @@ def save_assignment(request):
   data = request.POST['data']
   turn_id = request.POST['turn_id']
   turn = Turn.objects.get(id=turn_id)
+  created = True
   if turn.assignment.individual:
     submission,created = Submission.objects.get_or_create(author=request.user,turn=turn)
   else:
     try:
       submission = Submission.objects.get(turn=turn)
+      created=False
     except Submission.DoesNotExist:
       submission = Submission(turn=turn,author=request.user)
-      created=True
   submission.data = data
-  submission.published = ( request.POST.get('published','Draft').find('Draft') >=0 )
+  submission.published = ( request.POST.get('published','Draft').find('Draft') < 0 )
   submission.save()
   return HttpResponse(created)
 

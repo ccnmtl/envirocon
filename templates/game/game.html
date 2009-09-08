@@ -59,6 +59,9 @@
       <div id="due_date">
      DUE: {{ world_state.duedate|date:"D M j Y f A" }}
    </div>
+   <div id="submitted">
+     ALREADY PUBLISHED: {{world_state.published}}
+   </div>
 <div id="short_instructions">{%block short-instructions %}{% endblock %}</div>
 
 <h3 class="toggle-control">Full Instructions</h3>

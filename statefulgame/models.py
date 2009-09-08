@@ -47,6 +47,11 @@ class Turn(models.Model):
   
   def __unicode__(self):
     return "Turn ID %s for Team %s (%s)" % (self.id, self.team, self.assignment)
+
+  @property
+  def published(self):
+    submission = getattr(self,'submission',None)
+    return submission and submission.published
   
 class State(models.Model):
   team = models.OneToOneField(Team)  # singleton per team
@@ -67,7 +72,7 @@ class State(models.Model):
 # breadcrumb
 class Submission(models.Model):
   author = models.ForeignKey(User)
-  turn = models.ForeignKey(Turn)
+  turn = models.OneToOneField(Turn)
   published = models.BooleanField()
   data = models.TextField()  # submitted data
 
@@ -91,8 +96,9 @@ def include_world_state(sender, context,request, **kwargs):
   else:
     raise "Activity does not match assignment for this turn."
   return { 'duedate':turn.assignment.close_date,
-             'individual':turn.assignment.individual,
-             'turn_id':turn.id
+           'individual':turn.assignment.individual,
+           'turn_id':turn.id,
+           'published':turn.published
          }
 game_signals.world_state.connect(include_world_state)
 

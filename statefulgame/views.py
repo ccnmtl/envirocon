@@ -14,7 +14,7 @@ def assignment_page(request,assignment_id):
 
 # saves an assignment blob to the database
 def save_assignment(request):
-  data = request.POST['data']
+  data = request.POST.get('data',None)
   turn_id = request.POST['turn_id']
   turn = Turn.objects.get(id=turn_id)
   created = True

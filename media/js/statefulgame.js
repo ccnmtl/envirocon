@@ -9,26 +9,39 @@ if (typeof GameSystem == 'undefined') {
       ///which submit value was clicked?
      this.published = 'Submit';
   }
+  GameSystemClass.prototype.getForm = function() {
+      return $('assignment-form');
+  }
   GameSystemClass.prototype.saveState = function(evt) {
-      //easy default
-     if (this.textarea_default) {
-        if (game_variables.length == 1) {
-            this.my_vars[game_variables[0]] = this.textarea_default.value; 
-        }
-     }
-     doXHR(this.action,{method:'POST',
-                        sendContent:queryString({data:serializeJSON(this.my_vars),
-						 turn_id:this.turn_id,
-						 published:this.published
-						}),
-                        headers:[["Content-type","application/x-www-form-urlencoded"]]
-        });
-     return false;
+      try {
+	  //easy default
+	  if (this.textarea_default) {
+              if (game_variables.length == 1) {
+		  this.my_vars[game_variables[0]] = this.textarea_default.value; 
+              }
+	  }
+	  console.log(this.my_vars);
+	  doXHR(this.action,{method:'POST',
+                             sendContent:queryString({data:serializeJSON(this.my_vars),
+						      turn_id:this.turn_id,
+						      published:this.published
+						     }),
+                             headers:[["Content-type","application/x-www-form-urlencoded"]]
+			    });
+      } 
+      catch (e) {
+	  console.log(e);
+      }
+      finally {
+	  return false;
+      }
   }
 
   GameSystemClass.prototype.getVariable = function(var_name) {
      if (typeof this.my_vars[var_name] != 'undefined') {
         return this.my_vars[var_name];
+     } else {
+	return this.my_vars[var_name] = {};
      }
   }
 
@@ -36,7 +49,7 @@ if (typeof GameSystem == 'undefined') {
      var self = this;
      update(this.my_vars, state);
      ///ASSUME: document is loaded by now!
-     var assignment_form = $('assignment-form');
+     var assignment_form = this.getForm();
      if (assignment_form) {
 	 forEach(assignment_form.elements, function(elt) {
              if (elt.name=='turn_id') {

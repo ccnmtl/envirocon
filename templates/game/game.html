@@ -85,11 +85,11 @@
        <textarea rows=17 cols=58 name="data"></textarea><br />
   {% endblock %}
 
-     <input type="submit" name="published" value="Submit" onclick="GameSystem.published='Submit'" />
-     <input type="reset" />
-     <input type="submit" name="published" value="Save Draft" onclick="GameSystem.published='Draft'" />
-     <input type="hidden" name="turn_id" value="{{ world_state.turn_id }}" />
-     <input type="hidden" name="author" value={{ user }}" />
+     <input class="game-system" type="submit" name="published" value="Submit" onclick="GameSystem.published='Submit'" />
+     <input class="game-system" type="reset" />
+     <input class="game-system" type="submit" name="published" value="Save Draft" onclick="GameSystem.published='Draft'" />
+     <input class="game-system" type="hidden" name="turn_id" value="{{ world_state.turn_id }}" />
+     <input class="game-system" type="hidden" name="author" value={{ user }}" />
      </form>
    </div>
 {% endblock %}

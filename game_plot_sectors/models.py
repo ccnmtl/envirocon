@@ -12,7 +12,7 @@ class PlotSectorsGame(GameInterface):
         return ('game_plot_sectors/index.html',game_context)
     
     def variables(self,page_id=None):
-        return []
+        return ['game_plot_sectors']
 
 InstalledGames.register_game('plot_sectors',
                              'Plot Sectors',

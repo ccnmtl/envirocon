@@ -6,3 +6,7 @@ TableSortCasts["Select"] = function(cell){
 	return cell.getElementsByTagName('select')[0].value;
     } catch(e) {return 0;}
 }
+
+forEach(document.getElementsByTagName('select'),function(elt) {
+    connect(elt,'onchange',
+});

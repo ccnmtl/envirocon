@@ -20,8 +20,13 @@ def save_assignment(request):
   if turn.assignment.individual:
     submission,created = Submission.objects.get_or_create(author=request.user,turn=turn)
   else:
-    submission,created = Submission.objects.get_or_create(turn=turn)
+    try:
+      submission = Submission.objects.get(turn=turn)
+    except Submission.DoesNotExist:
+      submission = Submission(turn=turn,author=request.user)
+      created=True
   submission.data = data
+  submission.published = ( request.POST.get('published','Draft').find('Draft') >=0 )
   submission.save()
   return HttpResponse(created)
 
@@ -33,10 +38,9 @@ def get_assignment_data(request,turn_id):
     submission = get_object_or_404(Submission, author=user,turn=turn)
   else:
     submission = get_object_or_404(Submission, turn=turn)
-  jsondata=json.dumps(submission.data)
   if request.GET.has_key("jsonp"):
-    return HttpResponse("%s(%s)" % (request.GET["jsonp"], jsondata), mimetype="application/json")
-  return HttpResponse(jsondata, mimetype="application/json")
+    return HttpResponse("%s(%s)" % (request.GET["jsonp"], submission.data))
+  return HttpResponse(submission.data)
   
 def current_turn(request):
   user = request.user

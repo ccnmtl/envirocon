@@ -14,7 +14,7 @@ class TeamManager(models.Manager):
             return None
         
     def by_request(self, request):
-        c = getattr(request,'actual_course_object',None)
+        c = getattr(request,'course',None)
         if c:
             try:
                 return Team.objects.get(

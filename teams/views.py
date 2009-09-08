@@ -18,7 +18,7 @@ def addteam(request,course_id=None):
     tms = tuple()
     if request.method == "POST":    
         if course_id is None:
-            course_id = request.actual_course_object.id
+            course_id = request.course.id
         count = int(request.POST.get('count',1))
         tms = [Team.objects.create(course_id=course_id)
                for i in range(count)]
@@ -29,7 +29,7 @@ def addmember(request, user_id, course_id=None, team_id=None):
     #TODO: test for addteam permission or faculty
     done = 'no'
     if request.method == "POST":
-        course = (course_id is None) and request.actual_course_object \
+        course = (course_id is None) and request.course \
                  or Course.objects.get(pk=course_id)
             
         user = User.objects.get(pk=user_id)
@@ -53,8 +53,8 @@ def deleteteam(request, team_id, remove_group=False):
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 def team_admin(request):
-    c = request.actual_course_object
-    teams = request.actual_course_object.team_set.all()
+    c = request.course
+    teams = request.course.team_set.all()
     
     return render_to_response('teams/teamassignment.html',
                               {'course':c,

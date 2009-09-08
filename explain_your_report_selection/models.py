@@ -12,7 +12,7 @@ class ExplainYourReportSelection(GameInterface):
         return ('explain_your_report_selection/index.html',game_context)
     
     def variables(self,page_id=None):
-        return []
+        return ['explain_your_report_selection']
 
 InstalledGames.register_game('explain_your_report_selection',
                              'Explain Your Report Selection',

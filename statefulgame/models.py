@@ -50,8 +50,10 @@ class Turn(models.Model):
 
   @property
   def published(self):
-    submission = getattr(self,'submission',None)
-    return submission and submission.published
+    try:
+      return self.submission.published
+    except:
+      return False
   
 class State(models.Model):
   team = models.OneToOneField(Team)  # singleton per team

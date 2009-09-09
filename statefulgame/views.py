@@ -1,5 +1,5 @@
 from statefulgame.models import Submission, Turn, Assignment
-from django.http import HttpResponse,Http404,HttpResponseRedirect
+from django.http import HttpResponse,Http404,HttpResponseRedirect,HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 from django.db import models
 from django.core.urlresolvers import reverse
@@ -19,6 +19,8 @@ def save_assignment(request):
   data = request.POST.get('data',None)
   turn_id = request.POST['turn_id']
   turn = Turn.objects.get(id=turn_id)
+  if not turn.open:
+    return HttpResponseForbidden()
   created = True
   if turn.assignment.individual:
     submission,created = Submission.objects.get_or_create(author=request.user,turn=turn)
@@ -60,14 +62,22 @@ def current_turn(request):
 def faculty_view(request):
   """
   list assignments (change due dates/ open|close)
-  see teams
-  
+  see teams:
+    set turn (manually) per-team
+       AND globally (through assignments list above)
+    
+  """
+  pass
+
+def faculty_assignment_review(request):
+  """
+  view assignments
   """
   pass
 
 def team_view(request):
   """
-  past assignments
+  past assignments (with title,status,shock)
   
   """
   pass

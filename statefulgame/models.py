@@ -31,9 +31,8 @@ class Assignment(Activity):
     order_with_respect_to = 'game'
 
   def save(self,*args,**kwargs):
-    if self.open:
-      for team in self.game.course.team_set.all():
-        Turn.objects.get_or_create(team=team,assignment=self)
+    for team in self.game.course.team_set.all():
+      Turn.objects.get_or_create(team=team,assignment=self)
         
     return super(Assignment,self).save(*args,**kwargs)
 
@@ -61,6 +60,10 @@ class Turn(models.Model):
       return self.submission.published
     except:
       return False
+
+  @property
+  def open(self):
+    return (self==team.state.turn or self.assignment.open)
   
 class State(models.Model):
   team = models.OneToOneField(Team)  # singleton per team

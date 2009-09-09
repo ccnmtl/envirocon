@@ -22,4 +22,8 @@ urlpatterns = patterns(
         'assignment_page',
         name='assignment-page'),
 
+    url(r'^faculty_view/?$',
+        'faculty_view',
+        name='faculty-view'),
+
     )

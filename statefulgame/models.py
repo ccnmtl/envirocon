@@ -19,7 +19,7 @@ class Game(models.Model):
 class Assignment(Activity):
   game = models.ForeignKey(Game)
   close_date = models.DateTimeField()
-  open = models.BooleanField()
+  open = models.BooleanField(default=False)
   name = models.CharField(max_length=100)
   individual = models.BooleanField()  # True = individual assignment; False = group assignment
   # app (inherited from Activity)
@@ -29,6 +29,13 @@ class Assignment(Activity):
     
   class Meta:
     order_with_respect_to = 'game'
+
+  def save(self,*args,**kwargs):
+    if self.open:
+      for team in self.game.course.team_set.all():
+        Turn.objects.get_or_create(team=team,assignment=self)
+        
+    return super(Assignment,self).save(*args,**kwargs)
 
 
 # abstract
@@ -70,6 +77,24 @@ class State(models.Model):
       assert(self.turn.team == self.team)
     return super(State,self).save(*args,**kwargs)
 
+  def current_turn(self,assignment=None):
+    if assignment:
+      if assignment.open:
+        return Turn.objects.get_or_create(team=self.team,assignment=assignment)[0]
+      else:
+        return None
+    elif self.turn:
+      return self.turn
+    else:
+      turn = None
+      for assn in Assignment.objects.filter(game__course=self.team.course,
+                                            open=True):
+        turn,created = Turn.objects.get_or_create(team=self.team,assignment=assn)
+        if created:
+          return turn
+      #any old turn can do
+      return turn
+
 
 # breadcrumb
 class Submission(models.Model):
@@ -92,7 +117,7 @@ def include_world_state(sender, context,request, **kwargs):
   user = request.user
   team = Team.objects.by_user(user, getattr(request,"course",None))
   if isinstance(activity, Assignment):
-    turn = Turn.objects.get(team=team, assignment=activity)
+    turn = team.state.current_turn(assignment=activity)
   elif team.state.assignment.app == activity.app:
     turn = team.state.turn
   else:

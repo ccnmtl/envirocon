@@ -2,6 +2,8 @@ from statefulgame.models import Submission, Turn, Assignment
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.db import models
+from django.core.urlresolvers import reverse
+
 import simplejson as json
 
 from game.views import game
@@ -46,9 +48,26 @@ def get_assignment_data(request,turn_id):
 def current_turn(request):
   user = request.user
   team = Team.objects.by_user(user, getattr(request,"course",None))
-  turn = team.state.turn
+  turn = team.state.current_turn()
   
   # TODO: "wait" page if current turn pending
+  if turn is None:
+    pass
+
+  return HttpResponseRedirect(reverse("assignment-page", args=[turn.assignment.id]))
+
+
+def faculty_view(request):
+  """
+  list assignments (change due dates/ open|close)
+  see teams
   
-  # TODO: url lookup
-  return HttpResponseRedirect("/assignment/%s" % turn.assignment.id)
+  """
+  pass
+
+def team_view(request):
+  """
+  past assignments
+  
+  """
+  pass

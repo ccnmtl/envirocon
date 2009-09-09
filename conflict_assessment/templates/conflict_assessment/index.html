@@ -6,6 +6,10 @@
   <!-- add css link here -->
 {% endblock %}
 
+{% block new-materials %}
+  New Materials: <a href="{% url game-page game.app "country_narrative" %}">Country Narrative</a>
+{% endblock %}
+
 {% block short-instructions %}Write a draft proposal of a post-conflict needs assessment memo. Justify your recommendations using evidence from cases.
 {% endblock %}
 

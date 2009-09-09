@@ -66,7 +66,7 @@ class State(models.Model):
   team = models.OneToOneField(Team)  # singleton per team
   #assignment = models.ForeignKey(Assignment)
   turn = models.ForeignKey(Turn, null=True, blank=True)
-  #world_state = models.TextField()  # state data
+  world_state = models.TextField(blank=True)  # state data
   
   @property
   def assignment(self):

@@ -31,10 +31,9 @@ class Assignment(Activity):
     order_with_respect_to = 'game'
 
   def save(self,*args,**kwargs):
+    super(Assignment,self).save(*args,**kwargs)
     for team in self.game.course.team_set.all():
       Turn.objects.get_or_create(team=team,assignment=self)
-        
-    return super(Assignment,self).save(*args,**kwargs)
 
 
 # abstract

@@ -3,30 +3,36 @@
 {% block title %}Country Narrative{% endblock %}
 
 {% block content %}
-  <p>Quick Facts</p>
+
+<div id="intro_container">
+  <h1>Next Activity: {{game.gamename}}</h1>
   
-  <p>Climate: Arid desert in the East, tropical in the West<br />
-  Population: 18 million (estimates as there has been no official census since 1983 and the beginning of the civil war)<br />
-  Area: 230,000 sq km<br />
-  Capital city: In the west along the main river and on the border<br />
-  Infant mortality rate: 87 deaths/1,000 live births<br />
-  National language: Arabic in the north and east and English in the west and south</p>
+  <div id="alertbox"><h2>Alert!</h2>  A cholera epidemic is affecting your population.</div>
 
-  <p>Age structure:<br />
-  0-14 years: 41.1% (male 8,451,576/female 8,093,609)<br />
-  15-64 years: 56.4% (male 11,407,233/female 11,275,685)<br />
-  65 years and over: 2.5% (male 518,822/female 471,530)</p>
-  
-  <p>The Maqqara (40%) – Pastoral ethnic group (traditionally sheep, cattle, goat-herding), generally reside in the East and other urban centers. Most Maqqara practice Islam. The Maqqara have close ties to the pastoral minority in the south of Country B.<br />
-  The Akola (30%) – Agricultural community that has historically resided in the West and central regions of the country. Akola were heavily influenced by Christian missionaries and most practice Christianity or a mixture of Christian-animist traditions. Akola land stretches into the Northern territories of Country D.<br />
-  The Ragat (16%) – Pastoral ethnic group (traditionally camel-herding) residing in the East and North. Ties to the ethnic majority in Country B.<br />
-  The Kou (8%) – Agricultural community that has historically resided in the East of the country. The Kou hold a variety of religious beliefs, with the majority practicing Islam. The remainder are animist. The Kou have strong ties to Country C where there is a Kou majority. The Kou are linked ethno-linguistically to the Akola, although due to their geographic location they have more recent cultural ties to the Maqqara and Ragat.<br />
-  Other (6%) - There are more than 100 distinct ethnic groups in Nimpala.</p>
+    <div id="due_date">
+     DUE: {{ world_state.duedate|date:"D M j Y f A" }}
+   </div>
 
-<p>Country B (North): A civil war has been going on in Country B for the past ten years. The Maqqara are a small ethnic minority in Country B, while the Ragat are an ethnic majority. The Ragat dominated government has been accused of war crimes and waging an ethnic cleansing campaign against the Maqqara. The ruling Ragat political party is considered extremist by the West and Western governments have listed Country B as a state sponsor of terrorism. In the most recent flare-ups in Nimpala's far Eastern districts, the Ragat have been fleeing to Country B and are allegedly being recruited into terrorist training camps.</p>
+ <div id="new_materials">
+<h2>New Materials:</h2> 
 
-<p>Country C (East): Country C has a large Kou population and provided political asylum for current President Ndgogo during his exile.</p>
+<img source="" /><a href="#">Updated Watching Brief.</a>
+</div>
 
-<p>Country D (South & West): Country D is a regional powerhouse with a dominant Akola majority. The government has been accused of arming the Akola Defense Force (ADF) during Nimpala’s civil war. The country has historically had a tense relationship with Nimpala due to competing claims to trade routes along the Nile.</p>
-  
+ <div id="instructions">
+<h2>Instructions:</h2>
+
+Abigo mauris te mauris, gravis, dolus oppeto indoles caecus importunus nunc inhibeo aptent. Gemino autem distineo refoveo nonummy consequat occuro opes eros appellatio pala in mara validus consequat. 
+
+Incassum in nulla duis olim brevitas, olim, ut. Dignissim exputo capto, iriure esse, aliquip pecus luptatum fatua eum ludus pneum oppeto blandit abluo. Ut, ullamcorper amet singularis, os capio comis aptent enim feugiat blandit, dignissim. Lenis delenit ad, eum, iriure nisl transverbero defui esca typicus dolore. Te, ut consectetuer pneum hendrerit vel, multo premo immitto. Nunc quidne, sit huic adipiscing gravis dolus esca neo quod iaceo mos vero jus feugait. Mos paratus hos jus, magna metuo, aptent saluto minim augue. 
+
+</div>
+ <div id="grouping">
+<h2>Note:</h2>
+This is a group activity. You and your team members will submit a single group response.
+</div>
+
+
+
+</div>
 {% endblock %}

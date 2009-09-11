@@ -142,8 +142,44 @@ img, img a
 {
 	display: block;
 	margin: 0 10px 1em 10px;
-	padding: 0;
 	border: 0;
+	padding: 0;
+
+}
+
+#intro_container
+{
+	display: block;
+	margin: 0 20px 1em 20px;
+	border: 0;
+	background-color:#EAEAEA;
+	color:#000000;
+	float:left;
+	padding: 0 2em 2em 2em;
+
+}
+
+#intro_container h1
+{
+	background-color:#000000;
+	color:#FFFFFF;
+	font-size:100%;
+	font-weight:bold;
+	margin:0 -2em 1.5em -2em;
+	padding: 5px 14px;
+
+}
+
+#alertbox
+{
+	display: block;
+	margin: 0 0 1em 1em;
+	padding: 0 1em 1em 1em;
+	border: 0;
+	border: 1px solid #ccc;
+	background-color: #b4aa8f;
+	float: right;
+	width: 14em;
 }
 
 /* ---- Clearing block ---------- */
@@ -829,3 +865,37 @@ body.fluid #content
 table.sortable th { 
                cursor: pointer;                    
  }
+ 
+ .floatright {
+		float: right;
+
+}
+
+#activity_title {
+
+	font-weight: bold;
+	margin: 10px;
+}
+
+#due_date {
+
+	font-weight: bold;
+	margin: 10px 10px 10px 0;
+	color: #135286
+}
+
+#new_materials, #instructons, #grouping  {
+
+
+	margin: 10px 10px 10px 0;
+
+}
+
+#alertbox h2, #new_materials h2, #instructions h2, #grouping h2  {
+
+
+	font-weight: bold;
+	font-size: 110%;
+	margin: 1em 1em 1em 0;
+
+}

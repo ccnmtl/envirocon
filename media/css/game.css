@@ -116,23 +116,7 @@ li {
 ol li { margin-left: 0px; }
 
 
-.floatright {
-		float: right;
 
-}
-
-#activity_title {
-
-	font-weight: bold;
-	margin: 10px;
-}
-
-#due_date {
-
-	font-weight: bold;
-	margin: 10px;
-	color: #135286
-}
 
 #short_instructions {
 	

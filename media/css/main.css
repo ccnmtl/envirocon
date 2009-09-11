@@ -874,14 +874,16 @@ table.sortable th {
 #activity_title {
 
 	font-weight: bold;
-	margin: 10px;
+
+
 }
 
 #due_date {
 
 	font-weight: bold;
-	margin: 10px 10px 10px 0;
-	color: #135286
+	color: #135286;
+	float: right;
+
 }
 
 #new_materials, #instructons, #grouping  {

@@ -85,7 +85,7 @@ margin-top: 10px;
 #game-content {
                    
                    width: 470px;
-                   padding: 0 10px 10px 10px;
+                   padding: 0 15px 10px 15px;
                    float: left;
                    background-color: #eaeaea;
                 color: #000;
@@ -95,7 +95,7 @@ margin-top: 10px;
                    
 	background-color: #000;
 	color: #fff;
-	margin: 0 -10px;
+	margin: 0 -15px 10px -15px;
 	font-size: 100%;
 	padding: 5px;
 	font-weight: bold;
@@ -116,17 +116,26 @@ li {
 ol li { margin-left: 0px; }
 
 
-
+#submitted {
+	
+	font-size: 90%;
+	line-height: 110%;
+	margin: 10px 0;
+}
 
 #short_instructions {
 	
 	font-size: 90%;
 	line-height: 110%;
-	margin: 10px;
+	margin: 10px 0;
 }
 
-.toggle-control {
-  cursor: pointer;
+.toggle-control
+{
+	cursor: pointer;
+	padding-left: 20px;
+	background-image: url(../img/toggle_closed.gif);
+	background-repeat: no-repeat;
 }
 
 .toggle {
@@ -135,4 +144,17 @@ ol li { margin-left: 0px; }
 
 select {  
          font-size:70%;
+}
+
+table #chart-data {
+
+color: #fff;
+font-size: 95%;
+
+}
+
+table #chart-data td{
+
+padding: 1px 5px;
+
 }

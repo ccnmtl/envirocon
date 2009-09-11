@@ -55,10 +55,10 @@ var myPlots = new (function() {
     this.updateChart = function() {
 	$('scatterplot').src = this.googleChartURL(this.getChartData());
     }
-    this.colors = ['#FF0000','#00FF00','#0000FF',
-		   '#FF8888','#99FF99','#8888FF',
-		   '#880000','#008800','#000088',
-		   '#00FFFF','#FFFF00','#FF00FF',];
+    this.colors = ['#597687','#ba9850','#7c5d4c',
+		   '#56592b','#646464','#70444a',
+		   '#a06134','#699746','#cb7e57',
+		   '#85896f','#0a7d96','#6a6688',];
     this.getChartData = function() {
 	var self = this;
 	var data = {};

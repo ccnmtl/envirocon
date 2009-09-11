@@ -11,13 +11,15 @@
 
 {% block game_content %}
    <div>
-         <div id="activity_title">
+     <div id="due_date">
+     DUE: {{ game_context.duedate|date:"D M d Y" }}
+   </div>
+   
+   <div id="activity_title">
      Week 1 Activity
    </div>
       
-      <div id="due_date">
-     DUE: {{ game_context.duedate|date:"D M d Y" }}
-   </div>
+      
 <div id="short_instructions">Write a draft proposal of a post-conflict needs assessment memo. Justify your recommendations using evidence from cases.</div>
 <h3>Full Instructions:</h3>
 <div id="full_instructions_body" class="toggle">

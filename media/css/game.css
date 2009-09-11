@@ -13,6 +13,7 @@ ul#tabs
  height: 30px;
  width: 435px;
  margin: 0;
+ cursor:pointer;
 }
 
 ul#tabs li
@@ -50,7 +51,14 @@ background-color: #ccc;
 	margin: 0;
 }
 
-#files_panel {display: none;}
+#files_panel {
+  background-color: #fff;
+  width: 415px;
+  padding: 10px;
+  min-height: 200px;
+  color: #000;
+  display: none;
+}
 
 #data_panel {   
 	background-color: #fff;

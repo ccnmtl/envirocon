@@ -9,6 +9,19 @@ import simplejson as json
 from game.views import game
 Team = models.get_model('teams','team')
 
+# return list of files team has seen
+def get_files(request):
+  team = Team.objects.by_user(request.user, getattr(request,"course",None))
+  world_state = {}
+  if team.state.world_state != "":
+    world_state = json.loads(team.state.world_state)
+  if world_state.has_key('documents'):
+    if request.GET.has_key("jsonp"):
+      return HttpResponse("%s(%s)" % (request.GET["jsonp"], json.dumps(world_state['documents'])))
+    return HttpResponse(json.dumps(world_state['documents']), mimetype="application/javascript")
+  return HttpResponse("")
+  
+
 def assignment_page(request,assignment_id):
   assignment = get_object_or_404(Assignment,pk=assignment_id,game__course=getattr(request,"course",None))
   #team = Team.objects.by_user(request.user, getattr(request,"course",None))

@@ -6,6 +6,10 @@ from django.conf import settings
 from game.models import *
 from game import signals as game_signals
 
+# TODO this does not belong here...
+Team = models.get_model('teams','team')
+import simplejson as json
+
 #CUSTOM CONTEXT PROCESSOR
 #see/set TEMPLATE_CONTEXT_PROCESSORS in settings_shared.py
 #also note that we need RequestContext instead of the usual Context
@@ -26,10 +30,30 @@ def gamepage(request, gamename, page_id=None):
     activity = Activity.objects.create(app=gamename)
     return game(request, activity, page_id)
 
+def register_document(request, activity, page_id):
+    # TODO: if individual activity, register for that user ; else register for team
+    # --problematic since state is only stored for a team!!
+    team = Team.objects.by_user(request.user, getattr(request,"course",None))
+    world_state = {}
+    if team.state.world_state != "":
+      world_state = json.loads(team.state.world_state)
+    # TODO we have to store the name somehow too -- passed back up by game??
+    document_record = "%s/%s" % (activity.app, page_id)
+    if not world_state.has_key('documents'):
+      world_state['documents'] = [document_record]
+    if world_state.has_key('documents') and world_state['documents'].count(document_record) == 0:
+      world_state['documents'].append(document_record)
+    team.state.world_state = json.dumps(world_state)
+    team.state.save()
+
 def game(request, activity, page_id=None):
     activity.page_id = page_id #for easy access in template
     
     template,game_context = activity.gametemplate(page_id)
+    # nasty hack since we need to set/return headers for e.g. pdf files
+    if template == "file":
+      register_document(request, activity, page_id)
+      return game_context
 
     world_state = dict()
     for func,dict_val in game_signals.world_state.send(sender=activity,

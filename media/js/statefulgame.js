@@ -1,6 +1,7 @@
 if (typeof GameSystem == 'undefined') {
 
   function GameSystemClass() {
+     //this.files = "";
      this.my_vars = {};
      this.turn_id = null;
      this.textarea_default = false;
@@ -69,13 +70,29 @@ if (typeof GameSystem == 'undefined') {
      this.loaded = true;
   }
 
-  
+  GameSystemClass.prototype.loadFiles = function(files) {
+    //var self = this;
+    //if(files) {
+    //  this.files = files;
+    //}
+    //alert(this.files);
+    //if($('files_panel')) {
+    //  alert("whee");
+    var html = "";
+    for(var i=0; i<files.length; i++) {
+      html += "<a href='../" + files[i] + "'>" + files[i] + "</a><br />";
+    }    
+      $('files_panel').innerHTML = html;
+    //}
+  }
+
 
   window.GameSystem = new GameSystemClass();
 
   addLoadEvent(function() {
       if (!GameSystem.loaded) {
 	  GameSystem.loadState({});
+	  //GameSystem.loadFiles();
       }
   });
 

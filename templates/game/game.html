@@ -9,8 +9,10 @@
    </script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/mochikit/MochiKit/MochiKit.js"></script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/toggle_full_info.js"></script>
+   <script type="text/javascript" src="{{GAME_MEDIA}}/js/countrytabs.js"></script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/statefulgame.js"></script>
    <script type="text/javascript" src="{%url get-assignment world_state.turn_id %}?jsonp=GameSystem.loadState"></script>
+   <script type="text/javascript" src="{%url get-files %}?jsonp=GameSystem.loadFiles"></script>
    {% block game_js %}{% endblock %}
 {% endblock %}
 
@@ -29,7 +31,7 @@
 
 {% block content %}
    <div id="country-info">
-   <ul id="tabs"><li class="on"><a>Geographic Data</a></li> <li class="off"><a>Files</a></li></ul>
+   <ul id="tabs"><li class="on" id="data-tab"><a>Geographic Data</a></li> <li class="off" id="files-tab"><a>Files</a></li></ul>
    <div id="data_panel">
 
    <div id="conditions">

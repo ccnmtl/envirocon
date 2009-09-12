@@ -120,14 +120,24 @@ def include_world_state(sender, context,request, **kwargs):
   team = Team.objects.by_user(user, getattr(request,"course",None))
   if isinstance(activity, Assignment):
     turn = team.state.current_turn(assignment=activity)
-  elif team.state.assignment.app == activity.app:
-    turn = team.state.turn
+    return { 'duedate':turn.assignment.close_date,
+             'individual':turn.assignment.individual,
+             'turn_id':turn.id,
+             'published':turn.published
+           }
+  else:
+    # TODO: if you go to the activity page directly but it is
+    # also your current assignment, it should pull that assign. data
+    # TODO: if assignment exists, old assignment so use that
+    # (not editable)
+    #assignment = Assignment.objects.get(app=activity)
+    #turn = Turn.objects.get(team=team, assignment=assignment)
+    # if assignment does not exist, just show the activity
+    # for now (though actually we should disallow)
+    return { 'turn_id':None }
+  #elif team.state.assignment.app == activity.app:
+  #else: turn = team.state.turn
   #else:
   #  raise "Activity does not match assignment for this turn."
-  return { 'duedate':turn.assignment.close_date,
-           'individual':turn.assignment.individual,
-           'turn_id':turn.id,
-           'published':turn.published
-         }
 game_signals.world_state.connect(include_world_state)
 

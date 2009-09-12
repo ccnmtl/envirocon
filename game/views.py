@@ -72,5 +72,5 @@ def game(request, activity, page_id=None):
                                            '/site_media'),
                                    activity.app),
     })
-    print c
+    #print c
     return HttpResponse(t.render(c))

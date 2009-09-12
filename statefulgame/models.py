@@ -122,8 +122,8 @@ def include_world_state(sender, context,request, **kwargs):
     turn = team.state.current_turn(assignment=activity)
   elif team.state.assignment.app == activity.app:
     turn = team.state.turn
-  else:
-    raise "Activity does not match assignment for this turn."
+  #else:
+  #  raise "Activity does not match assignment for this turn."
   return { 'duedate':turn.assignment.close_date,
            'individual':turn.assignment.individual,
            'turn_id':turn.id,

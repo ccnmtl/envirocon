@@ -21,8 +21,8 @@ ul#tabs li
 
 float: left;
  display: block;
- height: 25px;
- width: 120px;
+ height: 41px;
+ width: 233px;
  padding: 5px 5px 0 5px;
  margin: 0 10px 0 0px;
 
@@ -30,14 +30,16 @@ float: left;
 
 ul#tabs li.on
 {
-background-color: #fff;
+	background-image: url(../img/activity_tab_on.gif);
 	color: #000;
+	background-repeat: no-repeat;
 }
 
 ul#tabs li.off
 {
-background-color: #ccc;
-	color: #000;
+	background-image: url(../img/activity_tab_on.gif);
+	color: #333;
+	background-repeat: no-repeat;
 }
                  
 #country-info h2

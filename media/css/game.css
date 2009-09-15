@@ -424,6 +424,8 @@ h4.toggle-control
 
 }
 
+#buttons {margin-top: 5px;}
+
 select {  
          font-size:70%;
 }

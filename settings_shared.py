@@ -44,6 +44,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
+    'someutils.AuthRequirementMiddleware',
     'courseaffils.middleware.CourseManagerMiddleware',
 )
 
@@ -126,5 +127,9 @@ TINYMCE_DEFAULT_CONFIG = {'cols': 80,
 COURSEAFFILS_EXEMPT_PATHS = ('/accounts/',
                              '/site_media/',
                              '/admin/',
-                             #re.compile(r'^/$'),
+                             )
+ANONYMOUS_PATHS = ('/accounts/',
+                             '/site_media/',
+                             '/admin/',
+                             re.compile(r'^/$'),
                              )

@@ -13,8 +13,9 @@ def home(request):
     state = {'todo':todo,
              'games':InstalledGames,
              }
-    for k,v in team_view_data(request).items():
-        state[k] = v
+
+    #for k,v in team_view_data(request).items():
+    #    state[k] = v
 
     if hasattr(request,'course') and \
        (request.user.is_staff or request.user in request.course.faculty):

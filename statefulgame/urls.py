@@ -22,7 +22,7 @@ urlpatterns = patterns(
         'get_files',
         name='get-files'),
 
-    url(r'^assignment/(?P<assignment_id>.*)/?$',
+    url(r'^assignment/(?P<assignment_id>[^/]*)/?$',
         'assignment_page',
         name='assignment-page'),
 

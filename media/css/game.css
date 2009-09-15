@@ -129,10 +129,21 @@ table#choose_layers td {
 
 }
 
+.legend
+{
+	display: block;
+	height: 69px;
+	width: 400px;
+	margin: 0 0 6.5px 0px;
+
+
+}
+
 #basemap.basic
 {
 	background-image: url(../img/maps/map_base.jpg);
 	background-repeat: no-repeat;
+	
 }
 
 #basemap.rainfall
@@ -224,6 +235,50 @@ table#choose_layers td {
 	background-image: url(../img/maps/map_layer_wb3_conflict.png);
 	background-repeat: no-repeat;
 	position: absolute;
+}
+
+
+.legend.basic
+{
+	background-image: url(../img/maps/map_legend_basic.jpg);
+	background-repeat: no-repeat;
+	margin-bottom: -2em;
+
+}
+
+.legend.refugee
+{
+	background-image: url(../img/maps/map_legend_camps.jpg);
+	background-repeat: no-repeat;
+	border: 1px solid #ccc;
+		background-position: .15em 1.5em;
+
+}
+
+.legend.cholera
+{
+	background-image: url(../img/maps/map_legend_cholera.jpg);
+	background-repeat: no-repeat;
+	border: 1px solid #ccc;
+		background-position: .4em 1.5em;
+
+}
+
+.legend.parks
+{
+	background-image: url(../img/maps/map_legend_parks.jpg);
+	background-repeat: no-repeat;
+	border: 1px solid #ccc;
+		background-position: .4em 1.5em;
+
+}
+
+.legend.conflict
+{
+	background-image: url(../img/maps/map_legend_conflict.jpg);
+	background-repeat: no-repeat;
+	border: 1px solid #ccc;
+		background-position: 0 1.5em;
 }
 
 

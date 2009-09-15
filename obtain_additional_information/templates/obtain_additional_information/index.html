@@ -7,7 +7,7 @@
   <!-- add css link here -->
 {% endblock %}
 
-{% block short-instructions %}As a group, choose five reports from the following list you would like to request.{% endblock %}
+{% block short-instructions %}As a group, choose five reports to request from the following list.{% endblock %}
 
 {% block full-instructions %}
   <p>Please discuss as a group what information you require to make informed decisions about prioritization and allocation of limited reconstruction funding. Based on discussions in the course and readings, what information is critical to addressing both short and long-term needs, as well as confronting continued conflict stressors and potential relapses of conflict?</p>
@@ -16,10 +16,12 @@
 
   <p>Please think carefully about which reports from the following list you would like to request and why that information is critical to your analysis. Please be prepared to discuss your selection briefly in class and write a memo with your team's rationale for purchasing each report.</p>
 {% endblock %}
+ 
+{% block form-instructions %}{% endblock %}
+    
+{% block form-inputs %}<div class="report_choices">
 
-{% block form-instructions %}<p>Select your five choices below.</p>{% endblock %}
-     
-{% block form-inputs %}
+<h2>Available Reports</h2>
   <input type='checkbox' name='reports' value='water'/>Water Resources Management<br />
   <input type='checkbox' name='reports' value='agriculture'/>Agricultural Practices<br />
   <input type='checkbox' name='reports' value='economy'/>Economic Profile<br />
@@ -31,4 +33,4 @@
   <input type='checkbox' name='reports' value='wildlife'/>Wildlife<br />
   <input type='checkbox' name='reports' value='governance'/>Environmental Governance<br />
   <input type='checkbox' name='reports' value='forest'/>Forest Resources<br />
-{% endblock %}
+</div>{% endblock %}

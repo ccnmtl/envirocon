@@ -353,7 +353,7 @@ table#choose_layers td {
                    float: left;
                    background-color: #eaeaea;
                 color: #000;
-                   }
+                  }
                    
 #game-content h1{
                    
@@ -391,7 +391,9 @@ ol li { margin-left: 0px; }
 	
 	font-size: 90%;
 	line-height: 110%;
-	margin: 10px 0;
+	margin: 10px 0 0 0;
+	font-style: italic;
+	color: #336699;
 }
 
 .toggle-control
@@ -400,11 +402,27 @@ ol li { margin-left: 0px; }
 	padding-left: 20px;
 	background-image: url(../img/toggle_closed.gif);
 	background-repeat: no-repeat;
+	background-position: 1px 2px;
+	
+}
+
+h4.toggle-control 
+{
+	margin-top: 10px;
+	font-size: 95%;
 }
 
 .toggle {
 
-	/*display: none;*/}
+	display: none;}
+	
+#full_instructions_body {
+
+	font-size: 85%;
+	margin: -2px 10px 20px 20px;
+	font-style: italic;
+
+}
 
 select {  
          font-size:70%;
@@ -420,5 +438,28 @@ font-size: 95%;
 table #chart-data td{
 
 padding: 1px 5px;
+
+}
+
+.report_choices {
+
+
+border: 1px solid #ccc;
+font-size: 85%;
+margin-bottom: 1em;
+background-color: #fff;
+
+}
+
+.report_choices h2{
+
+
+	background-color: #CCC;
+	background-image: url(../img/bg_h2.jpg);
+	background-repeat: repeat-x;
+	font-size: 100%;
+	padding: 0px 10px;
+	border-bottom: 1px solid #ccc;
+	margin: 0;
 
 }

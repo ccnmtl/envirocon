@@ -83,7 +83,7 @@ INSTALLED_APPS = (
     # week 1 activities
     'conflict_assessment',
     'obtain_additional_information',
-    'explain_your_report_selection',
+    'game_many',
     # week 2 activities
     'game_plot_sectors',
 )

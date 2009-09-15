@@ -49,25 +49,25 @@
      <div>
      <form>
      <table id="choose_layers">
-     <tr><td>Choose base map:</td><td>Show layers:</td></tr>
-     <tr>
-     <td>
-    <select type="dropdown" onchange="" size="1" >
-		
-		<option value="" selected="selected">Basic Geography</option>
+     <tr><td>Choose base map:
+     <select type="dropdown" onchange="" >
+     <option value="" selected="selected">Basic Geography</option>
 		<option value="">Ethnic Group Distribution</option>
 		<option value="">Rainfall</option>
 		<option value="home.pl?mode=project;pid=498">Drought/Flood Hotspots</option>
-		
-     </td>
+		</td></tr>
+     <tr>
      <td>
-    <input type="checkbox" name="layer">Refugee Camps</input><br />
-    <input type="checkbox" name="layer">Cholera Outbreaks</input><br />
-    <input type="checkbox" name="layer">Protected Areas</input><br />
-    <input type="checkbox" name="layer">Conflict Incidents</input><br />
-    <input type="checkbox" name="layer">Watching Brief 2</input><br />
-    <input type="checkbox" name="layer">Watching Brief 3</input><br />
     
+	Show Layers: <br />
+    <ul>
+  	 <li class="layer_choice"> <input type="checkbox" name="layer">Refugee Camps</input></li>
+     <li class="layer_choice"><input type="checkbox" name="layer" >Cholera Outbreaks</input></li>
+    <li class="layer_choice"><input type="checkbox" name="layer" class="layer_choice">Protected Areas</input></li>
+    <li class="layer_choice"><input type="checkbox" name="layer" class="layer_choice">Conflict Incidents</input></li>
+    <li class="layer_choice"><input type="checkbox" name="layer" class="layer_choice">Watching Brief 2</input></li>
+   <li class="layer_choice"> <input type="checkbox" name="layer" class="layer_choice">Watching Brief 3</input></li>
+    </ul>
      </td></tr></table>
      </form>
      </div>
@@ -86,15 +86,18 @@
 		 <div class="layer wb3_conflict"></div>
 		 </div>
      </div>
-</div>
+
 <div id="legends">
  		 <div class="legend basic"></div>
+ 		 <div class="legend ethnicgroups"><h2>Ethnic Group Distribution</h2></div>
+ 		 <div class="legend rainfall"><h2>Rainfall</h2></div>
+ 		 <div class="legend droughtflood"><h2>Drought/Flood Hotspots</h2></div>
  		 <div class="legend refugee"><h2>Refugee Camps</h2></div>
-		 <div class="legend cholera"><h2>Cholera Outbreaks</h2></div>
+ 		 <div class="legend cholera"><h2>Cholera Outbreaks</h2></div>
 		 <div class="legend parks"><h2>Protected Areas</h2></div>
 		 <div class="legend conflict"><h2>Conflict Instances</h2></div>
 
-</div>
+</div></div>
 </div><!-- end div data_panel -->
  
  

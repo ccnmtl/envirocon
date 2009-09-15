@@ -1,8 +1,16 @@
+li.layer_choice {
+
+	white-space: nowrap;
+	display: inline;
+
+}
+
 div#country-info {
                    
                    width: 435px;
                    margin: 0 15px 0 10px;
                    float: left;
+
                 
 }
                    
@@ -21,6 +29,7 @@ ul#tabs
  width: 510px;
  margin: 0  0 5px 0;
  cursor:pointer;
+
 }
 
 ul#tabs li
@@ -92,6 +101,15 @@ ul#tabs li.off a
 
 
 border: 1px solid #ccc;
+font-size: 85%;
+
+}
+
+#conditions ul {
+
+
+margin: 10px;
+line-height: 170%;
 
 }
 
@@ -100,15 +118,20 @@ border: 1px solid #ccc;
 
 border: 1px solid #ccc;
 margin-top: 10px;
+font-size: 85%;
 }
 
 table#choose_layers {
-	margin: 7.5px
+
+	width: 100%;
+	border: none;
 
 }
 
 table#choose_layers td {
 	padding: 5px;
+	border: none;
+	border-bottom: 1px solid #ccc;
 
 }
 
@@ -132,9 +155,8 @@ table#choose_layers td {
 .legend
 {
 	display: block;
-	height: 69px;
 	width: 400px;
-	margin: 0 0 6.5px 0px;
+	margin: 0 0 6.5px 6.5px;
 
 
 }
@@ -242,7 +264,8 @@ table#choose_layers td {
 {
 	background-image: url(../img/maps/map_legend_basic.jpg);
 	background-repeat: no-repeat;
-	margin-bottom: -2em;
+	height: 30px;
+	
 
 }
 
@@ -252,6 +275,7 @@ table#choose_layers td {
 	background-repeat: no-repeat;
 	border: 1px solid #ccc;
 		background-position: .15em 1.5em;
+		height: 65px;
 
 }
 
@@ -261,6 +285,7 @@ table#choose_layers td {
 	background-repeat: no-repeat;
 	border: 1px solid #ccc;
 		background-position: .4em 1.5em;
+		height: 50px;
 
 }
 
@@ -270,6 +295,7 @@ table#choose_layers td {
 	background-repeat: no-repeat;
 	border: 1px solid #ccc;
 		background-position: .4em 1.5em;
+		height: 69px;
 
 }
 
@@ -279,6 +305,34 @@ table#choose_layers td {
 	background-repeat: no-repeat;
 	border: 1px solid #ccc;
 		background-position: 0 1.5em;
+		height: 50px;
+}
+
+.legend.rainfall
+{
+	background-image: url(../img/maps/map_legend_rainfall.jpg);
+	background-repeat: no-repeat;
+	border: 1px solid #ccc;
+		background-position: .5em 1.5em;
+		height: 93px;
+}
+
+.legend.ethnicgroups
+{
+	background-image: url(../img/maps/map_legend_ethnicgroups.jpg);
+	background-repeat: no-repeat;
+	border: 1px solid #ccc;
+		background-position: .5em 1.5em;
+		height: 93px;
+}
+
+.legend.droughtflood
+{
+	background-image: url(../img/maps/map_legend_droughtflood.jpg);
+	background-repeat: no-repeat;
+	border: 1px solid #ccc;
+		background-position: .5em 1.5em;
+		height: 65px;
 }
 
 

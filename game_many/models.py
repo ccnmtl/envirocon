@@ -9,7 +9,7 @@ class ExplainYourReportSelection(GameInterface):
 
     def template(self,page_id=None):
         game_context = {'sampledata':"hello"}
-        return ('explain_your_report_selection/index.html',game_context)
+        return ('game_many/explain_your_report_selection.html',game_context)
     
     def variables(self,page_id=None):
         return ['explain_your_report_selection']

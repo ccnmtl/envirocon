@@ -11,11 +11,7 @@
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/toggle_full_info.js"></script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/countrytabs.js"></script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/statefulgame.js"></script>
-  {% ifnotequal world_state.turn_id, None %}
-    <form action="{%url save-assignment %}" method="POST" id="assignment-form">
-
    <script type="text/javascript" src="{%url get-assignment world_state.turn_id %}?jsonp=GameSystem.loadState"></script>
-  {% endifnotequal %}
    <script type="text/javascript" src="{%url get-files %}?jsonp=GameSystem.loadFiles"></script>
    {% block game_js %}{% endblock %}
 {% endblock %}
@@ -191,14 +187,12 @@
 
 {% block form-instructions %}<p>Write or paste your answer in the box below.</p>{% endblock %}
      
-  {% ifnotequal world_state.turn_id, None %}
     <form action="{%url save-assignment %}" method="POST" id="assignment-form">
-  {% endifnotequal %}
 
   {% block form-inputs %}
        <textarea rows=17 cols=58 name="data"
        {% if not world_state.turn_id %}
-       disabled
+       disabled="disabled"
        {% endif %}
        ></textarea><br />
   {% endblock %}

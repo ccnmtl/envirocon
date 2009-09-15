@@ -66,7 +66,7 @@ class Turn(models.Model):
 
   @property
   def open(self):
-    return (self==team.state.turn or self.assignment.open)
+    return (self==self.team.state.turn or self.assignment.open)
   
 class State(models.Model):
   team = models.OneToOneField(Team)  # singleton per team

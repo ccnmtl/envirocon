@@ -32,8 +32,9 @@ def assignment_page(request,assignment_id):
 
 # saves an assignment blob to the database
 def save_assignment(request):
-  data = request.POST.get('data',None)
-  turn_id = request.POST['turn_id']
+
+  data = getattr(request,request.method).get('data',None)
+  turn_id = getattr(request,request.method)['turn_id']
   turn = Turn.objects.get(id=turn_id)
   if not turn.open:
     return HttpResponseForbidden()
@@ -47,7 +48,7 @@ def save_assignment(request):
     except Submission.DoesNotExist:
       submission = Submission(turn=turn,author=request.user)
   submission.data = data
-  submission.published = ( request.POST.get('published','Draft').find('Draft') < 0 )
+  submission.published = (getattr(request,request.method).get('published','Draft').find('Draft') < 0 )
   submission.save()
   return HttpResponse(created)
 

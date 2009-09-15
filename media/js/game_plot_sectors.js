@@ -31,15 +31,13 @@ var myPlots = new (function() {
          */
 	var d ={x:[],y:[],lbl:[]};
 	for (k in chart_data) {
-	    console.log(chart_data[k][0]);
 	    d.x.push(chart_data[k][0]*10);
 	    d.y.push(chart_data[k][1]*10);
-	    d.lbl.push('o,'+chart_data[k][2]+',1,'+(d.x.length-1)+',6');
+	    d.lbl.push('o,'+chart_data[k][2]+',1,'+(d.x.length-1)+',10');
 	    //d.x.push(chart_data[k][0]*10);
 	    //d.y.push(chart_data[k][1]*10);
 	    //d.lbl.push('f'+k+',0000FF,0,'+(d.x.length-1)+',10,0');
 	}
-	console.log(chart_data);
 	var url = "http://chart.apis.google.com/chart?";
 	var args = {
 	    cht:'s',//scatterplot
@@ -49,7 +47,6 @@ var myPlots = new (function() {
 	    chs:'400x125',
 	    chm:d.lbl.join('|')
 	};
-	console.log(args);
 	return url+queryString(args);
     }
     this.updateChart = function() {

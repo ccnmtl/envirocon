@@ -46,15 +46,46 @@
 </div>
 <div id="maps">
      <h2>Map</h2>
-     <div id="layers">
-     Choose maps to view:
-     
-     Base map <option label="Basic Geography" value="basic" selected></option>
-     
-     Layers: <fieldset>Cholera, Layer 2
-     </fieldset>
+     <div>
+     <form>
+     <table id="choose_layers">
+     <tr><td>Choose base map:</td><td>Show layers:</td></tr>
+     <tr>
+     <td>
+    <select type="dropdown" onchange="" size="1" >
+		
+		<option value="" selected="selected">Basic Geography</option>
+		<option value="">Ethnic Group Distribution</option>
+		<option value="">Rainfall</option>
+		<option value="home.pl?mode=project;pid=498">Drought/Flood Hotspots</option>
+		
+     </td>
+     <td>
+    <input type="checkbox" name="layer">Refugee Camps</input><br />
+    <input type="checkbox" name="layer">Cholera Outbreaks</input><br />
+    <input type="checkbox" name="layer">Protected Areas</input><br />
+    <input type="checkbox" name="layer">Conflict Incidents</input><br />
+    <input type="checkbox" name="layer">Watching Brief 2</input><br />
+    <input type="checkbox" name="layer">Watching Brief 3</input><br />
+    
+     </td></tr></table>
+     </form>
      </div>
-       <img src="/site_media/img/nimpala.jpg" style='width:400px;' />
+     <div id="basemap" class="basic">
+		 <div id="layers">
+	
+		 <div class="layer refugee"></div>
+		 <div class="layer cholera"></div>
+		 <div class="layer parks"></div>
+		 <div class="layer conflict_basic"></div>
+		 <div class="layer wb2_peace"></div>
+		 <div class="layer wb2_humanitarian"></div>
+		 <div class="layer wb2_conflict"></div>
+		 <div class="layer wb3_peace"></div>
+		 <div class="layer wb3_humanitarian"></div>
+		 <div class="layer wb3_conflict"></div>
+		 </div>
+     </div>
 </div>
 <div id="legends">
   <ul>

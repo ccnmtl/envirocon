@@ -4,15 +4,22 @@ div#country-info {
                    margin: 0 15px 0 10px;
                    float: left;
                 
-                   }
+}
+                   
+div#country-info ul {
+                   
+ list-style: none;
+ margin-left: -1px;
+                
+}
 
 ul#tabs
 {
  list-style: none;
  display: block;
- height: 30px;
- width: 435px;
- margin: 0;
+ height: 25px;
+ width: 510px;
+ margin: 0  0 5px 0;
  cursor:pointer;
 }
 
@@ -21,25 +28,36 @@ ul#tabs li
 
 float: left;
  display: block;
- height: 41px;
- width: 233px;
- padding: 5px 5px 0 5px;
- margin: 0 10px 0 0px;
+ height: 25px;
+ width: 200px;
+ padding: 5px 0 0 0;
+ margin: 0 37px 0 0px;
+ text-align: center;
+ font-weight: bold;
 
 }
 
 ul#tabs li.on
 {
-	background-image: url(../img/activity_tab_on.gif);
-	color: #000;
+	background-image: url(../img/activity_tab_on.png);
 	background-repeat: no-repeat;
+}
+
+ul#tabs li.on a
+{
+	color: #000;
+
 }
 
 ul#tabs li.off
 {
-	background-image: url(../img/activity_tab_on.gif);
-	color: #333;
+	background-image: url(../img/activity_tab_off.png);
 	background-repeat: no-repeat;
+}
+
+ul#tabs li.off a
+{
+	color: #333;
 }
                  
 #country-info h2
@@ -83,6 +101,132 @@ border: 1px solid #ccc;
 border: 1px solid #ccc;
 margin-top: 10px;
 }
+
+table#choose_layers {
+	margin: 7.5px
+
+}
+
+table#choose_layers td {
+	padding: 5px;
+
+}
+
+#basemap
+{
+	display: block;
+	height: 225px;
+	width: 400px;
+	margin: 0 6.5px 6.5px 6.5px;
+}
+
+.layer
+{
+	display: block;
+	height: 225px;
+	width: 400px;
+	margin: 0 6.5px 6.5px 0px;
+
+}
+
+#basemap.basic
+{
+	background-image: url(../img/maps/map_base.jpg);
+	background-repeat: no-repeat;
+}
+
+#basemap.rainfall
+{
+	background-image: url(../img/maps/map_base_rainfall.jpg);
+	background-repeat: no-repeat;
+}
+
+#basemap.ethnicgroups
+{
+	background-image: url(../img/maps/map_base_ethnicgroups.jpg);
+	background-repeat: no-repeat;
+}
+
+#basemap.droughtflood
+{
+	background-image: url(../img/maps/map_base_droughtflood.jpg);
+	background-repeat: no-repeat;
+}
+
+
+
+.layer.refugee
+{
+	background-image: url(../img/maps/map_layer_camps.png);
+	background-repeat: no-repeat;
+	position: absolute;
+}
+
+.layer.cholera
+{
+	background-image: url(../img/maps/map_layer_cholera.png);
+	background-repeat: no-repeat;
+	position: absolute;
+}
+
+.layer.parks
+{
+	background-image: url(../img/maps/map_layer_parks.png);
+	background-repeat: no-repeat;
+	position: absolute;
+	margin-top: 1px;
+}
+
+.layer.conflict_basic
+{
+	background-image: url(../img/maps/map_layer_basicconflict.png);
+	background-repeat: no-repeat;
+	position: absolute;
+}
+
+.layer.wb2_peace
+{
+	background-image: url(../img/maps/map_layer_wb2_peace.png);
+	background-repeat: no-repeat;
+	position: absolute;
+}
+
+.layer.wb2_humanitarian
+{
+	background-image: url(../img/maps/map_layer_wb2_human.png);
+	background-repeat: no-repeat;
+	position: absolute;
+}
+
+.layer.wb2_conflict
+{
+	background-image: url(../img/maps/map_layer_wb2_conflict.png);
+	background-repeat: no-repeat;
+	position: absolute;
+}
+
+.layer.wb3_peace
+{
+	background-image: url(../img/maps/map_layer_wb3_peace.png);
+	background-repeat: no-repeat;
+	position: absolute;
+}
+
+.layer.wb3_humanitarian
+{
+	background-image: url(../img/maps/map_layer_wb3_human.png);
+	background-repeat: no-repeat;
+	position: absolute;
+}
+
+.layer.wb3_conflict
+{
+	background-image: url(../img/maps/map_layer_wb3_conflict.png);
+	background-repeat: no-repeat;
+	position: absolute;
+}
+
+
                    
 #game-content {
                    

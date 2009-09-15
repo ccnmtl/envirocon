@@ -26,7 +26,7 @@ urlpatterns = patterns(
         'assignment_page',
         name='assignment-page'),
 
-    url(r'^faculty_view/?$',
+    url(r'^faculty_view/(?P<game_id>[^/]*)',
         'faculty_view',
         name='faculty-view'),
 

@@ -1,8 +1,11 @@
-from statefulgame.models import Submission, Turn, Assignment
+from statefulgame.models import *
 from django.http import HttpResponse,Http404,HttpResponseRedirect,HttpResponseForbidden
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render_to_response
+from django.template import RequestContext, loader
 from django.db import models
 from django.core.urlresolvers import reverse
+
+from django.forms.models import modelformset_factory,inlineformset_factory
 
 import simplejson as json
 
@@ -72,25 +75,67 @@ def current_turn(request):
   return HttpResponseRedirect(reverse("assignment-page", args=[turn.assignment.id]))
 
 
-def faculty_view(request):
+def faculty_view(request, game_id=None):
   """
   list assignments (change due dates/ open|close)
   see teams:
     set turn (manually) per-team
        AND globally (through assignments list above)
-    
+        
   """
-  pass
+  if request.user not in request.course.faculty \
+         and not request.user.is_staff:
+    return HttpResponseForbidden()
+
+  game = None
+  if game_id:
+    game = get_object_or_404(Game, pk=game_id, course=request.course)
+  else:
+    game = Game.objects.filter(course=request.course)[0]
+
+  if request.method == 'POST':
+    pass
+
+  return render_to_response('statefulgame/faculty_view.html',
+                            {'course':request.course,
+                             'game':game,
+                             },
+                            context_instance=RequestContext(request))
+
 
 def faculty_assignment_review(request):
   """
   view assignments
+  
   """
-  pass
+  data = {}
+  if request.user.is_staff or request.user in request.course.faculty:
+    data['assignments'] = Assignment.objects.filter(game__course=request.course)
+  return render_to_response('statefulgame/faculty_view.html',
+                            {'course':request.course,
+                             'game':game,
+                             },
+                            context_instance=RequestContext(request))
+  
 
-def team_view(request):
+
+def team_view_data(request,teams=None):
   """
   past assignments (with title,status,shock)
   
   """
-  pass
+  if not teams:
+    teams = [Team.objects.by_user(request.user, getattr(request,'course',None))]
+  assignments = [{'data':a,'teams':[]} for a in Assignment.objects.filter(game__course=request.course)]
+  for t in teams:
+    for d in assignments:
+      turn = None      
+      try:
+        turn = Turn.objects.get(assignment=d['data'],team=t)
+      except:
+        pass
+      d['teams'].append(turn)
+  return {'teams':teams,
+          'assignments':assignments,
+          }
+  

@@ -53,10 +53,14 @@ class Turn(models.Model):
   def __unicode__(self):
     return "Turn ID %s for Team %s (%s)" % (self.id, self.team, self.assignment)
 
-  @property
-  def published(self):
+  def published(self,user=None):
     try:
-      return self.submission.published
+      if not self.assignment.individual:
+        return self.submission_set.all()[0].published
+      elif user:
+        return self.submission_set.filter(author=user)[0].published
+      else:
+        return False
     except:
       return False
 
@@ -101,7 +105,7 @@ class State(models.Model):
 # breadcrumb
 class Submission(models.Model):
   author = models.ForeignKey(User)
-  turn = models.OneToOneField(Turn)
+  turn = models.ForeignKey(Turn) #not 1-1 when individual assignments
   published = models.BooleanField()
   data = models.TextField()  # submitted data
 
@@ -120,24 +124,24 @@ def include_world_state(sender, context,request, **kwargs):
   team = Team.objects.by_user(user, getattr(request,"course",None))
   if isinstance(activity, Assignment):
     turn = team.state.current_turn(assignment=activity)
-    return { 'duedate':turn.assignment.close_date,
-             'individual':turn.assignment.individual,
-             'turn_id':turn.id,
-             'published':turn.published
-           }
-  else:
-    # TODO: if you go to the activity page directly but it is
-    # also your current assignment, it should pull that assign. data
-    # TODO: if assignment exists, old assignment so use that
-    # (not editable)
-    #assignment = Assignment.objects.get(app=activity)
-    #turn = Turn.objects.get(team=team, assignment=assignment)
-    # if assignment does not exist, just show the activity
-    # for now (though actually we should disallow)
-    return { 'turn_id':None }
+    if turn:
+      return { 'duedate':turn.assignment.close_date,
+               'individual':turn.assignment.individual,
+               'turn_id':turn.id,
+               'published':turn.published(user)
+               }
+  # TODO: if you go to the activity page directly but it is
+  # also your current assignment, it should pull that assign. data
+  # TODO: if assignment exists, old assignment so use that
+  # (not editable)
+  #assignment = Assignment.objects.get(app=activity)
+  #turn = Turn.objects.get(team=team, assignment=assignment)
+  # if assignment does not exist, just show the activity
+  # for now (though actually we should disallow)
   #elif team.state.assignment.app == activity.app:
   #else: turn = team.state.turn
-  #else:
-  #  raise "Activity does not match assignment for this turn."
+  #return { 'turn_id':None }
+  raise Exception("Activity does not match assignment for this turn.")
+  
 game_signals.world_state.connect(include_world_state)
 

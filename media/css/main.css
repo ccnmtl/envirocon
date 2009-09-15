@@ -908,3 +908,9 @@ table.sortable th {
 	margin: 1em 1em 1em 0;
 
 }
+
+.textblock 
+{ 
+  background-color: #EAEAEA;
+  color: #000000;
+ }

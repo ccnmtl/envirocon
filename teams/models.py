@@ -6,6 +6,8 @@ Group = models.get_model('auth','group')
 class TeamManager(models.Manager):
     def by_user(self, user, course=None):
         try:
+            if user.is_anonymous():
+                return None
             kw = {'group__user__pk':user.pk}
             if course:
                 kw['course__pk'] = course.pk
@@ -43,12 +45,14 @@ class Team(models.Model):
     def save(self, *args, **kwargs):
         #auto-create group
         if self.group_id is None:
-            group_name = ['Team %d: ' % (Team.objects.count()+1) ]
+            group_name = ['Team %d: ' % (Team.objects.filter(course=self.course_id).count()+1) ]
             if self.course_id:
                 group_name.append(self.course.title)
             if self.name:
                 group_name.append(self.name)
             self.group = Group.objects.create(name=' - '.join(group_name))
+            if not self.name:
+                self.name = self.group.name
             
         return super(Team, self).save(*args, **kwargs)
 

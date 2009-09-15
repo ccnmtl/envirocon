@@ -11,15 +11,53 @@
 
 
 {% block content %}
+  <div class="textblock">
   {%for survey in todo %}
     Please fill out <a href="{%url survey-detail survey.slug %}">{{survey.title}}</a>
   {%endfor%}
+  <h2>Assignments</h2>
+  <table>
+    <thead>
+      <tr>
+	<th>name</th>
+	<th>individual</th>
+	<th>due date</th>
+	<th>open</th>
+      </tr>
+    </thead>
+    {%for assn in assignments %}
+    <tr>
+      <td>
+	<a href="{%url assignment-page assn.data.id %}">
+	{{assn.data.name}}
+	</a>
+      </td>
+      <td>{{assn.data.individual}}</td>
+      <td>{{assn.data.close_date|date}}</td>
+      <td>{{assn.data.open}}</td>
+      <td>
+	{%for t in assn.turn %}
+	{{t.shock.name}}
+	{%endfor%}
+      </td>
+    </tr>
+    {%endfor%}
+  </table>
+  {%if team%}
+  <h2>Team Members</h2>
+  <ul>
+    {%for member in team.group.user_set.all %}
+    <li>{{member.get_full_name|default:member.username}}</li>
+    {%endfor%}
+  </ul>
+  {%endif%}
 
-  <h2>Temp game list</h2>
+
+  <h2>Temp game list (Broken)</h2>
   <ul>
     {%for g in games %}
     <li><a href="{%url game-page g.0 %}">{{g.1}}</a></li>
     {%endfor%}
   </ul>
-
+  </div>
 {% endblock %}

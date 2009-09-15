@@ -6,13 +6,22 @@ from django.db import models
 
 Survey = models.get_model('survey','survey')
 from game.installed_games import InstalledGames
+from statefulgame.views import team_view_data
 
 def home(request):
     todo = filled_out_a_profile(request)
+    state = {'todo':todo,
+             'games':InstalledGames,
+             }
+    for k,v in team_view_data(request).items():
+        state[k] = v
+
+    if hasattr(request,'course') and \
+       (request.user.is_staff or request.user in request.course.faculty):
+        state['is_faculty'] = True
+
     return render_to_response('envirocon_controller/home.html',
-                              {'todo':todo,
-                               'games':InstalledGames,
-                               },
+                              state,
                               context_instance=RequestContext(request))
 
 

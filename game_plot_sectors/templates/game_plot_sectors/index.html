@@ -9,7 +9,7 @@
 {% endblock %}
 
   {% block short-instructions %}
-     Based upon your group discussion, rank the impact and relevance of each of the sectors.  The resulting chart will provide a visual representation of your group's priorities and serve as a guide as you fund interventions in the future.
+  Based on your group discussion, rank the impact and relevance of each sector from 1 (low impact/relevance) to 10 (high impact/relevance).  
   {% endblock %}
 
   {% block full-instructions %}
@@ -18,6 +18,8 @@
 <p>Please discuss within your groups the strengths and weaknesses of previous management strategies both based on the context presented from background documents and comparative cases from your knowledge.</p>
 
 <p>Are there other sectors that should be included and if so please discuss their relevance in the multiple aspects of recovery (spatial impacts, temporal, humanitarian needs, conflict prevention/reconciliation, reconstruction of infrastructure, sustainable natural resource management, economic development, political stability, etc).</p>
+
+<p>As you choose your rankings, the resulting chart will serve as a visual representation of your group's priorities and help guide decisions regarding future interventions.</p>
 
 <table>
   <thead>
@@ -75,7 +77,6 @@
 {% endblock %}
    
 {% block form-instructions %}
-<p>Enter a number from 1-10 to rank the impact and relevance of each sector, from 1 (low impact/relevance) to 10 (high impact/relevance).</p> 
 {% endblock %}
 
   {% block form-inputs %}
@@ -89,7 +90,7 @@
        </thead>
        <tbody id="chart-data">
        <tr>
-	 <td>Water Supply
+	 <td width="100%">Water Supply
 	 </td>
 	 <td>
 	   <select name="1-impact">
@@ -258,8 +259,8 @@
        </tr>
        </tbody>
      </table>
-     
+     <div id="scatterplot_container">
      <img id="scatterplot" src="http://chart.apis.google.com/chart?cht=s&chd=t:12,87,75,41,23,96,68,71,34,9|98,60,27,34,56,79,58,74,18,76|84,23,69,81,47,94,60,93,64,54&chxt=x,y&chxl=0:|0|20|30|40|50|60|70|80|90|10|1:|0|25|50|75|100&chs=400x125" />
-
+</div>
      {% endblock %}
    </form>

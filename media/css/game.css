@@ -433,15 +433,21 @@ select {
 table #chart-data {
 
 color: #fff;
-font-size: 95%;
+font-size: 90%;
+width: 400px;
 
 }
 
-table #chart-data td{
+#scatterplot_container {
 
-padding: 1px 5px;
-
+	min-width: 400px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	padding: 10px 5px 5px 10px;
+	margin-left: -1px;
 }
+
+
 
 .report_choices {
 

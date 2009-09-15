@@ -14,12 +14,12 @@ def home(request):
              'games':InstalledGames,
              }
 
-    #for k,v in team_view_data(request).items():
-    #    state[k] = v
+    if hasattr(request,'course'):
+        for k,v in team_view_data(request).items():
+            state[k] = v
 
-    if hasattr(request,'course') and \
-       (request.user.is_staff or request.user in request.course.faculty):
-        state['is_faculty'] = True
+        if request.user.is_staff or request.user in request.course.faculty:
+            state['is_faculty'] = True
 
     return render_to_response('envirocon_controller/home.html',
                               state,
@@ -28,7 +28,7 @@ def home(request):
 
 #NOT A VIEW
 def filled_out_a_profile(request):
-    c = getattr(request,'actual_course_object',None)
+    c = getattr(request,'course',None)
     if Survey and c:
         surveys = Survey.objects.surveys_for(c)
         return [sy for sy in surveys

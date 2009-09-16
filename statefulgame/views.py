@@ -88,11 +88,10 @@ def current_turn(request):
   team = Team.objects.by_user(user, getattr(request,"course",None))
   turn = team.state.current_turn()
   
-  # TODO: "wait" page if current turn pending
-  if turn is None:
-    pass
-
-  return HttpResponseRedirect(reverse("assignment-page", args=[turn.assignment.id]))
+  if turn:
+    return HttpResponseRedirect(reverse("assignment-page", args=[turn.assignment.id]))
+  else:
+    return HttpResponseRedirect('/?message=no+activity+ready')
 
 
 def faculty_view(request, game_id=None):

@@ -10,7 +10,6 @@ Course = models.get_model('courseaffils','course')
 User = models.get_model('auth','user')
 
 
-
 class Game(models.Model):
   def __unicode__(self):
     return self.course.title
@@ -20,6 +19,9 @@ class Game(models.Model):
 class Assignment(Activity):
   game = models.ForeignKey(Game)
   close_date = models.DateTimeField()
+
+  #open means Teams are allowed to advance to this assignment
+  #only one assignment is editable by a team at a particular moment (see turn.open)
   open = models.BooleanField(default=False)
   name = models.CharField(max_length=100)
   individual = models.BooleanField()  # True = individual assignment; False = group assignment
@@ -36,8 +38,8 @@ class Assignment(Activity):
     for team in self.game.course.team_set.all():
       Turn.objects.get_or_create(team=team,assignment=self)
 
-  def submission(self,team,user=None):
-    if not self.individual:
+  def submission(self,team,user=None,allUsers=False):
+    if not self.individual or allUsers:
       return Submission.objects.filter(turn__team=team)
     elif user:
       return Submission.objects.filter(turn__team=team,author=user)
@@ -74,13 +76,27 @@ class Turn(models.Model):
 
   @property
   def open(self):
-    "When a turn is open, the team can edit their submission"
+    """When a turn is open, the team can edit their submission
+    only one (at most) turn can be open for a particular team, at once.
+    """
     #TODO: if self.team.state.turn is earlier than self
     #      are we open, or do they have to finish the first part?
     return (self==self.team.state.turn or self.assignment.open)
+
+  @property
+  def complete(self):
+    subs = [s.author.id for s in Submission.objects.filter(turn=self,published=True)]
+    if not subs:
+      return False
+    if self.assignment.individual:
+      for m in self.team.group.user_set.all():
+        if m.id not in subs:
+          return False
+    return True
+      
   
 class State(models.Model):
-  #game = models.ForeignKey(Game)
+  game = models.ForeignKey(Game)
   team = models.OneToOneField(Team)  # singleton per team
   turn = models.ForeignKey(Turn, null=True, blank=True)
   world_state = models.TextField(blank=True)  # state data
@@ -113,23 +129,24 @@ class State(models.Model):
       assert(self.turn.team == self.team)
     return super(State,self).save(*args,**kwargs)
 
-  def current_turn(self,assignment=None):
-    if assignment:
-      if assignment.open:
-        return Turn.objects.get_or_create(team=self.team,assignment=assignment)[0]
-      else:
-        return None
-    elif self.turn:
-      return self.turn
+  def advance_turn(self):
+    if self.turn is None:
+      next_a = self.game.assignment_set.all()[0]
+      if not getattr(next_a,'open',False):
+        return False
     else:
-      turn = None
-      for assn in Assignment.objects.filter(game__course=self.team.course,
-                                            open=True):
-        turn,created = Turn.objects.get_or_create(team=self.team,assignment=assn)
-        if created:
-          return turn
-      #last open turn: since any could do
-      return turn
+      try:
+        next_a = self.turn.assignment.get_next_in_order()
+      except Assignment.DoesNotExist:
+        return False
+      if not next_a.open or not self.turn.complete:
+        return False
+    self.turn = next_a.turn(self.team)
+    self.save()
+    return self.turn
+
+  def current_turn(self):
+    return self.advance_turn() or self.turn
 
   def resources(self,user=None):
     "The resources from each game that the team has access to"
@@ -158,7 +175,7 @@ class Submission(models.Model):
 #SIGNAL SUPPORT
 def create_state_for_team(sender, instance, created, **kwargs):
   if isinstance(instance,Team) and created:
-    State.objects.create(team=instance) # turn=null to begin with
+    State.objects.create(team=instance,game=Game.objects.filter(course=instance.course)[0]) # turn=null to begin with
 
 post_save.connect(create_state_for_team, sender=Team)
 
@@ -167,13 +184,15 @@ def include_world_state(sender,request, **kwargs):
   user = request.user
   team = Team.objects.by_user(user, getattr(request,"course",None))
   if isinstance(activity, Assignment):
-    turn = team.state.current_turn(assignment=activity)
+    turn = activity.turn(team)
+    #TODO: some logic here about openness or whatever
     if turn:
       world = team.state.world_slice(activity.gamepublic_variables())
       world.update({ 'duedate':turn.assignment.close_date,
                      'individual':turn.assignment.individual,
                      'turn_id':turn.id,
-                     'published':turn.published(user)
+                     'published':turn.published(user),
+                     'editable':turn.open,
                      })
       return world
   # TODO: if you go to the activity page directly but it is
@@ -186,7 +205,7 @@ def include_world_state(sender,request, **kwargs):
   # for now (though actually we should disallow)
   #elif team.state.assignment.app == activity.app:
   #else: turn = team.state.turn
-  #return { 'turn_id':None }
+  return { 'turn_id':1 } #TEMPORARY
   raise Exception("Activity does not match assignment for this turn.")
   
 game_signals.world_state.connect(include_world_state)

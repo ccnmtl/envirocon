@@ -13,6 +13,9 @@ if (typeof GameSystem == 'undefined') {
   GameSystemClass.prototype.getForm = function() {
       return $('assignment-form');
   }
+  GameSystemClass.prototype.stopFormListener = function() {
+      return disconnect(this.formlistener);
+  }    
   GameSystemClass.prototype.saveState = function(evt) {
       try {
 	  //easy default
@@ -21,7 +24,7 @@ if (typeof GameSystem == 'undefined') {
 		  this.my_vars[game_variables[0]] = this.textarea_default.value; 
               }
 	  }
-	  console.log(this.my_vars);
+	  //console.log(this.my_vars);
 	  doXHR(this.action,{method:'POST',
                              sendContent:queryString({data:serializeJSON(this.my_vars),
 						      turn_id:this.turn_id,
@@ -31,10 +34,12 @@ if (typeof GameSystem == 'undefined') {
 			    });
       } 
       catch (e) {
+	  console.log(this);
 	  console.log(e);
       }
       finally {
 	  return false;
+	  //evt.stop();
       }
   }
 
@@ -45,14 +50,22 @@ if (typeof GameSystem == 'undefined') {
 	return this.my_vars[var_name] = {};
      }
   }
+  GameSystemClass.prototype.init = function() {
+      this.assignment_form = this.getForm();
+      this.formlistener = connect(this.assignment_form,'onsubmit',bind(this.saveState,GameSystem));
+        //this.assignment_form.onsubmit = bind(GameSystem.saveState,GameSystem);
+	//connect(self.assignment_form,'onsubmit',bind(GameSystem.saveState,GameSystem));
+	 //this.assignment_form.action = 'javascript:(function(){GameSystem.saveState();return false;})()';
 
+
+  }
   GameSystemClass.prototype.loadState = function(state) {
      var self = this;
      update(this.my_vars, state);
      ///ASSUME: document is loaded by now!
-     var assignment_form = this.getForm();
-     if (assignment_form) {
-	 forEach(assignment_form.elements, function(elt) {
+     //this.assignment_form = this.getForm();
+     if (this.assignment_form) {
+	 forEach(this.assignment_form.elements, function(elt) {
              if (elt.name=='turn_id') {
 		 self.turn_id = elt.value;
              }
@@ -64,8 +77,7 @@ if (typeof GameSystem == 'undefined') {
 		 }
              }        
 	 });
-        this.action = assignment_form.action;
-        assignment_form.onsubmit = bind(GameSystem.saveState,GameSystem);
+        this.action = this.assignment_form.action;
      }
      this.loaded = true;
   }
@@ -88,7 +100,7 @@ if (typeof GameSystem == 'undefined') {
 
 
   window.GameSystem = new GameSystemClass();
-
+    window.GameSystem.init();
   addLoadEvent(function() {
       if (!GameSystem.loaded) {
 	  GameSystem.loadState({});

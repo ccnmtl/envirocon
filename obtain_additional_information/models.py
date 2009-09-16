@@ -12,7 +12,10 @@ class ObtainAdditionalInformation(GameInterface):
         return ('obtain_additional_information/index.html',game_context)
     
     def variables(self,page_id=None):
-        return []
+        return ['additional_information']
+
+    def public_variables(self):
+        return ['additional_information']
 
 InstalledGames.register_game('obtain_additional_information',
                              'Obtain Additional Information',

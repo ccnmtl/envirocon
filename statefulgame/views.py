@@ -69,13 +69,19 @@ def get_assignment_data(request,turn_id):
   user = request.user
   team = Team.objects.by_user(user, getattr(request,"course",None))
   turn = Turn.objects.get(pk=turn_id,team=team)
-  if turn.assignment.individual:
-    submission = get_object_or_404(Submission, author=user,turn=turn)
-  else:
-    submission = get_object_or_404(Submission, turn=turn)
+  data = team.state.world_slice(turn.assignment.gamepublic_variables())
+  try:
+    if turn.assignment.individual:
+      submission = Submission.objects.get(author=user,turn=turn)
+    else:
+      submission = Submission.objects.get(turn=turn)
+    data.update(json.loads(submission.data))
+  except Submission.DoesNotExist:
+    pass
+  serialized_data = json.dumps(data)
   if request.GET.has_key("jsonp"):
-    return HttpResponse("%s(%s)" % (request.GET["jsonp"], submission.data))
-  return HttpResponse(submission.data)
+    return HttpResponse("%s(%s)" % (request.GET["jsonp"], serialized_data))
+  return HttpResponse(serialized_data)
   
 def current_turn(request):
   user = request.user

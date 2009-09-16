@@ -150,6 +150,15 @@ table.interventions td input{
 	
 		width: 98%;
 		margin: 2px 0;
+		
+}
+
+table.interventions td textarea{
+	
+		height: 8em;
+		overflow: auto;
+			width: 98%;
+		margin: 2px 0;
 }
 
 #basemap

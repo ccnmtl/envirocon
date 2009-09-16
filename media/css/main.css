@@ -960,3 +960,24 @@ table.sortable th {
  	margin-left: 2em;
  
  }
+
+td.teamlist {white-space:nowrap;}
+div.teamoptions {white-space:nowrap;}
+th {cursor:pointer;}
+div.teamoptions div.on 
+{
+  border:1px solid red;
+  background-color:#FF9999;
+  }
+td div.teamoptions div 
+{
+  width:2em;
+  display:inline-block;
+  border:1px solid black;
+  text-align:center;
+  cursor:pointer;
+  }
+tr.current
+{ 
+  background-color:orange;
+ }

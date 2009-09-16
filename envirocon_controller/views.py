@@ -15,11 +15,12 @@ def home(request):
              }
 
     if hasattr(request,'course'):
+        if request.user in request.course.faculty:
+            state['is_faculty'] = True
+            
         for k,v in team_view_data(request).items():
             state[k] = v
 
-        if request.user.is_staff or request.user in request.course.faculty:
-            state['is_faculty'] = True
 
     return render_to_response('envirocon_controller/home.html',
                               state,

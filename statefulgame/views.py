@@ -147,18 +147,28 @@ def team_view_data(request,teams=None):
   past assignments (with title,status,shock)
   
   """
-  if not teams:
+  is_faculty = (request.user in request.course.faculty)
+  if is_faculty:
+    teams =Team.objects.filter(course=getattr(request,'course',None))
+  else:
     teams = [Team.objects.by_user(request.user, getattr(request,'course',None))]
-  assignments = [{'data':a,'teams':[]} for a in Assignment.objects.filter(game__course=request.course)]
+
+  assignments = [{'data':a,'teams':[],'hidden':False,'current':False}
+                 for a in Assignment.objects.filter(game__course=request.course)]
   for t in teams:
     for d in assignments:
       turn = None      
       try:
         turn = Turn.objects.get(assignment=d['data'],team=t)
+        if not (turn.open or turn.complete):
+          d['hidden'] = True
+        elif turn == t.state.turn:
+          d['current'] = True
       except:
         pass
       d['teams'].append(turn)
   return {'teams':teams,
           'assignments':assignments,
+          'is_faculty':is_faculty,
           }
   

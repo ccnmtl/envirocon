@@ -12,10 +12,10 @@
       td.teamlist {white-space:nowrap;}
       div.teamoptions {white-space:nowrap;}
       th {cursor:pointer;}
-      div.on {border:1px solid red;
+      div.teamoptions div.on {border:1px solid red;
               background-color:#FF9999;
       }
-      td div div {width:2em;
+      td div.teamoptions div {width:2em;
                   display:inline-block;
 		  border:1px solid black;
 		  text-align:center;
@@ -31,6 +31,9 @@
 
 
 {% block content %}
+<div class="textblock">
+  <h1>Team Administration</h1>
+
     <p>
       <form name="team-addmember" method="POST" 
 	    action='{%url team-addmember user_id="user_id" %}'>
@@ -83,8 +86,11 @@
       </thead>
       <tbody>
 	{% for student in surveys.values %}
-	  <tr data-member="{{student.record.id}}"><td>{{student.record.get_full_name}}
+	  <tr data-member="{{student.record.id}}"><td>{{student.record.get_full_name|default:student.record.username}}
 	  {#PROFILE FIELDS#}
+	  {% if not student.surveys.0 %}
+	     </td><!--did not fill out survey-->
+	  {%endif%}
 	  {% for answers in student.surveys.0 %}
 	   {%if not answers.qtype %}
 	      {%if answers.0.question.qtype not in "AT" %}
@@ -138,5 +144,5 @@
 	</div>
       {% endfor %}
     </div>
-
+  </div>
 {% endblock %}

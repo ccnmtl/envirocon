@@ -895,6 +895,14 @@ table.sortable th {
 
 }
 
+#due_date.interstitial {
+
+	color: #fff;
+	font-size: 100%;
+	margin: 0.35em -15px .35em 15px;
+
+}
+
 #new_materials, #instructons, #grouping  {
 
 
@@ -921,9 +929,8 @@ table.sortable th {
  
  .textblock h1
 { 
- 	background-color: #d9d9d9;
-	background-image: url(../img/bg_h2.jpg);
-	background-repeat: repeat-x;
+ 	background-color: #000;
+	color: #fff;
 	font-size: 120%;
 	font-weight: bold;
 	padding: 5px 10px;

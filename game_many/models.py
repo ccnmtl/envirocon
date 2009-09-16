@@ -23,7 +23,7 @@ class RecommendingInterventions(GameInterface):
     def pages(self):
         return ('index',)
 
-    def template(self,page_id=None):
+    def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
         return ('game_many/recommending_interventions.html',game_context)
     

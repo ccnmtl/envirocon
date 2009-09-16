@@ -74,8 +74,8 @@ ul#tabs li.off a
 	background-color: #CCC;
 	background-image: url(../img/bg_h2.jpg);
 	background-repeat: repeat-x;
-	font-size: 100%;
-	padding: 0px 10px;
+	font-size: 110%;
+	padding: 2px 10px;
 	border-bottom: 1px solid #ccc;
 	margin: 0;
 }
@@ -130,18 +130,26 @@ margin-top: 10px;
 font-size: 85%;
 }
 
-table#choose_layers {
+table#choose_layers, table.interventions {
 
 	width: 100%;
 	border: none;
 
 }
 
+
+
 table#choose_layers td {
 	padding: 5px;
 	border: none;
 	border-bottom: 1px solid #ccc;
 
+}
+
+table.interventions td input{
+	
+		width: 98%;
+		margin: 2px 0;
 }
 
 #basemap
@@ -474,15 +482,39 @@ background-color: #fff;
 
 }
 
+.intervention_choices {
+
+
+border: 1px solid #ccc;
+font-size: 85%;
+margin-bottom: 1em;
+background-color: #fff;
+padding: 0 10px 10px 10px;
+
+}
+
 .report_choices h2{
 
 
 	background-color: #CCC;
 	background-image: url(../img/bg_h2.jpg);
 	background-repeat: repeat-x;
-	font-size: 100%;
-	padding: 0px 10px;
+		font-size: 110%;
+	padding: 2px 10px;
 	border-bottom: 1px solid #ccc;
 	margin: 0;
+
+}
+
+.intervention_choices h2{
+
+
+	background-color: #CCC;
+	background-image: url(../img/bg_h2.jpg);
+	background-repeat: repeat-x;
+		font-size: 110%;
+	padding: 2px 10px;
+	border-bottom: 1px solid #ccc;
+	margin: 0 -10px 0 -10px;
 
 }

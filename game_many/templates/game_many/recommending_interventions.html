@@ -6,7 +6,7 @@
   <!-- add css link here -->
 {% endblock %}
 
-{% block short-instructions %}Your group should discuss possible interventions for each of the areas of concern represented in the following chart. In the rows next to each concern, please describe the intervention of your choosing that corresponds to the best high, medium, and low cost options.{% endblock %}
+{% block short-instructions %}In the rows next to each area of concern, describe the intervention of your choosing that corresponds to the best high, medium, and low cost options.{% endblock %}
 
 {% block full-instructions %}
 <p>Recommending Interventions: TODO</p>
@@ -16,10 +16,10 @@
 {% block form-instructions %}{% endblock %}
 
 {% block form-inputs %}
-
+<div class="intervention_choices">
 <h2>Environmental Health and Basic Services</h2>
 <h3>Water Supply:</h3>
-<table>
+<table class="interventions">
   <tr>
     <td>High Cost:</td>
     <td><input type="text"></input></td>
@@ -35,7 +35,7 @@
 </table>
 
 <h3>Sanitation Access:</h3>
-<table>
+<table class="interventions">
   <tr>
     <td>High Cost:</td>
     <td><input type="text"></input></td>
@@ -51,7 +51,7 @@
 </table>
 
 <h3>Waste Management:</h3>
-<table>
+<table class="interventions">
   <tr>
     <td>High Cost:</td>
     <td><input type="text"></input></td>
@@ -65,11 +65,11 @@
     <td><input type="text"></input></td>
   </tr>
 </table>
-
+<br />
 <h2>Forestry</h2>
 
 <h3>Illegal Timber:</h3>
-<table>
+<table class="interventions">
   <tr>
     <td>High Cost:</td>
     <td><input type="text"></input></td>
@@ -85,7 +85,7 @@
 </table>
 
 <h3>Deforestation (Charcoal Production):</h3>
-<table>
+<table class="interventions">
   <tr>
     <td>High Cost:</td>
     <td><input type="text"></input></td>
@@ -99,11 +99,11 @@
     <td><input type="text"></input></td>
   </tr>
 </table>
-
+<br />
 <h2>Land Management</h2>
 
 <h3>Land Tenure:</h3>
-<table>
+<table class="interventions">
   <tr>
     <td>High Cost:</td>
     <td><input type="text"></input></td>
@@ -119,7 +119,7 @@
 </table>
 
 <h3>Nomadic Rights:</h3>
-<table>
+<table class="interventions">
   <tr>
     <td>High Cost:</td>
     <td><input type="text"></input></td>
@@ -133,5 +133,5 @@
     <td><input type="text"></input></td>
   </tr>
 </table>
-
+</div>
 {% endblock %}

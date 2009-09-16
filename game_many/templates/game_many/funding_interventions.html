@@ -25,12 +25,12 @@
 
 {% block form-inputs %}
 <div class="budget">Budget Remaining: $150,000</div>
-
+<div class="intervention_choices">
 <h2>Environmental Health and Basic Services</h2>
-<table>
+<table class="interventions">
   <tr>
-    <td colspan='2'><h3>Water Supply:</h3></td>
-    <td>Fund</td>
+    <th colspan='2'>Water Supply:</th>
+    <th>Fund</th>
   </tr>
   <tr>
     <td>High Cost:</td>
@@ -49,9 +49,12 @@
   </tr>
 </table>
 
-<h3>Water Quality in Urban Areas:</h3>
-<table>
-  <tr>
+
+<table class="interventions">
+ <tr>
+    <th colspan='2'>Water Quality in Urban Areas:</th>
+    <th>Fund</th>
+ <tr>
     <td>High Cost:</td>
     <td>This project title here</td>
     <td><input type="checkbox" name="fund"></input></td>
@@ -67,5 +70,5 @@
     <td><input type="checkbox" name="fund"></input></td>
   </tr>
 </table>
-
+</div>
 {% endblock %}

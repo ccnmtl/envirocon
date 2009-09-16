@@ -14,7 +14,7 @@
   <div class="textblock">
   <h1>{{user}}'s Dashboard</h1>
   
-  {%if team%}
+   {%if team%}
  <div id="alertbox">
  <h2>Your Team</h2>
   
@@ -31,9 +31,62 @@
   <b> Please fill out your <a href="{%url survey-detail survey.slug %}">{{survey.title}}</a></b>
   {%endfor%}
  
- 
  <h2>Assignments</h2>
-  <table>
+  <!--fake table-->
+<form>
+<table>
+    <thead>
+      <tr>
+	<th>Activity Name</th>
+	<th>Individual or Group Assignment?</th>
+	<th>Due Date</th>
+	<th>Status</th>
+	<th>System Notes</th>
+	<th>View</th>
+      </tr>
+    </thead>
+    
+    
+  <tr>
+   <td>
+	
+	<a href="#">
+	Activity Name Here
+	</a>
+      </td>
+   <td>Individual</td>
+      <td>Monday, 2/12/09, 12:30PM</td>
+      <td>Submitted 2/11/09 11:54PM</td>
+       <td>
+
+      </td>
+      <td><a href="#">Review this Assignment</a></td>
+  </tr>
+  
+   
+    <tr>
+      <td>
+	
+	<a href="#">
+	Activity Name Here
+	</a>
+      </td>
+      <td>Group</td>
+      <td>Tuesday, 2/19/09, 12:30PM</td>
+      <td>Open</td>
+      <td>
+	Cholera!
+      </td>
+      <td><button type="button" id="go_activity" value="go_activity"><a href="#">Begin Assignment Now</a></button></td>
+    </tr>
+    
+  
+</table>
+</form>
+  
+ <!--real table-->
+ 
+ <table>
     <thead>
       <tr>
 	<th>Assignment Name</th>
@@ -41,11 +94,36 @@
 	<th>Due Date</th>
 	<th>Open?</th>
 	<th>System Notes</th>
+	<th>View</th>
       </tr>
     </thead>
+    
     {%for assn in assignments %}
-    <tr>
+   
+     {%if forloop.last %}
+  <tr>
+   <td>
+	
+	<a href="{%url assignment-page assn.data.id %}">
+	{{assn.data.name}}
+	</a>
+      </td>
+   <td>{{assn.data.individual}}</td>
+      <td>{{assn.data.close_date|date}}</td>
+      <td>{{assn.data.open}}</td>
+       <td>
+	{%for t in assn.turn %}
+	{{t.shock.name}}
+	{%endfor%}
+      </td>
+      <td><button type="button" id="go_activity" value="go_activity"><a href="#">Begin Assignment</a></button></td>
+  </tr>
+  {%endif%}
+   
+   
+   <tr>
       <td>
+	
 	<a href="{%url assignment-page assn.data.id %}">
 	{{assn.data.name}}
 	</a>
@@ -58,10 +136,10 @@
 	{{t.shock.name}}
 	{%endfor%}
       </td>
+      <td><a href="#">Review</a></td>
     </tr>
     {%endfor%}
-  </table>
-
+</table>
 
 
   <h2>Temp game list (Broken)</h2>
@@ -70,5 +148,13 @@
     <li><a href="{%url game-page g.0 %}">{{g.1}}</a></li>
     {%endfor%}
   </ul>
+  
+<!--end real table  -->
+  
+  
+  
+  
+  
+  
   </div>
-{% endblock %}
+  {% endblock %}

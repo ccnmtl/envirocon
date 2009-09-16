@@ -883,12 +883,14 @@ table.sortable th {
 	font-weight: bold;
 
 
+
 }
 
 #due_date {
 
 	font-weight: bold;
 	color: #135286;
+	font-size: 90%;
 	float: right;
 
 }

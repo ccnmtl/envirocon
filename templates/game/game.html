@@ -155,13 +155,14 @@
   
      {% block game_content %}
    <div>
-         <div id="activity_title">{{game.gamename}}</div>
-      
-      <div id="due_date">
+       <div id="due_date">
      {% if world_state.duedate %}
      DUE: {{ world_state.duedate|date:"D M j Y f A" }}
      {% endif %}
-   </div>
+   </div>  
+   <div id="activity_title">{{game.gamename}}</div>
+      
+      
    {% if world_state.published %}
    <div id="submitted">
      Status: {{world_state.published}}

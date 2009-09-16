@@ -28,6 +28,13 @@
 
 {% block form-inputs %}
 
+       <textarea rows=17 cols=58 name="data"
+       {% if not world_state.turn_id %}
+       disabled="disabled"
+       {% endif %}
+       ></textarea><br />
+
+
 <h3>State vision for overall recovery of Nimpala:</h3>
 <table>
   <thead>

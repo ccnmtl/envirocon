@@ -25,7 +25,7 @@
 
 <p>This report is intended for the donors and for the national government. It is primarily a tool for harmonization of efforts and to foster dialogue between ministries and amongst donors. The donor conference will review this document while deciding the next round of funding allocations.</p>
 {% endblock %}
-
+{% block form-instructions %}{% endblock %}
 {% block form-inputs %}
 
        <textarea rows=17 cols=58 name="data"
@@ -35,93 +35,202 @@
        ></textarea><br />
 
 
-<h3>State vision for overall recovery of Nimpala:</h3>
-<table>
-  <thead>
+
+
+<br />
+<div class="intervention_choices">
+<h2>State vision for overall recovery of Nimpala:</h2>
+<br />
+<table class="interventions">
+ 
+   <tr>
+   
+    <th colspan=2>Baseline: Data Available?</th>
+    
+  </tr>
   <tr>
-    <td>Cluster</td>
+    
     <td>Economic</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+  <tr>
+    
+    
     <td>Political</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+  <tr>
+    
+    
     <td>Security</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+    <tr>
+    
+    
     <td>Social</td>
+    <td><textarea></textarea></td>
+    
   </tr>
-  </thead>
-  <tr>
-    <td>Baseline: Data Available?</td>
-    <td><select type="dropdown">
-      <option value="yes">yes</option>
-      <option value="no">no</option>
-    </select></td>
-    <td><select type="dropdown">
-      <option value="yes">yes</option>
-      <option value="no">no</option>
-    </select></td>
-    <td><select type="dropdown">
-      <option value="yes">yes</option>
-      <option value="no">no</option>
-    </select></td>
-    <td><select type="dropdown">
-      <option value="yes">yes</option>
-      <option value="no">no</option>
-    </select></td>
-  </tr>
-  <tr>
-    <td>Intervals: Short, Medium, or Long-Term?</td>
-    <td><select type="dropdown">
-      <option value="short">short</option>
-      <option value="medium">medium</option>
-      <option value="long">long</option>
-    </select></td>
-    <td><select type="dropdown">
-      <option value="short">short</option>
-      <option value="medium">medium</option>
-      <option value="long">long</option>
-    </select></td>
-    <td><select type="dropdown">
-      <option value="short">short</option>
-      <option value="medium">medium</option>
-      <option value="long">long</option>
-    </select></td>
-    <td><select type="dropdown">
-      <option value="short">short</option>
-      <option value="medium">medium</option>
-      <option value="long">long</option>
-    </select></td>
-  </tr>
-  <tr>
-    <td>Targets: Outcome/Result?</td>
-    <td><input type="text"></input></td>
-    <td><input type="text"></input></td>
-    <td><input type="text"></input></td>
-    <td><input type="text"></input></td>
-  </tr>
-  <tr>
-    <td>Responsibility: Agency or Organization</td>
-    <td><select type="dropdown">
-      <option value="agency">agency</option>
-      <option value="organization">organization</option>
-    </select></td>
-    <td><select type="dropdown">
-      <option value="agency">agency</option>
-      <option value="organization">organization</option>
-    </select></td>
-    <td><select type="dropdown">
-      <option value="agency">agency</option>
-      <option value="organization">organization</option>
-    </select></td>
-    <td><select type="dropdown">
-      <option value="agency">agency</option>
-      <option value="organization">organization</option>
-    </select></td>
-  </tr>
-  <tr>
-    <td>Relationship to environmental and natural resource variables</td>
-    <td><input type="text"></input></td>
-    <td><input type="text"></input></td>
-    <td><input type="text"></input></td>
-    <td><input type="text"></input></td>
-  </tr>
+    
 </table>
+
+<table class="interventions">
+ 
+   <tr>
+   
+    <th colspan=2>Intervals: Short, Medium, or Long-Term?</th>
+    
+  </tr>
+  <tr>
+    
+    <td>Economic</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+  <tr>
+    
+    
+    <td>Political</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+  <tr>
+    
+    
+    <td>Security</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+    <tr>
+    
+    
+    <td>Social</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+    
+</table>
+
+<table class="interventions">
+ 
+   <tr>
+   
+    <th colspan=2>Targets: Outcome/Result?</th>
+    
+  </tr>
+  <tr>
+    
+    <td>Economic</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+  <tr>
+    
+    
+    <td>Political</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+  <tr>
+    
+    
+    <td>Security</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+    <tr>
+    
+    
+    <td>Social</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+    
+</table>
+
+<table class="interventions">
+ 
+   <tr>
+   
+    <th colspan=2>Responsibility: Agency or Organization</th>
+    
+  </tr>
+  <tr>
+    
+    <td>Economic</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+  <tr>
+    
+    
+    <td>Political</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+  <tr>
+    
+    
+    <td>Security</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+    <tr>
+    
+    
+    <td>Social</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+    
+</table>
+
+<table class="interventions">
+ 
+   <tr>
+   
+    <th colspan=2>Relationship to environmental and natural resource variables</th>
+    
+  </tr>
+  <tr>
+    
+    <td>Economic</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+  <tr>
+    
+    
+    <td>Political</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+  <tr>
+    
+    
+    <td>Security</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+    <tr>
+    
+    
+    <td>Social</td>
+    <td><textarea></textarea></td>
+    
+  </tr>
+    
+</table>
+
+</div>
+
+
+
+
 
 
 {% endblock %}

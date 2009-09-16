@@ -13,3 +13,53 @@
 
 {% endblock %}
 
+{% block form-instructions %}{% endblock %}
+
+{% block form-inputs %}
+
+<div class="budget">Budget Remaining: $150,000</div>
+
+<h2>Environmental Health and Basic Services</h2>
+<table>
+  <tr>
+    <td colspan='2'><h3>Water Supply in IDP and Refugee Camps:</h3></td>
+    <td>Fund</td>
+  </tr>
+  <tr>
+    <td>High Cost:</td>
+    <td>Pipe distribution system with treated water</td>
+    <td><input type="checkbox" name="fund"></input></td>
+  </tr>
+  <tr>
+    <td>Medium Cost:</td>
+    <td>Truck clean water into community distribution points</td>
+    <td><input type="checkbox" name="fund"></input></td>
+  </tr>
+  <tr>
+    <td>Low Cost:</td>
+    <td># of bore wells for xx people</td>
+    <td><input type="checkbox" name="fund"></input></td>
+  </tr>
+</table>
+
+<h3>Water Quality in Urban Areas:</h3>
+<table>
+  <tr>
+    <td>High Cost:</td>
+    <td>This project title here</td>
+    <td><input type="checkbox" name="fund"></input></td>
+  </tr>
+  <tr>
+    <td>Medium Cost:</td>
+    <td>This project title here</td>
+    <td><input type="checkbox" name="fund"></input></td>
+  </tr>
+  <tr>
+    <td>Low Cost:</td>
+    <td>This project title here</td>
+    <td><input type="checkbox" name="fund"></input></td>
+  </tr>
+</table>
+
+
+{% endblock %}

@@ -48,7 +48,7 @@ class FundingInterventions(GameInterface):
     def pages(self):
         return ('index',)
 
-    def template(self,page_id=None):
+    def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
         return ('game_many/funding_interventions.html',game_context)
     
@@ -66,7 +66,7 @@ class TrackingYourProjects(GameInterface):
     def pages(self):
         return ('index',)
 
-    def template(self,page_id=None):
+    def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
         return ('game_many/tracking_your_projects.html',game_context)
     
@@ -84,7 +84,7 @@ class ResultsFramework(GameInterface):
     def pages(self):
         return ('index',)
 
-    def template(self,page_id=None):
+    def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
         return ('game_many/results_framework.html',game_context)
     
@@ -102,7 +102,7 @@ class DonorsConference(GameInterface):
     def pages(self):
         return ('index',)
 
-    def template(self,page_id=None):
+    def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
         return ('game_many/donors_conference.html',game_context)
     
@@ -120,7 +120,7 @@ class FinalPaper(GameInterface):
     def pages(self):
         return ('index',)
 
-    def template(self,page_id=None):
+    def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
         return ('game_many/final_paper.html',game_context)
     

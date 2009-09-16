@@ -9,7 +9,7 @@ class ConflictAssessment(GameInterface):
     def pages(self):
         return ('index',)
 
-    def template(self,page_id=None):
+    def template(self,page_id=None,public_state=None):
         #documents = {"Country Narrative":"country_narrative.pdf"}
         game_context = {'sampledata':"hello"}#, documents:documents}
         # register documents for game

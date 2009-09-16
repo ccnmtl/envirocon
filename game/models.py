@@ -27,8 +27,13 @@ class Activity(models.Model):
             return InstalledGames.variables(self.app,page_id) or []
         return []
 
-    def gametemplate(self, page_id=None):
-        return InstalledGames.template(self.app,page_id)
+    def gamepublic_variables(self):
+        if self.app:
+            return InstalledGames.public_variables(self.app) or []
+        return []
+
+    def gametemplate(self, page_id=None,public_state=None):
+        return InstalledGames.template(self.app,page_id,public_state)
 
     def gameresources(self, game_state, onopen=False,onclosed=False):
         return InstalledGames.resources(self.app,game_state,onopen=onopen,onclosed=onclosed)

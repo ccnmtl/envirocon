@@ -96,6 +96,18 @@ class State(models.Model):
     except:
       return {}
 
+  def world_slice(self,vars):
+    try:
+      world = json.loads(team.state.world_state)
+      return dict([(k,v) for k,v in world.setdefault('app_vars',{}).items() if k in vars])
+    except:
+      return {}
+
+  def save_world(self,world):
+    """OK, saving is a bit dump here, but--I really wanted this method name :-)"""
+    self.world_state = json.dumps(world)
+    self.save()
+
   def save(self,*args,**kwargs):
     if self.turn:
       assert(self.turn.team == self.team)
@@ -157,11 +169,13 @@ def include_world_state(sender,request, **kwargs):
   if isinstance(activity, Assignment):
     turn = team.state.current_turn(assignment=activity)
     if turn:
-      return { 'duedate':turn.assignment.close_date,
-               'individual':turn.assignment.individual,
-               'turn_id':turn.id,
-               'published':turn.published(user)
-               }
+      world = team.state.world_slice(activity.gamepublic_variables())
+      world.update({ 'duedate':turn.assignment.close_date,
+                     'individual':turn.assignment.individual,
+                     'turn_id':turn.id,
+                     'published':turn.published(user)
+                     })
+      return world
   # TODO: if you go to the activity page directly but it is
   # also your current assignment, it should pull that assign. data
   # TODO: if assignment exists, old assignment so use that

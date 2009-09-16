@@ -45,9 +45,24 @@ def save_assignment(request):
     except Submission.DoesNotExist:
       submission = Submission(turn=turn,author=request.user)
       created = True
+    #save global state if we have public vars
+    state = turn.team.state
+    pubs = turn.assignment.gamepublic_variables()
+    world = state.world_ro
+    dirty = False
+    for k,v in json.loads(data).items():
+      if k in pubs:
+        world.setdefault('app_vars',{})
+        world['app_vars'][k] = v
+        dirty = True
+    if dirty:
+      state.save_world(world)
   submission.data = data
   submission.published = (getattr(request,request.method).get('published','Draft').find('Draft') < 0 )
   submission.save()
+
+  
+
   return HttpResponse(created)
 
 def get_assignment_data(request,turn_id):

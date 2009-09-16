@@ -6,11 +6,13 @@ class GameInterface:
     def pages(self):
         return ('page_one',)
 
-    def template(self,page_id=None):
+    def template(self,page_id=None,public_state=None):
         """return a tuple of template_name and game_context which will be
         available for the template.
         If you return "file" as the template then game_context
         should be a full http response which can be served directly to the client
+        @param public_state is a dict with keys listed in public_variables
+        if they have been set (by other apps)
         """
         game_context = {'page_id':page_id}
         return ('game/game.html',game_context)
@@ -21,6 +23,13 @@ class GameInterface:
         """
         return []
 
+    def public_variables(self):
+        """add these variables into the worldstate
+        usable for other games
+        don't include resource stuff here--only more interesting info
+        """
+        return []
+        
     def resources(self,game_state,onopen=False,onclosed=False):
         """return a list of page_ids that may not be listed in pages()
         which are global resources for general availability at
@@ -53,12 +62,15 @@ class InstalledGamesLazySingleton:
     def pages(self,game_code):
         return self.GAME_OBJECTS[game_code].pages()
 
-    def template(self,game_code,page_id):
-        return self.GAME_OBJECTS[game_code].template(page_id)
+    def template(self,game_code,page_id,public_state=None):
+        return self.GAME_OBJECTS[game_code].template(page_id,public_state=None)
         
     def variables(self,game_code,page_id=None):
         return self.GAME_OBJECTS[game_code].variables(page_id)
         
+    def public_variables(self,game_code):
+        return self.GAME_OBJECTS[game_code].public_variables()
+
     def resources(self,game_code,game_state,onopen=False,onclosed=False):
         return self.GAME_OBJECTS[game_code].resources(game_state,onopen,onclosed)
 

@@ -47,17 +47,22 @@ def register_document(request, activity, page_id):
 def game(request, activity, page_id=None, first_time=True):
     activity.page_id = page_id #for easy access in template
     
-    template,game_context = activity.gametemplate(page_id)
-    # nasty hack since we need to set/return headers for e.g. pdf files
-    if template == "file":
-      register_document(request, activity, page_id)
-      return game_context
-
     world_state = dict()
     for func,dict_val in game_signals.world_state.send(sender=activity,
                                                        request=request):
         for key in dict_val:
             world_state[key] = dict_val[key]
+
+    #for k in activity.gamepublic_variables():
+    #TODO: filter world_state for feeding into gametemplate
+    # or maybe this is done by statefulgame
+    
+    template,game_context = activity.gametemplate(page_id,world_state)
+    # bit-of-a-hack: "file" is returned when the app will complete the whole request
+    if template == "file":
+      register_document(request, activity, page_id)
+      return game_context
+
 
     t = loader.get_template(template)
     c = RequestContext(request,{

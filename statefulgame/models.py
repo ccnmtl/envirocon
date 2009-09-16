@@ -148,6 +148,21 @@ class State(models.Model):
   def current_turn(self):
     return self.advance_turn() or self.turn
 
+  def resource_access(self,activity,page_id,user=None):
+    if not page_id or page_id in activity.gamepages():
+      return True #public page
+    turn = activity.turn(self.team)    
+    sub = activity.submission(self.team, user)
+    data = (sub and sub[0].data or None)
+    res = activity.gameresources(data,#not de-jsoned
+                                 onopen=(turn.open or data),
+                                 onclosed=(not turn.open and data)
+                                 )
+    for d in res:
+      if page_id==d.get('page_id',None):
+        return True
+    return False
+
   def resources(self,user=None):
     "The resources from each game that the team has access to"
     res = []

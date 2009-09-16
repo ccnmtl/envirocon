@@ -30,20 +30,6 @@ def gamepage(request, gamename, page_id=None):
     activity = Activity.objects.create(app=gamename)
     return game(request, activity, page_id)
 
-def register_document(request, activity, page_id):
-    # TODO: if individual activity, register for that user ; else register for team
-    # --problematic since state is only stored for a team!!
-    team = Team.objects.by_user(request.user, getattr(request,"course",None))
-    world_state = team.state.world_ro
-    # TODO we have to store the name somehow too -- passed back up by game??
-    document_record = "%s/%s" % (activity.app, page_id)
-    if not world_state.has_key('documents'):
-      world_state['documents'] = [document_record]
-    if world_state.has_key('documents') and world_state['documents'].count(document_record) == 0:
-      world_state['documents'].append(document_record)
-    team.state.world_state = json.dumps(world_state)
-    team.state.save()
-
 def game(request, activity, page_id=None, first_time=True):
     activity.page_id = page_id #for easy access in template
     
@@ -60,7 +46,6 @@ def game(request, activity, page_id=None, first_time=True):
     template,game_context = activity.gametemplate(page_id,world_state)
     # bit-of-a-hack: "file" is returned when the app will complete the whole request
     if template == "file":
-      register_document(request, activity, page_id)
       return game_context
 
 

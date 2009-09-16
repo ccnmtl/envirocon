@@ -26,7 +26,11 @@ def get_files(request):
 
 def assignment_page(request,assignment_id,page_id=None):
   assignment = get_object_or_404(Assignment,pk=assignment_id,game__course=getattr(request,"course",None))
-  #team = Team.objects.by_user(request.user, getattr(request,"course",None))
+  team = Team.objects.by_user(request.user, getattr(request,"course",None))
+
+  #TODO: restrict access to assignment resources
+  if not team.state.resource_access(assignment,page_id,request.user):
+    return HttpResponseForbidden('You do not have access to this activity resource at this time.')
   return game(request,assignment,page_id=page_id,first_time=False)
 
 # saves an assignment blob to the database

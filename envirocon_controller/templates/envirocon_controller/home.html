@@ -12,17 +12,35 @@
 
 {% block content %}
   <div class="textblock">
+  <h1>{{user}}'s Dashboard</h1>
+  
+  {%if team%}
+ <div id="alertbox">
+ <h2>Your Team</h2>
+  
+  <ul>
+    {%for member in team.group.user_set.all %}
+    <li>{{member.get_full_name|default:member.username}}</li>
+    {%endfor%}
+  </ul>
+  </div>
+  {%endif%}
+ 
   {%for survey in todo %}
-    Please fill out <a href="{%url survey-detail survey.slug %}">{{survey.title}}</a>
+  <h2>Welcome!</h2>
+  <b> Please fill out your <a href="{%url survey-detail survey.slug %}">{{survey.title}}</a></b>
   {%endfor%}
-  <h2>Assignments</h2>
+ 
+ 
+ <h2>Assignments</h2>
   <table>
     <thead>
       <tr>
-	<th>name</th>
-	<th>individual</th>
-	<th>due date</th>
-	<th>open</th>
+	<th>Assignment Name</th>
+	<th>Individual Assignment?</th>
+	<th>Due Date</th>
+	<th>Open?</th>
+	<th>System Notes</th>
       </tr>
     </thead>
     {%for assn in assignments %}
@@ -43,14 +61,7 @@
     </tr>
     {%endfor%}
   </table>
-  {%if team%}
-  <h2>Team Members</h2>
-  <ul>
-    {%for member in team.group.user_set.all %}
-    <li>{{member.get_full_name|default:member.username}}</li>
-    {%endfor%}
-  </ul>
-  {%endif%}
+
 
 
   <h2>Temp game list (Broken)</h2>

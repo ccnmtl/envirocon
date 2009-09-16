@@ -5,7 +5,7 @@ body
 	padding: 0;
 	border: 0;
 	background-color: #000;
-	font: normal 0.88em/140% arial, helvetica, verdana, sans-serif;
+	font: normal 0.88em/100% arial, helvetica, verdana, sans-serif;
 	color: #fff;
   /*black on black is no fair as default
      regions which change the background color to something light,
@@ -26,39 +26,39 @@ h1, h2, h3, h4, h5, h6
 h1
 {
 	margin: 0 0 0.7em 0;
-	font-size: 180%;
+	font-size: 140%;
 	font-weight: normal;
 }
 
 h2
 {
 	margin: 1.6em 0 0.7em 0;
-	font-size: 160%;
+	font-size: 130%;
 }
 
 h3
 {
 	margin: 1.4em 0 0.7em 0;
-	font-size: 140%;
+	font-size: 120%;
 }
 
 h4
 {
 	margin: 1.2em 0 0.7em 0;
-	font-size: 140%;
+	font-size: 110%;
 	font-style: italic;
 }
 
 h5
 {
 	margin: 1em 0 0.7em 0;
-	font-size: 120%;
+	font-size: 100%;
 }
 
 h6
 {
 	margin: 1em 0 0.7em 0;
-	font-size: 110%;
+	font-size: 90%;
 }
 
 p
@@ -82,25 +82,25 @@ blockquote
 table
 {
 	margin: 0 0 0.7em 0;
-	padding: 0;
-	border: 1px solid #ccc;
+	padding: 1px 5px;
+	border: 1px solid #999;
 	border-collapse: collapse;
 	font-size: 100%;
 }
 
 th
 {
-	border: 1px solid #ccc;
+	border: 1px solid #999;
 	border-collapse: collapse;
 	text-align: left;
 	background-color: #ccc;
 	color: #000;
-	padding: 1px 5px;
+	padding: 3px 5px;
 }
 
 td
 {
-	border: 1px solid #ccc;
+	border: 1px solid #999;
 	border-collapse: collapse;
 	padding: 1px 5px;
 	vertical-align: top;
@@ -124,17 +124,17 @@ li
 
 a
 {
-	color: #06c;
+	color: #3d8dc0;
 }
 
 a:hover
 {
-	color: #69c;
+	color: #369;
 }
 
 a:visited
 {
-	color: #900;
+	color: #036;
 }
 
 img, img a
@@ -180,7 +180,7 @@ img, img a
 #alertbox
 {
 	display: block;
-	margin: 0 0 1em 1em;
+	margin: .8em 0 1em 1em;
 	padding: 0 1em 1em 1em;
 	border: 0;
 	border: 1px solid #ccc;
@@ -913,4 +913,18 @@ table.sortable th {
 { 
   background-color: #EAEAEA;
   color: #000000;
+  padding: 0px 20px 10px 20px;
+
+ }
+ 
+ .textblock h1
+{ 
+ 	background-color: #d9d9d9;
+	background-image: url(../img/bg_h2.jpg);
+	background-repeat: repeat-x;
+	font-size: 120%;
+	font-weight: bold;
+	padding: 5px 10px;
+	border-bottom: 1px solid #ccc;
+	margin: 0 -20px 10px -20px;
  }

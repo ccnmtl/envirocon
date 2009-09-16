@@ -157,10 +157,11 @@ class State(models.Model):
         turn = a.turn(self.team)
         sub = a.submission(self.team, user)
         data = (sub and sub[0].data or None)
-        res.extend(a.gameresources(data,#not de-jsoned
-                                   onopen=(turn.open or data),
-                                   onclosed=(not turn.open and data)
-                                   ))
+        res.append({'a':a,
+                    'res':a.gameresources(data,#not de-jsoned
+                                          onopen=(turn.open or data),
+                                          onclosed=(not turn.open and data)
+                                          )})
     return res
       
 # breadcrumb
@@ -193,6 +194,7 @@ def include_world_state(sender,request, **kwargs):
                      'turn_id':turn.id,
                      'published':turn.published(user),
                      'editable':turn.open,
+                     'resources':team.state.resources(user),
                      })
       return world
   # TODO: if you go to the activity page directly but it is

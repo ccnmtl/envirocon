@@ -99,54 +99,22 @@
  
  
      <div id="files_panel">   
+       
+       {%for activity in world_state.resources %}
+       {%if activity.res.0 %}
+       <div class="week"><!--not really a week-->
+	 <h2>{{activity.a.name}}</h2>
+	 <ul>
+	   {%for res in activity.res %}
+	     {%ifequal res.type "file" %}
+	   <li><a href="{%url assignment-page activity.a.id res.page_id %}" target="blank">{{res.title|default:"File"}}</a></li>
+	     {%endifequal %}
+	   {%endfor%}
+	 </ul>
+       </div>
+       {%endif%}
+       {%endfor%}
   
-     <div class="week">
-     <h2>Week 7</h2>
-     <ul>
-     <li><a href="#" target="blank">File</a></li>
-
-     </ul>
-     </div>
-        <div class="week">
-     <h2>Week 6</h2>
-     <ul>
-     <li><a href="#" target="blank">File</a></li>
-     </ul>
-     </div>
-        <div class="week">
-     <h2>Week 5</h2>
-     <ul>
-     <li><a href="#" target="blank">File</a></li>
-     </ul>
-     </div>
-        <div class="week">
-     <h2>Week 4</h2>
-     <ul>
-       <li><a href="#" target="blank">File</a></li>
-     </ul>
-     </div>
-        <div class="week">
-     <h2>Week 3</h2>
-     <ul>
-     <li><a href="#" target="blank">File</a></li>
-     </ul>
-     </div>
-  
-  <div class="week">
-     <h2>Week 2</h2>
-     <ul>
-     <li><a href="#" target="blank">Report 1</a></li>
-     <li><a href="#" target="blank">Report 2</a></li>
-     <li><a href="#" target="blank">Report 3</a></li>
-     </ul>
-     </div>
- 
-    <div class="week">
-     <h2>Week 1</h2>
-     <ul>
-     <li><a href="#" target="blank">Country Narrative </a></li>
-     </ul>
-     </div>
    </div>
 </div>
    <div id="game-content">

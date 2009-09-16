@@ -32,10 +32,14 @@ class ConflictAssessment(GameInterface):
     def variables(self,page_id=None):
         return ['conflict_assessment']
         
-    #def register_documents(self,state,document_name,document_url):
-        #document_list = state.world_state["documents"]
-        #document_list.append("%s:%s", (document_name, document_url)
-    #    pass
+    def resources(self,game_state,onopen=False,onclosed=False):
+        if onopen:
+            return [{"page_id":'country_narrative2',
+                     "type":'file',
+                     "title":'Country Narrative.pdf',
+                     }]
+        else:
+            return []
 
 InstalledGames.register_game('conflict_assessment',
                              'Conflict Assessment',

@@ -4,9 +4,11 @@ function toggleInfo(e) {
   var visible = getStyle(child, "display");
   if(visible == "block") {
     setStyle(child, {'display':'none'});
+    setStyle(e.src(), {'background-image':'url(/site_media/img/toggle_closed.gif)'});
   }
   else {
     setStyle(child, {'display':'block'});
+    setStyle(e.src(), {'background-image':'url(/site_media/img/toggle_open.gif)'});
   }
 }
 

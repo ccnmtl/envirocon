@@ -204,12 +204,19 @@ def include_world_state(sender,request, **kwargs):
     #TODO: some logic here about openness or whatever
     if turn:
       world = team.state.world_slice(activity.gamepublic_variables())
+      resources = team.state.resources(user)
+      resources_by_type = {}
+      for act_meta in resources:
+        for r in act_meta['res']:
+          t_bin = resources_by_type.setdefault(r.get('type','None'),[])
+          t_bin.append({'a':act_meta['a'],'res':r})
       world.update({ 'duedate':turn.assignment.close_date,
                      'individual':turn.assignment.individual,
                      'turn_id':turn.id,
                      'published':turn.published(user),
                      'editable':turn.open,
-                     'resources':team.state.resources(user),
+                     'resources':resources,
+                     'res_by_type':resources_by_type,
                      })
       return world
   # TODO: if you go to the activity page directly but it is

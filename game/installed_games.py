@@ -31,11 +31,13 @@ class GameInterface:
         return []
         
     def resources(self,game_state,onopen=False,onclosed=False):
-        """return a list of page_ids that may not be listed in pages()
+        """return a list of dicts may not be listed in pages()
         which are global resources for general availability at
         onset of starting the game or at the close of the game
         """
+        #return [{"page_id":"foo","type":"map"},{"page_id":"foo","type":"file"}]
         return []
+    
 
 
 class InstalledGamesLazySingleton:

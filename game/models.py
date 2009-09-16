@@ -29,3 +29,6 @@ class Activity(models.Model):
 
     def gametemplate(self, page_id=None):
         return InstalledGames.template(self.app,page_id)
+
+    def gameresources(self, game_state, onopen=False,onclosed=False):
+        return InstalledGames.resources(self.app,game_state,onopen=onopen,onclosed=onclosed)

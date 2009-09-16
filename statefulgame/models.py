@@ -3,6 +3,7 @@ from django.db.models.signals import post_save
 from game.models import Activity
 from game import signals as game_signals
 import datetime
+import simplejson as json
 
 Team = models.get_model('teams','team')
 Course = models.get_model('courseaffils','course')
@@ -35,6 +36,17 @@ class Assignment(Activity):
     for team in self.game.course.team_set.all():
       Turn.objects.get_or_create(team=team,assignment=self)
 
+  def submission(self,team,user=None):
+    if not self.individual:
+      return Submission.objects.filter(turn__team=team)
+    elif user:
+      return Submission.objects.filter(turn__team=team,author=user)
+    else:
+      return None
+    
+  def turn(self,team):
+    turn,created = Turn.objects.get_or_create(team=team,assignment=self)
+    return turn
 
 # abstract
 class Shock(models.Model):
@@ -54,30 +66,36 @@ class Turn(models.Model):
     return "Turn ID %s for Team %s (%s)" % (self.id, self.team, self.assignment)
 
   def published(self,user=None):
-    try:
-      if not self.assignment.individual:
-        return self.submission_set.all()[0].published
-      elif user:
-        return self.submission_set.filter(author=user)[0].published
-      else:
-        return False
-    except:
+    sub = self.assignment.submission(self.team,user)
+    if sub:
+      return sub[0].published
+    else:
       return False
 
   @property
   def open(self):
+    "When a turn is open, the team can edit their submission"
+    #TODO: if self.team.state.turn is earlier than self
+    #      are we open, or do they have to finish the first part?
     return (self==self.team.state.turn or self.assignment.open)
   
 class State(models.Model):
+  #game = models.ForeignKey(Game)
   team = models.OneToOneField(Team)  # singleton per team
-  #assignment = models.ForeignKey(Assignment)
   turn = models.ForeignKey(Turn, null=True, blank=True)
   world_state = models.TextField(blank=True)  # state data
   
   @property
   def assignment(self):
     return self.turn.assignment
-   
+  
+  @property
+  def world_ro(self):
+    try:
+      return json.loads(team.state.world_state)
+    except:
+      return {}
+
   def save(self,*args,**kwargs):
     if self.turn:
       assert(self.turn.team == self.team)
@@ -98,10 +116,24 @@ class State(models.Model):
         turn,created = Turn.objects.get_or_create(team=self.team,assignment=assn)
         if created:
           return turn
-      #any old turn can do
+      #last open turn: since any could do
       return turn
 
-
+  def resources(self,user=None):
+    "The resources from each game that the team has access to"
+    res = []
+    if self.turn:
+      game = self.turn.assignment.game
+      for a in game.assignment_set.all():
+        turn = a.turn(self.team)
+        sub = a.submission(self.team, user)
+        data = (sub and sub[0].data or None)
+        res.extend(a.gameresources(data,#not de-jsoned
+                                   onopen=(turn.open or data),
+                                   onclosed=(not turn.open and data)
+                                   ))
+    return res
+      
 # breadcrumb
 class Submission(models.Model):
   author = models.ForeignKey(User)
@@ -118,7 +150,7 @@ def create_state_for_team(sender, instance, created, **kwargs):
 
 post_save.connect(create_state_for_team, sender=Team)
 
-def include_world_state(sender, context,request, **kwargs):
+def include_world_state(sender,request, **kwargs):
   activity = sender
   user = request.user
   team = Team.objects.by_user(user, getattr(request,"course",None))

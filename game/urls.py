@@ -17,7 +17,7 @@ urlpatterns = patterns(
     #    'django.views.static.serve', {'document_root': rootdir+'conflict_assessment'+'/files', 'show_indexes':True}
     #    ),
 
-    url(r'^game/(?P<gamename>\w+)/(?P<page_id>\w+)?/?$',
+    url(r'^game/(?P<gamename>\w+)/(?P<page_id>\w+)?$',
         'game.views.gamepage',
         name='game-page'),
         

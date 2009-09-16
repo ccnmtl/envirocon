@@ -15,9 +15,8 @@ Team = models.get_model('teams','team')
 # return list of files team has seen
 def get_files(request):
   team = Team.objects.by_user(request.user, getattr(request,"course",None))
-  world_state = {}
-  if team.state.world_state != "":
-    world_state = json.loads(team.state.world_state)
+
+  world_state = team.state.world_ro
   if world_state.has_key('documents'):
     if request.GET.has_key("jsonp"):
       return HttpResponse("%s(%s)" % (request.GET["jsonp"], json.dumps(world_state['documents'])))
@@ -25,20 +24,18 @@ def get_files(request):
   return HttpResponse("")
   
 
-def assignment_page(request,assignment_id):
+def assignment_page(request,assignment_id,page_id=None):
   assignment = get_object_or_404(Assignment,pk=assignment_id,game__course=getattr(request,"course",None))
   #team = Team.objects.by_user(request.user, getattr(request,"course",None))
-  return game(request,assignment)
+  return game(request,assignment,page_id=page_id,first_time=False)
 
 # saves an assignment blob to the database
 def save_assignment(request):
-
   data = getattr(request,request.method).get('data',None)
   turn_id = getattr(request,request.method)['turn_id']
   turn = Turn.objects.get(id=turn_id)
   if not turn.open:
     return HttpResponseForbidden()
-  created = True
   if turn.assignment.individual:
     submission,created = Submission.objects.get_or_create(author=request.user,turn=turn)
   else:
@@ -47,6 +44,7 @@ def save_assignment(request):
       created=False
     except Submission.DoesNotExist:
       submission = Submission(turn=turn,author=request.user)
+      created = True
   submission.data = data
   submission.published = (getattr(request,request.method).get('published','Draft').find('Draft') < 0 )
   submission.save()

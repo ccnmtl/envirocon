@@ -34,9 +34,7 @@ def register_document(request, activity, page_id):
     # TODO: if individual activity, register for that user ; else register for team
     # --problematic since state is only stored for a team!!
     team = Team.objects.by_user(request.user, getattr(request,"course",None))
-    world_state = {}
-    if team.state.world_state != "":
-      world_state = json.loads(team.state.world_state)
+    world_state = team.state.world_ro
     # TODO we have to store the name somehow too -- passed back up by game??
     document_record = "%s/%s" % (activity.app, page_id)
     if not world_state.has_key('documents'):
@@ -46,7 +44,7 @@ def register_document(request, activity, page_id):
     team.state.world_state = json.dumps(world_state)
     team.state.save()
 
-def game(request, activity, page_id=None):
+def game(request, activity, page_id=None, first_time=True):
     activity.page_id = page_id #for easy access in template
     
     template,game_context = activity.gametemplate(page_id)
@@ -57,7 +55,6 @@ def game(request, activity, page_id=None):
 
     world_state = dict()
     for func,dict_val in game_signals.world_state.send(sender=activity,
-                                                       context=game_context,
                                                        request=request):
         for key in dict_val:
             world_state[key] = dict_val[key]

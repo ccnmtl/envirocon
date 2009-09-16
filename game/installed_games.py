@@ -7,12 +7,24 @@ class GameInterface:
         return ('page_one',)
 
     def template(self,page_id=None):
+        """return a tuple of template_name and game_context which will be
+        available for the template.
+        If you return "file" as the template then game_context
+        should be a full http response which can be served directly to the client
+        """
         game_context = {'page_id':page_id}
         return ('game/game.html',game_context)
 
     def variables(self,page_id=None):
         """return a list of strings to declare the variables you will store/retrieve
         If your variable name conflicts with another game, you will share state
+        """
+        return []
+
+    def resources(self,game_state,onopen=False,onclosed=False):
+        """return a list of page_ids that may not be listed in pages()
+        which are global resources for general availability at
+        onset of starting the game or at the close of the game
         """
         return []
 
@@ -47,7 +59,8 @@ class InstalledGamesLazySingleton:
     def variables(self,game_code,page_id=None):
         return self.GAME_OBJECTS[game_code].variables(page_id)
         
-
+    def resources(self,game_code,game_state,onopen=False,onclosed=False):
+        return self.GAME_OBJECTS[game_code].resources(game_state,onopen,onclosed)
 
 InstalledGames = InstalledGamesLazySingleton()
 

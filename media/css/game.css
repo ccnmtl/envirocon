@@ -202,6 +202,7 @@ table#choose_layers td {
 	background-image: url(../img/maps/map_layer_camps.png);
 	background-repeat: no-repeat;
 	position: absolute;
+	display: none;
 }
 
 .layer.cholera
@@ -209,6 +210,7 @@ table#choose_layers td {
 	background-image: url(../img/maps/map_layer_cholera.png);
 	background-repeat: no-repeat;
 	position: absolute;
+	display: none;
 }
 
 .layer.parks
@@ -217,6 +219,7 @@ table#choose_layers td {
 	background-repeat: no-repeat;
 	position: absolute;
 	margin-top: 1px;
+	display: none;
 }
 
 .layer.conflict_basic
@@ -224,6 +227,7 @@ table#choose_layers td {
 	background-image: url(../img/maps/map_layer_basicconflict.png);
 	background-repeat: no-repeat;
 	position: absolute;
+	display: none;
 }
 
 .layer.wb2_peace
@@ -231,6 +235,7 @@ table#choose_layers td {
 	background-image: url(../img/maps/map_layer_wb2_peace.png);
 	background-repeat: no-repeat;
 	position: absolute;
+	display: none;
 }
 
 .layer.wb2_humanitarian
@@ -238,6 +243,7 @@ table#choose_layers td {
 	background-image: url(../img/maps/map_layer_wb2_human.png);
 	background-repeat: no-repeat;
 	position: absolute;
+	display: none;
 }
 
 .layer.wb2_conflict
@@ -245,6 +251,7 @@ table#choose_layers td {
 	background-image: url(../img/maps/map_layer_wb2_conflict.png);
 	background-repeat: no-repeat;
 	position: absolute;
+	display: none;
 }
 
 .layer.wb3_peace
@@ -252,6 +259,7 @@ table#choose_layers td {
 	background-image: url(../img/maps/map_layer_wb3_peace.png);
 	background-repeat: no-repeat;
 	position: absolute;
+	display: none;
 }
 
 .layer.wb3_humanitarian
@@ -259,6 +267,7 @@ table#choose_layers td {
 	background-image: url(../img/maps/map_layer_wb3_human.png);
 	background-repeat: no-repeat;
 	position: absolute;
+	display: none;
 }
 
 .layer.wb3_conflict
@@ -266,6 +275,7 @@ table#choose_layers td {
 	background-image: url(../img/maps/map_layer_wb3_conflict.png);
 	background-repeat: no-repeat;
 	position: absolute;
+	display: none;
 }
 
 
@@ -285,6 +295,7 @@ table#choose_layers td {
 	border: 1px solid #ccc;
 		background-position: .15em 1.5em;
 		height: 65px;
+   display: none;
 
 }
 
@@ -295,7 +306,7 @@ table#choose_layers td {
 	border: 1px solid #ccc;
 		background-position: .4em 1.5em;
 		height: 50px;
-
+   display: none;
 }
 
 .legend.parks
@@ -305,7 +316,7 @@ table#choose_layers td {
 	border: 1px solid #ccc;
 		background-position: .4em 1.5em;
 		height: 69px;
-
+  display: none;
 }
 
 .legend.conflict
@@ -315,6 +326,7 @@ table#choose_layers td {
 	border: 1px solid #ccc;
 		background-position: 0 1.5em;
 		height: 50px;
+   display: none;
 }
 
 .legend.rainfall
@@ -324,6 +336,7 @@ table#choose_layers td {
 	border: 1px solid #ccc;
 		background-position: .5em 1.5em;
 		height: 93px;
+	display: none;
 }
 
 .legend.ethnicgroups
@@ -333,6 +346,7 @@ table#choose_layers td {
 	border: 1px solid #ccc;
 		background-position: .5em 1.5em;
 		height: 93px;
+	display: none;
 }
 
 .legend.droughtflood
@@ -342,6 +356,7 @@ table#choose_layers td {
 	border: 1px solid #ccc;
 		background-position: .5em 1.5em;
 		height: 65px;
+   display: none;
 }
 
 

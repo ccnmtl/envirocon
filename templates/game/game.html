@@ -9,6 +9,7 @@
    </script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/mochikit/MochiKit/MochiKit.js"></script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/toggle_full_info.js"></script>
+   <script type="text/javascript" src="{{GAME_MEDIA}}/js/map_controller.js"></script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/countrytabs.js"></script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/statefulgame.js"></script>
    <script type="text/javascript" src="{%url get-assignment world_state.turn_id %}?jsonp=GameSystem.loadState"></script>
@@ -46,23 +47,23 @@
      <form>
      <table id="choose_layers">
      <tr><td>Choose base map:
-     <select type="dropdown" onchange="" >
-     <option value="" selected="selected">Basic Geography</option>
-		<option value="">Ethnic Group Distribution</option>
-		<option value="">Rainfall</option>
-		<option value="home.pl?mode=project;pid=498">Drought/Flood Hotspots</option>
+     <select type="dropdown" id="base-map-dropdown" >
+     <option value="basic" selected="selected">Basic Geography</option>
+		<option value="ethnicgroups">Ethnic Group Distribution</option>
+		<option value="rainfall">Rainfall</option>
+		<option value="droughtflood">Drought/Flood Hotspots</option>
 		</td></tr>
      <tr>
      <td>
     
 	Show Layers: <br />
     <ul>
-  	 <li class="layer_choice"> <input type="checkbox" name="layer">Refugee Camps</input></li>
-     <li class="layer_choice"><input type="checkbox" name="layer" >Cholera Outbreaks</input></li>
-    <li class="layer_choice"><input type="checkbox" name="layer" class="layer_choice">Protected Areas</input></li>
-    <li class="layer_choice"><input type="checkbox" name="layer" class="layer_choice">Conflict Incidents</input></li>
-    <li class="layer_choice"><input type="checkbox" name="layer" class="layer_choice">Watching Brief 2</input></li>
-   <li class="layer_choice"> <input type="checkbox" name="layer" class="layer_choice">Watching Brief 3</input></li>
+  	  <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="refugee">Refugee Camps</input></li>
+     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="cholera">Cholera Outbreaks</input></li>
+     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="parks">Protected Areas</input></li>
+     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="conflict">Conflict Incidents</input></li>
+     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb2">Watching Brief 2</input></li>
+     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb3">Watching Brief 3</input></li>
     </ul>
      </td></tr></table>
      </form>
@@ -70,28 +71,28 @@
      <div id="basemap" class="basic">
 		 <div id="layers">
 	
-		 <div class="layer refugee"></div>
-		 <div class="layer cholera"></div>
-		 <div class="layer parks"></div>
-		 <div class="layer conflict_basic"></div>
-		 <div class="layer wb2_peace"></div>
-		 <div class="layer wb2_humanitarian"></div>
-		 <div class="layer wb2_conflict"></div>
-		 <div class="layer wb3_peace"></div>
-		 <div class="layer wb3_humanitarian"></div>
-		 <div class="layer wb3_conflict"></div>
+		 <div class="layer refugee" id="layer-refugee"></div>
+		 <div class="layer cholera" id="layer-cholera"></div>
+		 <div class="layer parks" id="layer-parks"></div>
+		 <div class="layer conflict_basic" id="layer-conflict"></div>
+		 <div class="layer wb2_peace" id="layer-wb2-peace"></div>
+		 <div class="layer wb2_humanitarian" id="layer-wb2-humanitarian"></div>
+		 <div class="layer wb2_conflict" id="layer-wb2-conflict"></div>
+		 <div class="layer wb3_peace" id="layer-wb3-peace"></div>
+		 <div class="layer wb3_humanitarian" id="layer-wb3-humanitarian"></div>
+		 <div class="layer wb3_conflict" id="layer-wb3-conflict"></div>
 		 </div>
      </div>
 
 <div id="legends">
  		 <div class="legend basic"></div>
- 		 <div class="legend ethnicgroups"><h2>Ethnic Group Distribution</h2></div>
- 		 <div class="legend rainfall"><h2>Rainfall</h2></div>
- 		 <div class="legend droughtflood"><h2>Drought/Flood Hotspots</h2></div>
- 		 <div class="legend refugee"><h2>Refugee Camps</h2></div>
- 		 <div class="legend cholera"><h2>Cholera Outbreaks</h2></div>
-		 <div class="legend parks"><h2>Protected Areas</h2></div>
-		 <div class="legend conflict"><h2>Conflict Instances</h2></div>
+ 		 <div class="legend ethnicgroups" id="legend-ethnicgroups"><h2>Ethnic Group Distribution</h2></div>
+ 		 <div class="legend rainfall" id="legend-rainfall"><h2>Rainfall</h2></div>
+ 		 <div class="legend droughtflood" id="legend-droughtflood"><h2>Drought/Flood Hotspots</h2></div>
+ 		 <div class="legend refugee" id="legend-refugee"><h2>Refugee Camps</h2></div>
+ 		 <div class="legend cholera" id="legend-cholera"><h2>Cholera Outbreaks</h2></div>
+		 <div class="legend parks" id="legend-parks"><h2>Protected Areas</h2></div>
+		 <div class="legend conflict" id="legend-conflict"><h2>Conflict Instances</h2></div>
 
 </div></div>
 </div><!-- end div data_panel -->

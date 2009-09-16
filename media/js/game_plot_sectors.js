@@ -44,7 +44,7 @@ var myPlots = new (function() {
 	    chd:'t:'+d.x.join(',')+'|'+d.y.join(','),
 	    chxt:'x,y',
 	    chxl:'0:|0|1|2|3|4|5|6|7|8|9|10|1:|0|2|4|6|8|10|3:|Relevance|',
-	    chs:'400x125',
+	    chs:'300x125',
 	    chm:d.lbl.join('|')
 	};
 	return url+queryString(args);

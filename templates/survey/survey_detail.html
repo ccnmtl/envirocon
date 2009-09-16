@@ -9,7 +9,8 @@ div.horizontal ul {margin-left:20px; padding-left:10px; display: inline;}
 </style>
 {% endblock %}
 {% block content %}
-<h1>FOOO {{ title }}</h1>
+<div class="textblock">
+<h1>{{ title }}</h1>
 
 <form method="post" class="focus-input" action="">
     {% for question_form in survey.forms %}
@@ -17,4 +18,5 @@ div.horizontal ul {margin-left:20px; padding-left:10px; display: inline;}
     {% endfor %}
     <div class="submit-row"><input type="submit" value="{% trans 'Submit' %}" class="default" name="__vote" /></div>
 </form>
+</div>
 {% endblock %}

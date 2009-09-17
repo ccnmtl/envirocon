@@ -12,24 +12,14 @@ import simplejson as json
 from game.views import game
 Team = models.get_model('teams','team')
 
-# return list of files team has seen
-def get_files(request):
-  team = Team.objects.by_user(request.user, getattr(request,"course",None))
-
-  world_state = team.state.world_ro
-  if world_state.has_key('documents'):
-    if request.GET.has_key("jsonp"):
-      return HttpResponse("%s(%s)" % (request.GET["jsonp"], json.dumps(world_state['documents'])))
-    return HttpResponse(json.dumps(world_state['documents']), mimetype="application/javascript")
-  return HttpResponse("")
-  
-
 def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id=None):
   assignment = get_object_or_404(Assignment,pk=assignment_id,game__course=getattr(request,"course",None))
   #we can assume request.course from now on
   user = request.user
+  editable=True
   if faculty_view and request.course.is_faculty(request.user):
     user = User.objects.get(pk=user_id)
+    editable=False
   team = Team.objects.by_user(user, getattr(request,"course",None))
 
   if not team.state.resource_access(assignment,page_id,user):
@@ -44,14 +34,16 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
       for r in act_meta['res']:
         t_bin = resources_by_type.setdefault(r.get('type','None'),[])
         t_bin.append({'a':act_meta['a'],'res':r})
+  editable = editable and turn.open
   world_state = { 'duedate':turn.assignment.close_date,
                   'individual':turn.assignment.individual,
                   'turn_id':turn.id,
                   'published':turn.published(user),
-                  'editable':turn.open,
+                  'editable':editable,
                   'resources':resources,
                   'res_by_type':resources_by_type,
                   'team':team,
+                  'user_id':user.id,
                   }
   # TODO: if you go to the activity page directly but it is
   # also your current assignment, it should pull that assign. data
@@ -103,8 +95,11 @@ def save_assignment(request):
 
   return HttpResponse(created)
 
-def get_assignment_data(request,turn_id):
+def get_assignment_data(request,turn_id,user_id):
   user = request.user
+  if user_id and request.course.is_faculty(request.user):
+    user = User.objects.get(pk=user_id)
+
   team = Team.objects.by_user(user, getattr(request,"course",None))
   turn = Turn.objects.get(pk=turn_id,team=team)
   data = team.state.world_slice(turn.assignment.gamepublic_variables())

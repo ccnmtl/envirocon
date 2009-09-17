@@ -96,6 +96,7 @@ class Turn(models.Model):
       
 
 class StateManager(models.Manager):
+  #auto-create State on get() for access from team.state
   def get(self,*args,**kwargs):
     try:
       return super(StateManager, self).get(*args,**kwargs)

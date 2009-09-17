@@ -10,7 +10,7 @@ urlpatterns = patterns(
         'save_assignment',
         name='save-assignment'),
 
-    url(r'^get_assignment/(?P<turn_id>\d+)/?$',
+    url(r'^get_assignment/(?P<turn_id>\d+)/(?P<user_id>[^/]+)/$',
         'get_assignment_data',
         name='get-assignment'),
 
@@ -18,9 +18,6 @@ urlpatterns = patterns(
         'current_turn',
         name='current-turn'),
 
-    url(r'^files',
-        'get_files',
-        name='get-files'),
     #note faculty_view is even more optional than page_id
     url(r'^assignment/(?P<assignment_id>[^/]+)/(?P<faculty_view>instructor/(?P<user_id>[^/]+)/)?(?P<page_id>[^/]+)?$',
         'assignment_page',

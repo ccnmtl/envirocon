@@ -6,14 +6,14 @@
    <!-- Delegate to the particular game which extra JS it needs -->
    <script>
      var game_variables = {{game.gamevariables|safe}};
+     var editable_view = {{world_state.editable|lower}};
    </script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/mochikit/MochiKit/MochiKit.js"></script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/toggle_full_info.js"></script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/map_controller.js"></script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/countrytabs.js"></script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/statefulgame.js"></script>
-   <script type="text/javascript" src="{%url get-assignment world_state.turn_id %}?jsonp=GameSystem.loadState"></script>
-   <script type="text/javascript" src="{%url get-files %}?jsonp=GameSystem.loadFiles"></script>
+   <script type="text/javascript" src="{%url get-assignment world_state.turn_id world_state.user_id %}?jsonp=GameSystem.loadState"></script>
    {% block game_js %}{% endblock %}
 {% endblock %}
 
@@ -164,13 +164,15 @@
        {% endif %}
        ></textarea><br />
   {% endblock %}
-<div id="buttons">
+  {%if world_state.editable %}
+  <div id="buttons">
      <input class="game-system floatright" type="submit" name="published" value="Submit" onclick="GameSystem.published='Submit'" />
      <input class="game-system" type="reset" />
      <input class="game-system" type="submit" name="published" value="Save Draft" onclick="GameSystem.published='Draft'" />
      <input class="game-system" type="hidden" name="turn_id" value="{{ world_state.turn_id }}" />
      <input class="game-system" type="hidden" name="author" value={{ user }}" />
-    </div>
+  </div>
+  {%endif %}
      </form>
    </div>
 {% endblock %}

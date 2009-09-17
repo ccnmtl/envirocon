@@ -16,6 +16,19 @@ if (typeof GameSystem == 'undefined') {
   GameSystemClass.prototype.stopFormListener = function() {
       return disconnect(this.formlistener);
   }    
+
+  GameSystemClass.prototype.stateLoaded = function() {
+      ///defined globally in the game template
+      if (!editable_view) {
+	  forEach(this.assignment_form.elements,function(elt) {
+	      elt.disabled = true;
+	      if (elt.tagName.toLowerCase()=='textarea') {
+		  var value = elt.value;
+		  swapDOM(elt,P({},value));
+	      }
+	  });
+      }
+  }
   GameSystemClass.prototype.saveState = function(evt) {
       try {
 	  //easy default
@@ -24,7 +37,6 @@ if (typeof GameSystem == 'undefined') {
 		  this.my_vars[game_variables[0]] = this.textarea_default.value; 
               }
 	  }
-	  //console.log(this.my_vars);
 	  doXHR(this.action,{method:'POST',
                              sendContent:queryString({data:serializeJSON(this.my_vars),
 						      turn_id:this.turn_id,
@@ -53,11 +65,6 @@ if (typeof GameSystem == 'undefined') {
   GameSystemClass.prototype.init = function() {
       this.assignment_form = this.getForm();
       this.formlistener = connect(this.assignment_form,'onsubmit',bind(this.saveState,GameSystem));
-        //this.assignment_form.onsubmit = bind(GameSystem.saveState,GameSystem);
-	//connect(self.assignment_form,'onsubmit',bind(GameSystem.saveState,GameSystem));
-	 //this.assignment_form.action = 'javascript:(function(){GameSystem.saveState();return false;})()';
-
-
   }
   GameSystemClass.prototype.loadState = function(state) {
      var self = this;
@@ -80,31 +87,15 @@ if (typeof GameSystem == 'undefined') {
         this.action = this.assignment_form.action;
      }
      this.loaded = true;
-  }
+      this.stateLoaded();
 
-  GameSystemClass.prototype.loadFiles = function(files) {
-    //var self = this;
-    //if(files) {
-    //  this.files = files;
-    //}
-    //alert(this.files);
-    //if($('files_panel')) {
-    //  alert("whee");
-    var html = "";
-    for(var i=0; i<files.length; i++) {
-      html += "<a href='../" + files[i] + "'>" + files[i] + "</a><br />";
-    }    
-      $('files_panel').innerHTML = html;
-    //}
   }
-
 
   window.GameSystem = new GameSystemClass();
     window.GameSystem.init();
   addLoadEvent(function() {
       if (!GameSystem.loaded) {
 	  GameSystem.loadState({});
-	  //GameSystem.loadFiles();
       }
   });
 

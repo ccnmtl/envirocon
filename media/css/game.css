@@ -536,3 +536,10 @@ padding: 0 10px 10px 10px;
 	font-size: 160%;
 	margin: 15px 6.5em 5px 0;
 }
+
+/*for read-only mode*/
+*[disabled] 
+{  
+  color:black;
+  font-weight:bold;
+}

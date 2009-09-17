@@ -21,8 +21,8 @@ urlpatterns = patterns(
     url(r'^files',
         'get_files',
         name='get-files'),
-
-    url(r'^assignment/(?P<assignment_id>[^/]+)/(?P<page_id>[^/]+)?$',
+    #note faculty_view is even more optional than page_id
+    url(r'^assignment/(?P<assignment_id>[^/]+)/(?P<faculty_view>instructor/(?P<user_id>[^/]+)/)?(?P<page_id>[^/]+)?$',
         'assignment_page',
         name='assignment-page'),
 

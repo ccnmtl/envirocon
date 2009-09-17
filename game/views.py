@@ -30,10 +30,11 @@ def gamepage(request, gamename, page_id=None):
     activity = Activity.objects.create(app=gamename)
     return game(request, activity, page_id)
 
-def game(request, activity, page_id=None, first_time=True):
+def game(request, activity, page_id=None, extra_world_state=None):
     activity.page_id = page_id #for easy access in template
     
-    world_state = dict()
+    world_state = extra_world_state or dict()
+
     for func,dict_val in game_signals.world_state.send(sender=activity,
                                                        request=request):
         for key in dict_val:

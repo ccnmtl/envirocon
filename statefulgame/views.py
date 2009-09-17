@@ -24,14 +24,48 @@ def get_files(request):
   return HttpResponse("")
   
 
-def assignment_page(request,assignment_id,page_id=None):
+def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id=None):
   assignment = get_object_or_404(Assignment,pk=assignment_id,game__course=getattr(request,"course",None))
-  team = Team.objects.by_user(request.user, getattr(request,"course",None))
+  #we can assume request.course from now on
+  user = request.user
+  if faculty_view and request.course.is_faculty(request.user):
+    user = User.objects.get(pk=user_id)
+  team = Team.objects.by_user(user, getattr(request,"course",None))
 
-  #TODO: restrict access to assignment resources
-  if not team.state.resource_access(assignment,page_id,request.user):
+  if not team.state.resource_access(assignment,page_id,user):
     return HttpResponseForbidden('You do not have access to this activity resource at this time.')
-  return game(request,assignment,page_id=page_id,first_time=False)
+
+  turn = assignment.turn(team)
+  if turn:
+    world = team.state.world_slice(assignment.gamepublic_variables())
+    resources = team.state.resources(user)
+    resources_by_type = {}
+    for act_meta in resources:
+      for r in act_meta['res']:
+        t_bin = resources_by_type.setdefault(r.get('type','None'),[])
+        t_bin.append({'a':act_meta['a'],'res':r})
+  world_state = { 'duedate':turn.assignment.close_date,
+                  'individual':turn.assignment.individual,
+                  'turn_id':turn.id,
+                  'published':turn.published(user),
+                  'editable':turn.open,
+                  'resources':resources,
+                  'res_by_type':resources_by_type,
+                  'team':team,
+                  }
+  # TODO: if you go to the activity page directly but it is
+  # also your current assignment, it should pull that assign. data
+  # TODO: if assignment exists, old assignment so use that
+  # (not editable)
+  #assignment = Assignment.objects.get(app=activity)
+  #turn = Turn.objects.get(team=team, assignment=assignment)
+  # if assignment does not exist, just show the activity
+  # for now (though actually we should disallow)
+  #elif team.state.assignment.app == activity.app:
+  #else: turn = team.state.turn
+  
+  return game(request,assignment,page_id=page_id,
+              extra_world_state=world_state)
 
 # saves an assignment blob to the database
 def save_assignment(request):

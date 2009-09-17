@@ -94,13 +94,28 @@ class Turn(models.Model):
           return False
     return True
       
+
+class StateManager(models.Manager):
+  def get(self,*args,**kwargs):
+    try:
+      return super(StateManager, self).get(*args,**kwargs)
+    except State.DoesNotExist:
+      if kwargs.has_key('team__pk'):
+        team = Team.objects.get(pk=kwargs['team__pk'])
+        state = State(team=team,game=Game.objects.filter(course=team.course)[0])
+        state.save()
+        return state
+      else:
+        raise State.DoesNotExist
   
 class State(models.Model):
+  objects = StateManager() #manager
+  
   game = models.ForeignKey(Game)
   team = models.OneToOneField(Team)  # singleton per team
   turn = models.ForeignKey(Turn, null=True, blank=True)
   world_state = models.TextField(blank=True)  # state data
-  
+
   @property
   def assignment(self):
     return self.turn.assignment
@@ -190,46 +205,18 @@ class Submission(models.Model):
 
 #SIGNAL SUPPORT
 def create_state_for_team(sender, instance, created, **kwargs):
+  #possibly redundant to the StateManager auto-create workflow as well
   if isinstance(instance,Team) and created:
     State.objects.create(team=instance,game=Game.objects.filter(course=instance.course)[0]) # turn=null to begin with
 
 post_save.connect(create_state_for_team, sender=Team)
 
 def include_world_state(sender,request, **kwargs):
-  activity = sender
-  user = request.user
-  team = Team.objects.by_user(user, getattr(request,"course",None))
-  if isinstance(activity, Assignment):
-    turn = activity.turn(team)
-    #TODO: some logic here about openness or whatever
-    if turn:
-      world = team.state.world_slice(activity.gamepublic_variables())
-      resources = team.state.resources(user)
-      resources_by_type = {}
-      for act_meta in resources:
-        for r in act_meta['res']:
-          t_bin = resources_by_type.setdefault(r.get('type','None'),[])
-          t_bin.append({'a':act_meta['a'],'res':r})
-      world.update({ 'duedate':turn.assignment.close_date,
-                     'individual':turn.assignment.individual,
-                     'turn_id':turn.id,
-                     'published':turn.published(user),
-                     'editable':turn.open,
-                     'resources':resources,
-                     'res_by_type':resources_by_type,
-                     })
-      return world
-  # TODO: if you go to the activity page directly but it is
-  # also your current assignment, it should pull that assign. data
-  # TODO: if assignment exists, old assignment so use that
-  # (not editable)
-  #assignment = Assignment.objects.get(app=activity)
-  #turn = Turn.objects.get(team=team, assignment=assignment)
-  # if assignment does not exist, just show the activity
-  # for now (though actually we should disallow)
-  #elif team.state.assignment.app == activity.app:
-  #else: turn = team.state.turn
-  return { 'turn_id':1 } #TEMPORARY
+  #DEPRECATED: see statefulgame/views now
+  if not isinstance(sender, Assignment):
+    return { 'turn_id':1 } #TEMPORARY
+  else:
+    return {} 
   raise Exception("Activity does not match assignment for this turn.")
   
 game_signals.world_state.connect(include_world_state)

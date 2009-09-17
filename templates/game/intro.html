@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}{{game.gamename}}{% endblock %}
+
+{% block content %}
+
+<div id="intro_container">
+  <div id="due_date" class="interstitial">
+     DUE: {{ world_state.duedate|date:"D M j Y f A" }}
+   </div> <h1>Next Activity: {{game.gamename}}</h1>
+  
+  <div id="alertbox"><h2>Alert!</h2>  A cholera epidemic is affecting your population.</div>
+
+   
+
+ <div id="new_materials">
+<h2>New Materials:</h2> 
+
+{% for res in world_state.resources %}
+  {{ res }}
+{% endfor %}
+
+<img source="" /><a href="#" target="blank">Updated Watching Brief</a>
+</div>
+
+ <div id="instructions">
+<h2>Instructions:</h2>
+
+{% block instructions %}
+{% endblock %}
+</div>
+
+ <div id="grouping">
+<h2>Note:</h2>
+  {% if world_state.individual %}
+      This is an individual activity.
+  {% endif %}
+  {% if not world_state.individual %}
+      This is a group activity. You and your team members will submit a single group response.
+  {% endif %}
+</div>
+<br />
+<button type="button" id="go_activity" onclick="document.location='page2';">Go to Activity</button>
+
+</div>
+{% endblock %}

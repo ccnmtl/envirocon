@@ -16,6 +16,10 @@
  <div id="new_materials">
 <h2>New Materials:</h2> 
 
+{% for res in world_state.resources %}
+  {{ res }}
+{% endfor %}
+
 <img source="" /><a href="#" target="blank">Updated Watching Brief</a>
 </div>
 
@@ -28,7 +32,7 @@
 
   <p>Please think carefully about which reports from the following list you would like to request and why that information is critical to your analysis. Please be prepared to discuss your selection briefly in class and write a memo with your team's rationale for purchasing each report.</p>
 
-<h3>Available Reports</h3>
+<h5>Available Reports:</h5>
 <ul>
   <li>Water Resources Management</li>
   <li>Agricultural Practices</li>
@@ -46,7 +50,12 @@
 </div>
  <div id="grouping">
 <h2>Note:</h2>
-This is a group activity. You and your team members will submit a single group response.
+  {% if world_state.individual %}
+      This is an individual activity.
+  {% endif %}
+  {% if not world_state.individual %}
+      This is a group activity. You and your team members will submit a single group response.
+  {% endif %}
 </div>
 <br />
 <button type="button" id="go_activity" onclick="document.location='page2';">Go to Activity</button>

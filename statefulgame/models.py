@@ -215,7 +215,9 @@ post_save.connect(create_state_for_team, sender=Team)
 def include_world_state(sender,request, **kwargs):
   #DEPRECATED: see statefulgame/views now
   if not isinstance(sender, Assignment):
-    return { 'turn_id':1 } #TEMPORARY
+    return { 'turn_id':1,
+             'user_id':1,#hope there's a user.id==1!
+             } #TEMPORARY
   else:
     return {} 
   raise Exception("Activity does not match assignment for this turn.")

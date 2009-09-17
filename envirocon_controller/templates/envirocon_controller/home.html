@@ -41,7 +41,7 @@
   <p>
   {%for survey in todo %}
   <h2>Welcome!</h2>
-  <b> Please fill out your <a href="{%url survey-detail survey.slug %}?next=/">{{survey.title}}</a></b>
+  <b> Please fill out your <a href="{%url survey-detail survey.slug %}">{{survey.title}}</a></b>
   {%endfor%}
  
   </p>

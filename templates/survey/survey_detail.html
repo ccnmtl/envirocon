@@ -12,7 +12,7 @@ div.horizontal ul {margin-left:20px; padding-left:10px; display: inline;}
 <div class="textblock">
 <h1>{{ title }}</h1>
 
-<form method="post" class="focus-input" action="">
+<form method="post" class="focus-input" action=".?next={{request.build_absolute_uri}}../../../../">
     {% for question_form in survey.forms %}
         {{ question_form.as_template }}
     {% endfor %}

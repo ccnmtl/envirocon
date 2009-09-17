@@ -33,7 +33,8 @@ function validateReports(e) {
     for (a in vals) {
 	report_vars[a] = vals[a];
     }
-    GameSystem.saveState();//override from stopFormListener
+    //overridden from stopFormListener, so we call it ourselves
+    GameSystem.saveState(e);
     e.stop()
 }
 

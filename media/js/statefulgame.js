@@ -38,8 +38,8 @@ if (typeof GameSystem == 'undefined') {
 	  console.log(e);
       }
       finally {
-	  return false;
-	  //evt.stop();
+	  //return false;
+	  if (evt) evt.stop();
       }
   }
 

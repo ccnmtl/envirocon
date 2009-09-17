@@ -16,10 +16,11 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
   assignment = get_object_or_404(Assignment,pk=assignment_id,game__course=getattr(request,"course",None))
   #we can assume request.course from now on
   user = request.user
-  is_faculty = False
+  faculty_info = None
   if faculty_view and request.course.is_faculty(request.user):
     user = User.objects.get(pk=user_id)
-    is_faculty=True
+    faculty_info={'teams':[{'r':'x',},{}]
+                  }
   team = Team.objects.by_user(user, getattr(request,"course",None))
 
   if not team.state.resource_access(assignment,page_id,user):
@@ -34,13 +35,13 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
       for r in act_meta['res']:
         t_bin = resources_by_type.setdefault(r.get('type','None'),[])
         t_bin.append({'a':act_meta['a'],'res':r})
-  editable = turn.open and not is_faculty
+  editable = turn.open and not faculty_info
   world_state = { 'duedate':turn.assignment.close_date,
                   'individual':turn.assignment.individual,
                   'turn_id':turn.id,
                   'published':turn.published(user),
                   'editable':editable,
-                  'is_faculty':is_faculty,
+                  'faculty_info':faculty_info,
                   'resources':resources,
                   'res_by_type':resources_by_type,
                   'team':team,

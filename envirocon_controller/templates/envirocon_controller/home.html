@@ -11,6 +11,13 @@
 
 
 {% block content %}
+  {%if user.is_anonymous%}
+  <div class="textblock">
+  <h1>Welcome!</h1>
+  <p><a href="{%url djangowind.views.login %}">LOGIN!</a>
+  </p>
+  </div>
+  {%else%}
   <div class="textblock">
   <h1>{{user.get_full_name|default:user.username}}'s Dashboard</h1>
   
@@ -34,7 +41,7 @@
   <p>
   {%for survey in todo %}
   <h2>Welcome!</h2>
-  <b> Please fill out your <a href="{%url survey-detail survey.slug %}">{{survey.title}}</a></b>
+  <b> Please fill out your <a href="{%url survey-detail survey.slug %}?next=/">{{survey.title}}</a></b>
   {%endfor%}
  
   </p>
@@ -106,4 +113,7 @@
   
   
   </div>
+
+  {%endif%}
+
   {% endblock %}

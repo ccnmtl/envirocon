@@ -7,7 +7,7 @@ from game.installed_games import InstalledGames,GameInterface
 
 class ConflictAssessment(GameInterface):
     def pages(self):
-        return ('index',)
+        return ('index','page2')
 
     def template(self,page_id=None,public_state=None):
         #documents = {"Country Narrative":"country_narrative.pdf"}
@@ -24,10 +24,10 @@ class ConflictAssessment(GameInterface):
           
           return ('file',response)
 
-        if page_id == "country_narrative":
-          return ('conflict_assessment/narrative.html',game_context)
+        if page_id == "page2":
+          return ('conflict_assessment/index.html',game_context)
 
-        return ('conflict_assessment/index.html',game_context)
+        return ('conflict_assessment/intro.html',game_context)
     
     def variables(self,page_id=None):
         return ['conflict_assessment']

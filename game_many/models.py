@@ -9,11 +9,13 @@ class ExplainYourReportSelection(GameInterface):
     """
 
     def pages(self):
-        return ('index',)
+        return ('index','page2')
 
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
-        return ('game_many/explain_your_report_selection.html',game_context)
+        if page_id == "page2":
+          return ('game_many/explain_your_report_selection.html',game_context)
+        return ('game_many/explain_your_report_selection_intro.html',game_context)
     
     def variables(self,page_id=None):
         return ['explain_your_report_selection']
@@ -28,11 +30,13 @@ class RecommendingInterventions(GameInterface):
     Week 3, Recommending Interventions
     """
     def pages(self):
-        return ('index',)
+        return ('index','page2')
 
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
-        return ('game_many/recommending_interventions.html',game_context)
+        if page_id == "page2":
+          return ('game_many/recommending_interventions.html',game_context)
+        return ('game_many/recommending_interventions_intro.html',game_context)
     
     def variables(self,page_id=None):
         return ['recommending_interventions']
@@ -46,11 +50,13 @@ class FundingInterventions(GameInterface):
     Week 4, Funding Interventions
     """
     def pages(self):
-        return ('index',)
+        return ('index','page2')
 
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
-        return ('game_many/funding_interventions.html',game_context)
+        if page_id == "page2":
+          return ('game_many/funding_interventions.html',game_context)
+        return ('game_many/funding_interventions_intro.html',game_context)
     
     def variables(self,page_id=None):
         return ['funding_interventions']
@@ -64,11 +70,13 @@ class TrackingYourProjects(GameInterface):
     Week 4, Tracking Your Projects
     """
     def pages(self):
-        return ('index',)
+        return ('index','page2',)
 
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
-        return ('game_many/tracking_your_projects.html',game_context)
+        if page_id == "page2":
+          return ('game_many/tracking_your_projects.html',game_context)
+        return ('game_many/tracking_your_projects_intro.html',game_context)
     
     def variables(self,page_id=None):
         return ['tracking_your_projects']
@@ -82,11 +90,13 @@ class ResultsFramework(GameInterface):
     Week 5, Results Framework
     """
     def pages(self):
-        return ('index',)
+        return ('index','page2',)
 
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
-        return ('game_many/results_framework.html',game_context)
+        if page_id == "page2":
+          return ('game_many/results_framework.html',game_context)
+        return ('game_many/results_framework_intro.html',game_context)
     
     def variables(self,page_id=None):
         return ['results_framework']
@@ -100,11 +110,13 @@ class DonorsConference(GameInterface):
     Week 6, Donors Conference & More Interventions
     """
     def pages(self):
-        return ('index',)
+        return ('index','page2',)
 
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
-        return ('game_many/donors_conference.html',game_context)
+        if page_id == "page2":
+          return ('game_many/donors_conference.html',game_context)
+        return ('game_many/donors_conference_intro.html',game_context)
     
     def variables(self,page_id=None):
         return ['donors_conference']
@@ -118,11 +130,13 @@ class FinalPaper(GameInterface):
     Week 8, Final Paper
     """
     def pages(self):
-        return ('index',)
+        return ('index','page2',)
 
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
-        return ('game_many/final_paper.html',game_context)
+        if page_id == "page2":
+          return ('game_many/final_paper.html',game_context)
+        return ('game_many/final_paper_intro.html',game_context)
     
     def variables(self,page_id=None):
         return ['final_paper']

@@ -14,7 +14,7 @@ class ConflictAssessment(GameInterface):
         game_context = {'sampledata':"hello"}#, documents:documents}
         # register documents for game
         #self.register_documents({"Country Narrative": "{{
-        if page_id == "country_narrative2":
+        if page_id == "country_narrative":
           # instead of serving the file directly, open it and pipe it over (for security)
           path = os.path.abspath(".") + "/conflict_assessment/files/country_narrative.pdf"
           file = open(path,"rb")
@@ -34,7 +34,7 @@ class ConflictAssessment(GameInterface):
         
     def resources(self,game_state,onopen=False,onclosed=False):
         if onopen:
-            return [{"page_id":'country_narrative2',
+            return [{"page_id":'country_narrative',
                      "type":'file',
                      "title":'Country Narrative.pdf',
                      }]

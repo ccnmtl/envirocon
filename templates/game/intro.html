@@ -16,11 +16,16 @@
  <div id="new_materials">
 <h2>New Materials:</h2> 
 
-{% for res in world_state.resources %}
-  {{ res }}
+{% for resource in world_state.resources %}
+  {% ifequal resource.a.name game.gamename %}
+    {% for file in resource.res %}
+      {% ifequal file.type "file" %}
+        <img source="" /><a href="{{file.page_id}}">{{ file.title }}</a>
+      {% endifequal %}
+    {% endfor %}
+  {% endifequal %}
 {% endfor %}
 
-<img source="" /><a href="#" target="blank">Updated Watching Brief</a>
 </div>
 
  <div id="instructions">

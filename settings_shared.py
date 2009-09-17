@@ -82,7 +82,6 @@ INSTALLED_APPS = (
     'teams',
 
     # week 1 activities
-    'conflict_assessment',
     'obtain_additional_information',
     'game_many',
     # week 2 activities

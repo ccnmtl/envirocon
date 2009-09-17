@@ -30,6 +30,7 @@ if (typeof GameSystem == 'undefined') {
       }
   }
   GameSystemClass.prototype.saveState = function(evt) {
+      if (tinyMCE) {tinyMCE.triggerSave();}
       try {
 	  //easy default
 	  if (this.textarea_default) {

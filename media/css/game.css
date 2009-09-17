@@ -21,7 +21,7 @@ div#country-info ul {
                 
 }
 
-ul#tabs
+ul.tabbernav
 {
  list-style: none;
  display: block;
@@ -32,41 +32,45 @@ ul#tabs
 
 }
 
-ul#tabs li
+ul.tabbernav li
 {
 
 float: left;
  display: block;
- height: 25px;
- width: 200px;
- padding: 5px 0 0 0;
- margin: 0 37px 0 0px;
+ height: 23px;
+ width: 137px;
+ padding: 7px 0 0 0;
+ margin: 0 15px 0 1px;
  text-align: center;
  font-weight: bold;
 
 }
 
-ul#tabs li.on
+ul.tabbernav li.tabberactive
 {
 	background-image: url(../img/activity_tab_on.png);
 	background-repeat: no-repeat;
 }
 
-ul#tabs li.on a
+ul.tabbernav li.tabberactive a
 {
 	color: #000;
 
 }
 
-ul#tabs li.off
+ul.tabbernav li
 {
 	background-image: url(../img/activity_tab_off.png);
 	background-repeat: no-repeat;
 }
 
-ul#tabs li.off a
+ul.tabbernav li a
 {
 	color: #333;
+  text-decoration:none;
+  text-align:center;
+  width:95%;
+  display:block;
 }
                  
 #country-info h2
@@ -80,22 +84,15 @@ ul#tabs li.off a
 	margin: 0;
 }
 
-#files_panel {
+.tabbertab
+{ 
   background-color: #fff;
   width: 415px;
   padding: 10px;
   min-height: 200px;
   color: #000;
-  display: none;
-}
 
-#data_panel {   
-	background-color: #fff;
-	width: 415px;
-    padding: 10px;
-    min-height: 200px;
-    color: #000;
-}
+ }
 
 #conditions {
 

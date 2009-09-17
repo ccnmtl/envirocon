@@ -723,6 +723,7 @@ textarea.resizable {width: 90%; height: 90%;}
   ul.tabbernav = the tab navigation list
   li.tabberactive = the active tab
   --------------------------------------------------*/
+/*
 ul.tabbernav
 {
  margin:0;
@@ -775,7 +776,7 @@ ul.tabbernav li.tabberactive a:hover
  padding:0;
  border: 0;
 }
-
+*/
 
 
 

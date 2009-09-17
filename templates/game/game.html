@@ -11,7 +11,7 @@
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/mochikit/MochiKit/MochiKit.js"></script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/toggle_full_info.js"></script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/map_controller.js"></script>
-   <script type="text/javascript" src="{{GAME_MEDIA}}/js/countrytabs.js"></script>
+   <script type="text/javascript" src="{{GAME_MEDIA}}/js/tabber.js"></script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/statefulgame.js"></script>
    <script type="text/javascript" src="{%url get-assignment world_state.turn_id world_state.user_id %}?jsonp=GameSystem.loadState"></script>
 
@@ -36,43 +36,52 @@
 
 {% block content %}
    <div id="country-info">
-   <ul id="tabs"><li class="on" id="data-tab"><a>Geographic Data</a></li> <li class="off" id="files-tab"><a>Files</a></li></ul>
-   <div id="data_panel">
+   <div class="tabber">
 
-   <div id="conditions">
-     <h2>Current Country Conditions</h2>
-       <ul><li>Infant Mortality: 87 deaths/1,000 live births</li>
-       <li>Forest Cover: 500 Ha</li>
-       <li>12 Month Rainfall: 16mm</li></ul>
-</div>
-<div id="maps">
-     <h2>Map</h2>
-     <div>
-     <form>
-     <table id="choose_layers">
-     <tr><td>Choose base map:
-     <select type="dropdown" id="base-map-dropdown" >
-     <option value="basic" selected="selected">Basic Geography</option>
-		<option value="ethnicgroups">Ethnic Group Distribution</option>
-		<option value="rainfall">Rainfall</option>
-		<option value="droughtflood">Drought/Flood Hotspots</option>
-		</td></tr>
-     <tr>
-     <td>
-    
-	Show Layers: <br />
-    <ul>
-  	  <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="refugee">Refugee Camps</input></li>
-     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="cholera">Cholera Outbreaks</input></li>
-     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="parks">Protected Areas</input></li>
-     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="conflict">Conflict Incidents</input></li>
-     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb2">Watching Brief 2</input></li>
-     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb3">Watching Brief 3</input></li>
-    </ul>
-     </td></tr></table>
-     </form>
+     {%if world_state.is_faculty %}
+     <div id="instructor_panel" class="tabbertab" title="Teams">
+       {%for teams in world_state.faculty_info.teams %}
+       
+       {%endfor%}
      </div>
-     <div id="basemap" class="basic">
+     {%endif%}
+
+     <div id="data_panel" class="tabbertab" title="Geographic Data">
+       <div id="conditions">
+	 <h2>Current Country Conditions</h2>
+	 <ul><li>Infant Mortality: 87 deaths/1,000 live births</li>
+	 <li>Forest Cover: 500 Ha</li>
+	 <li>12 Month Rainfall: 16mm</li></ul>
+       </div>
+       <div id="maps">
+	 <h2>Map</h2>
+	 <div>
+	   <form>
+	     <table id="choose_layers">
+	       <tr><td>Choose base map:
+	       <select type="dropdown" id="base-map-dropdown" >
+		 <option value="basic" selected="selected">Basic Geography</option>
+		 <option value="ethnicgroups">Ethnic Group Distribution</option>
+		 <option value="rainfall">Rainfall</option>
+		 <option value="droughtflood">Drought/Flood Hotspots</option>
+	       </select>
+
+	       </td></tr>
+	       <tr>
+		 <td>
+		   Show Layers: <br />
+		   <ul>
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="refugee">Refugee Camps</input></li>
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="cholera">Cholera Outbreaks</input></li>
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="parks">Protected Areas</input></li>
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="conflict">Conflict Incidents</input></li>
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb2">Watching Brief 2</input></li>
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb3">Watching Brief 3</input></li>
+		   </ul>
+		 </td></tr></table>
+	       </form>
+	     </div>
+	     <div id="basemap" class="basic">
 		 <div id="layers">
 	
 		 <div class="layer refugee" id="layer-refugee"></div>
@@ -86,9 +95,9 @@
 		 <div class="layer wb3_humanitarian" id="layer-wb3-humanitarian"></div>
 		 <div class="layer wb3_conflict" id="layer-wb3-conflict"></div>
 		 </div>
-     </div>
-
-<div id="legends">
+	     </div>
+     
+	     <div id="legends">
  		 <div class="legend basic"></div>
  		 <div class="legend ethnicgroups" id="legend-ethnicgroups"><h2>Ethnic Group Distribution</h2></div>
  		 <div class="legend rainfall" id="legend-rainfall"><h2>Rainfall</h2></div>
@@ -98,11 +107,12 @@
 		 <div class="legend parks" id="legend-parks"><h2>Protected Areas</h2></div>
 		 <div class="legend conflict" id="legend-conflict"><h2>Conflict Instances</h2></div>
 
-</div></div>
-</div><!-- end div data_panel -->
+	       </div>
+	     </div>
+	   </div><!-- end div data_panel -->
  
  
-     <div id="files_panel">   
+     <div id="files_panel" class="tabbertab" title="Files">   
        
        {%for activity in world_state.resources %}
        {%if activity.res.0 %}
@@ -119,6 +129,7 @@
        {%endif%}
        {%endfor%}
   
+     </div>
    </div>
 </div>
    <div id="game-content">

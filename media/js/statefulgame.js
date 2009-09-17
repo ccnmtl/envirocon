@@ -24,7 +24,9 @@ if (typeof GameSystem == 'undefined') {
 	      elt.disabled = true;
 	      if (elt.tagName.toLowerCase()=='textarea') {
 		  var value = elt.value;
-		  swapDOM(elt,P({},value));
+		  var wrapper = P();
+		  wrapper.innerHTML = value;
+		  swapDOM(elt,wrapper);
 	      }
 	  });
       }

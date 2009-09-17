@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}{{game.gamename}}{% endblock %}
+
+{% block content %}
+
+<div id="intro_container">
+  <div id="due_date" class="interstitial">
+     DUE: {{ world_state.duedate|date:"D M j Y f A" }}
+   </div> <h1>Next Activity: {{game.gamename}}</h1>
+  
+  <div id="alertbox"><h2>Alert!</h2>  A cholera epidemic is affecting your population.</div>
+
+   
+
+ <div id="new_materials">
+<h2>New Materials:</h2> 
+
+<img source="" /><a href="#" target="blank">Updated Watching Brief</a>
+</div>
+
+ <div id="instructions">
+<h2>Instructions:</h2>
+
+  <p>Please discuss as a group what information you require to make informed decisions about prioritization and allocation of limited reconstruction funding. Based on discussions in the course and readings, what information is critical to addressing both short and long-term needs, as well as confronting continued conflict stressors and potential relapses of conflict?</p>
+
+  <p>Your group will be able to request 5 reports from the following list of potential reports that can be prepared by the existing UN agencies on the ground to help with your decision making process.</p>
+
+  <p>Please think carefully about which reports from the following list you would like to request and why that information is critical to your analysis. Please be prepared to discuss your selection briefly in class and write a memo with your team's rationale for purchasing each report.</p>
+
+<h3>Available Reports</h3>
+<ul>
+  <li>Water Resources Management</li>
+  <li>Agricultural Practices</li>
+  <li>Economic Profile</li>
+  <li>Humanitarian Situation</li>
+  <li>Political Vulnerability Profile</li>
+  <li>Environmental Health</li>
+  <li>Natural Disasters</li>
+  <li>Population</li>
+  <li>Wildlife</li>
+  <li>Environmental Governance</li>
+  <li>Forest Resources</li>
+</ul>
+
+</div>
+ <div id="grouping">
+<h2>Note:</h2>
+This is a group activity. You and your team members will submit a single group response.
+</div>
+<br />
+<button type="button" id="go_activity" onclick="document.location='page2';">Go to Activity</button>
+
+</div>
+{% endblock %}

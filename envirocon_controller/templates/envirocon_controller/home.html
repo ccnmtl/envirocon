@@ -87,7 +87,9 @@
 	  <div class="teamoptions">{% for turn in assn.teams %}<div
 		  class="on"
 		data-turnid="{{turn.id}}"
-	      >{{turn.team.index}}</div>{% endfor %}</div
+	      >{{turn.team.index}} 
+	    <a href="{%url assignment-page assignment_id=turn.assignment.id,faculty_view="/instructor/",user_id=turn.team.group.user_set.all.0.id %}">view</a>
+	  </div>{% endfor %}</div
 	      >
 	</td>
       </tr>

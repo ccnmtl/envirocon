@@ -19,7 +19,7 @@ urlpatterns = patterns(
         name='current-turn'),
 
     #note faculty_view is even more optional than page_id
-    url(r'^assignment/(?P<assignment_id>[^/]+)/(?P<faculty_view>instructor/(?P<user_id>[^/]+)/)?(?P<page_id>[^/]+)?$',
+    url(r'^assignment/(?P<assignment_id>\d+)(?P<faculty_view>/instructor/)?(?P<user_id>[^/]+)?/(?P<page_id>[^/]+)?$',
         'assignment_page',
         name='assignment-page'),
 

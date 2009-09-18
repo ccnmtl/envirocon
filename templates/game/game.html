@@ -42,10 +42,37 @@
    <div class="tabber">
 
      {%if world_state.faculty_info %}
-     <div id="instructor_panel" class="tabbertab" title="Teams">
-       {%for teams in world_state.faculty_info.teams %}
-       
+     <div id="instructor_panel" class="tabbertab" title="Instructor">
+       <h2>{{world_state.team}}</h2>
+       {%if world_state.assignment.individual %}
+       <h1>Team Members</h1>
+       <ul>
+	 {%for member in world_state.team.group.user_set.all %}
+	 <li>
+	   {%ifnotequal member.id world_state.user_id %}
+	   <a href="{%url assignment-page assignment_id=world_state.assignment.id,faculty_view="/instructor/",user_id=member.id %}">
+	   {%else%}<b>{%endifnotequal%}
+	   {{member.get_full_name|default:member.username}}
+	   {%ifnotequal member.id world_state.user_id %}
+	 </a>{%else%}</b>{%endifnotequal%}
+         </li>
+	 {%endfor%}
+       </ul>
+       {%endif%}
+
+       <h1>Add outcome for team</h1>
+       <div>
+	 
+       </div>
+
+       <h1>Other Teams</h1>
+       <ul>
+       {%for otherteam in world_state.faculty_info.teams %}
+	 {%ifnotequal world_state.team otherteam.r %}
+	 <li><h2><a href="{%url assignment-page assignment_id=world_state.assignment.id,faculty_view="/instructor/",user_id=otherteam.r.group.user_set.all.0.id %}">Team: {{otherteam.r}}</a></h2></li>
+	 {%endifnotequal%}
        {%endfor%}
+       </ul>
      </div>
      {%endif%}
 

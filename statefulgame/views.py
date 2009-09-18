@@ -19,13 +19,15 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
   faculty_info = None
   if faculty_view and request.course.is_faculty(request.user):
     user = User.objects.get(pk=user_id)
-    faculty_info={'teams':[{'r':'x',},{}]
+    faculty_info={'teams':[{'r':t,} for t in request.course.team_set.all()]
                   }
+    if not page_id and 'page2' in assignment.gamepages():
+      page_id = 'page2'
+    
   team = Team.objects.by_user(user, getattr(request,"course",None))
 
   if not team.state.resource_access(assignment,page_id,user):
     return HttpResponseForbidden('You do not have access to this activity resource at this time.')
-
   turn = assignment.turn(team)
   if turn:
     world = team.state.world_slice(assignment.gamepublic_variables())
@@ -45,6 +47,8 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
                   'resources':resources,
                   'res_by_type':resources_by_type,
                   'team':team,
+                  'assignment':assignment,
+                  'turn':turn,
                   'user_id':user.id,
                   }
   # TODO: if you go to the activity page directly but it is
@@ -103,7 +107,8 @@ def get_assignment_data(request,turn_id,user_id):
     user = User.objects.get(pk=user_id)
 
   team = Team.objects.by_user(user, getattr(request,"course",None))
-  turn = Turn.objects.get(pk=turn_id,team=team)
+
+  turn = get_object_or_404(Turn,pk=turn_id,team=team)
   data = team.state.world_slice(turn.assignment.gamepublic_variables())
   try:
     if turn.assignment.individual:
@@ -203,3 +208,8 @@ def team_view_data(request,teams=None):
           'is_faculty':is_faculty,
           }
   
+def set_shock(request):
+  pass
+
+def update_assignment(request):
+  pass

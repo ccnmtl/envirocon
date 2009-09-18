@@ -1,4 +1,7 @@
 import re
+import os.path
+from django.conf import settings
+
 
 class GameInterface:
     """This class is meant to be the parent for game application
@@ -37,7 +40,7 @@ class GameInterface:
         """
         #return [{"page_id":"foo","type":"map"},{"page_id":"foo","type":"file"}]
         return []
-    
+
 
 
 class InstalledGamesLazySingleton:
@@ -75,6 +78,18 @@ class InstalledGamesLazySingleton:
 
     def resources(self,game_code,game_state,onopen=False,onclosed=False):
         return self.GAME_OBJECTS[game_code].resources(game_state,onopen,onclosed)
+
+
+    #UTILS #HACK #HACK #HACK
+    def absolute_path(self,app,path):
+        path = os.path.abspath(".")
+        template = '%s/envirocon/%s/%s'
+        if settings.DEBUG:
+            template = '%s/%s/%s'            
+        return template % (path,app,path)
+    
+
+
 
 InstalledGames = InstalledGamesLazySingleton()
 

@@ -209,7 +209,20 @@ def team_view_data(request,teams=None):
           }
   
 def set_shock(request):
-  pass
+  if request.method=='POST' and request.course.is_faculty(request.user):
+    team = get_object_or_404(Team,pk=request.POST['team_id'],course=request.course)
+    assignment = get_object_or_404(Assignment,pk=request.POST['assignment_id'],
+                                   game__course=request.course)
+    turn = assignment.turn(team)
+    if request.POST.has_key('shock_id'):
+      shock = get_object_or_404(Shock,pk=request.POST['shock_id'])
+    else:
+      shock = Shock.objects.create(name=request.POST['shock_name'],outcome=request.POST['shock_outcome'])
+    turn.shock = shock
+    turn.save()
+    return HttpResponse(shock.id)
+    
+
 
 def update_assignment(request):
   pass

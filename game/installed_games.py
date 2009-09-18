@@ -1,5 +1,6 @@
 import re
 import os.path
+import sys
 from django.conf import settings
 
 
@@ -82,10 +83,10 @@ class InstalledGamesLazySingleton:
 
     #UTILS #HACK #HACK #HACK
     def absolute_path(self,app,path):
-        root = os.path.abspath(".")
-        template = '%s/envirocon/%s/%s'
-        if settings.DEBUG:
-            template = '%s/%s/%s'            
+        root = os.path.dirname(os.path.abspath(sys.argv[0]))
+        #template = '%s/envirocon/%s/%s'
+        #if settings.DEBUG:
+        template = '%s/%s/%s'            
         return template % (root,app,path)
     
 

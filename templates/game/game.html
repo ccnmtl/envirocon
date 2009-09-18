@@ -6,7 +6,7 @@
    <!-- Delegate to the particular game which extra JS it needs -->
    <script>
      var game_variables = {{game.gamevariables|safe}};
-     var editable_view = {{world_state.editable|lower}};
+     var editable_view = "{{world_state.editable|lower}}";
    </script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/mochikit/MochiKit/MochiKit.js"></script>
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/toggle_full_info.js"></script>

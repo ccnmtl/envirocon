@@ -1,5 +1,5 @@
 function toggleInfo(e) {
-  var parent = getFirstParentByTagAndClassName(e.src(), "div", "*");
+  var parent = getFirstParentByTagAndClassName(e.src(), "div");
   var child = getFirstElementByTagAndClassName("*", "toggle", parent);
   var visible = getStyle(child, "display");
   if(visible == "block") {

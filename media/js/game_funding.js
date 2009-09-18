@@ -10,13 +10,7 @@ function tallyCosts() {
     }
   });
 
-  $("budget").innerHTML = format_money(budget);
-  if(budget < 0) {
-    setStyle("budget", {'color':'red'});
-  }
-  else {
-    setStyle("budget", {'color':'white'});
-  }
+  updateBudgetDisplay();
 }
 
 function calculateCosts(e) {
@@ -24,12 +18,12 @@ function calculateCosts(e) {
   var checked = e.src().checked;
   
   /* uncheck others in the group */
-  var regained = 0;
   if(checked) {
     var id = e.src().id;
     var group = "";
     var one = "";
     var two = "";
+    var regained = 0;
     if(id.indexOf("-low") != -1) {
       group = id.substr(0, id.indexOf("-low"));
       one = "-med";
@@ -54,23 +48,14 @@ function calculateCosts(e) {
       $(group+two).checked = false;
       regained = getCost(group+two);
     }
-    //tallyCosts();
-  }
-
-  if(checked) {
     budget = budget - cost + regained;
   }
+
   else {
-    budget = budget + cost + regained;
-  }
-  $("budget").innerHTML = format_money(budget);
-  if(budget < 0) {
-    setStyle("budget", {'color':'red'});
-  }
-  else {
-    setStyle("budget", {'color':'white'});
+    budget = budget + cost;
   }
 
+  updateBudgetDisplay();
 }
 
 function validate() {
@@ -81,6 +66,15 @@ function validate() {
   return true;
 }
 
+function updateBudgetDisplay() {
+  $("budget").innerHTML = format_money(budget);
+  if(budget < 0) {
+    setStyle("budget", {'color':'red'});
+  }
+  else {
+    setStyle("budget", {'color':'white'});
+  }
+}
 
 function getCost(id) {
   return parseFloat($(id + "-cost").innerHTML) * 1000000;  // costs are in millions

@@ -73,12 +73,14 @@ function validateFundingChoices(e) {
   }
   checkboxes = formContents(e.src());
   var vals = {};
+  var pts = 0;
   for(var i=0; i<checkboxes[0].length; i++){
     if(checkboxes[0][i] == "fund") {
-      alert(checkboxes[1][i]);
+      pts += parseInt($(checkboxes[1][i]+"-value").value);
       vals[checkboxes[1][i]]=1;
     }
   }
+  //alert(pts);
 
   //delete old
   for (a in funding_vars) {

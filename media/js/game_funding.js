@@ -1,15 +1,22 @@
+var funding_vars = {};
+
 var starting_budget = 0;
 var budget = 0;
 
-function tallyCosts() {
+function updateBudget() {
+  budget = starting_budget;
   forEach(getElementsByTagAndClassName("input", "fund"), function(elem) {
-    budget = starting_budget;
     if(elem.checked) {
       cost = parseFloat($(elem.id + "-cost").innerHTML) * 1000000;  // costs are in millions
       budget = budget - cost;
     }
   });
 
+  updateBudgetDisplay();
+}
+
+function resetBudget() {
+  budget = starting_budget;
   updateBudgetDisplay();
 }
 
@@ -58,12 +65,33 @@ function calculateCosts(e) {
   updateBudgetDisplay();
 }
 
-function validate() {
+function validateFundingChoices(e) {
   if(budget < 0) {
-    alert("You have agreed to fund more interventions than your budget will allow.  Please review your choices.");
+    alert("You have agreed to fund more interventions than your budget will allow.\nPlease review your choices.");
+    e.stop();
     return false;
   }
-  return true;
+  checkboxes = formContents(e.src());
+  var vals = {};
+  for(var i=0; i<checkboxes[0].length; i++){
+    if(checkboxes[0][i] == "fund") {
+      alert(checkboxes[1][i]);
+      vals[checkboxes[1][i]]=1;
+    }
+  }
+
+  //delete old
+  for (a in funding_vars) {
+	delete funding_vars[a];
+  }
+  //enter new
+  for (a in vals) {
+    funding_vars[a] = vals[a];
+  }
+
+  //overridden from stopFormListener, so we call it ourselves
+  GameSystem.saveState(e);
+  e.stop()
 }
 
 function updateBudgetDisplay() {
@@ -98,13 +126,21 @@ function format_money(amount) {
 
 function initFunding() {
   starting_budget = parseFloat($("budget").innerHTML.replace(/,/g,'').replace(/\$/g,''));
-  budget = starting_budget;
   forEach(getElementsByTagAndClassName("input", "fund"), function(elem) {
     connect(elem, "onclick", calculateCosts);
   });
-  connect("assignment-form", "onreset", tallyCosts);
-  connect("assignment-form", "onsubmit", validate);
-  tallyCosts();  // run once on load after loading saved data
+  var assn_form = $("assignment-form");
+  connect(assn_form, "onreset", resetBudget);
+  connect(assn_form, "onsubmit", validateFundingChoices);
+  GameSystem.stopFormListener();
+  
+  // load saved state
+  funding_vars = GameSystem.getVariable('additional_information');
+  forEach (assn_form.elements, function(elt) {
+	elt.checked = (elt.value in funding_vars);
+  });
+
+  updateBudget();  // run once after loading saved data
 }
 
 addLoadEvent(initFunding);

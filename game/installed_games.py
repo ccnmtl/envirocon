@@ -82,11 +82,11 @@ class InstalledGamesLazySingleton:
 
     #UTILS #HACK #HACK #HACK
     def absolute_path(self,app,path):
-        path = os.path.abspath(".")
+        root = os.path.abspath(".")
         template = '%s/envirocon/%s/%s'
         if settings.DEBUG:
             template = '%s/%s/%s'            
-        return template % (path,app,path)
+        return template % (root,app,path)
     
 
 

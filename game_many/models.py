@@ -5,6 +5,8 @@ import os.path
 # Create your models here.
 from game.installed_games import InstalledGames,GameInterface
 
+fileroot = os.path.abspath(".") + "/game_many/files/"
+
 ## week1 ##
 class ConflictAssessment(GameInterface):
     def pages(self):
@@ -14,7 +16,7 @@ class ConflictAssessment(GameInterface):
         game_context = {'sampledata':"hello"}#, documents:documents}
         if page_id == "country_narrative":
           # instead of serving the file directly, open it and pipe it over (for security)
-          path = os.path.abspath(".") + "/game_many/files/country_narrative.pdf"
+          path = InstalledGames.absolute_path("game_many", "files/country_narrative.pdf") 
           file = open(path,"rb")
           response = HttpResponse(mimetype='application/pdf')
           response['Content-Disposition'] = 'attachment; filename=country_narrative.pdf'

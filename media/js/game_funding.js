@@ -20,13 +20,48 @@ function tallyCosts() {
 }
 
 function calculateCosts(e) {
-  cost = parseFloat($(e.src().id + "-cost").innerHTML) * 1000000;  // costs are in millions
-  checked = e.src().checked;
+  var cost = getCost(e.src().id);
+  var checked = e.src().checked;
+  
+  /* uncheck others in the group */
+  var regained = 0;
   if(checked) {
-    budget = budget - cost;
+    var id = e.src().id;
+    var group = "";
+    var one = "";
+    var two = "";
+    if(id.indexOf("-low") != -1) {
+      group = id.substr(0, id.indexOf("-low"));
+      one = "-med";
+      two = "-high";
+    }
+    if(id.indexOf("-med") != -1) {
+      group = id.substr(0, id.indexOf("-med"));
+      one = "-low";
+      two = "-high";
+    }
+    if(id.indexOf("-high") != -1) {
+      group = id.substr(0, id.indexOf("-high"));
+      one = "-low";
+      two = "-med";
+    }
+    
+    if($(group+one).checked) {
+      $(group+one).checked = false;
+      regained = getCost(group+one);
+    }
+    if($(group+two).checked) {
+      $(group+two).checked = false;
+      regained = getCost(group+two);
+    }
+    //tallyCosts();
+  }
+
+  if(checked) {
+    budget = budget - cost + regained;
   }
   else {
-    budget = budget + cost;
+    budget = budget + cost + regained;
   }
   $("budget").innerHTML = format_money(budget);
   if(budget < 0) {
@@ -35,6 +70,7 @@ function calculateCosts(e) {
   else {
     setStyle("budget", {'color':'white'});
   }
+
 }
 
 function validate() {
@@ -43,6 +79,11 @@ function validate() {
     return false;
   }
   return true;
+}
+
+
+function getCost(id) {
+  return parseFloat($(id + "-cost").innerHTML) * 1000000;  // costs are in millions
 }
 
 // stolen from mvsim (with minor modifications)
@@ -68,6 +109,7 @@ function initFunding() {
     connect(elem, "onclick", calculateCosts);
   });
   connect("assignment-form", "onreset", tallyCosts);
+  connect("assignment-form", "onsubmit", validate);
   tallyCosts();  // run once on load after loading saved data
 }
 

@@ -1,6 +1,7 @@
 {% extends "game/game.html" %}
 
 {% block game_js %}
+  <script type="text/javascript" src="{{GAME_MEDIA}}js/game_funding.js"></script>
 {% endblock %}
 {% block game_css %}
   <!-- add css link here -->
@@ -23,94 +24,390 @@
 {% block form-instructions %}{% endblock %}
 
 {% block form-inputs %}
-<div class="budget">Budget Remaining: $165 million</div>
+<div class="budget">Budget Remaining: <span id='budget'>$165,000,000</span></div>
 <div class="intervention_choices">
 <h2>Environmental Health and Basic Services</h2>
-<h3>Water Supply</h3>
+<div>
+<h3 class='toggle-control'>Water Supply</h3>
+<div class='toggle'>
 <table class="interventions">
  
    <tr>
     <th>Intervention</th>
-    <th>Cost</th>
+    <th>Cost (millions)</th>
     <th>Fund</th>
   </tr>
   <tr>
     
-    <td>Major improvement in urban water infrastructure</td>
-    <td>$30</td>
-    <td><input type="checkbox" name="fund"></input></td>
+    <td>Major improvement in urban water infrastructure; major improvement in rural water infrastructure</td>
+    <td><span id='water-supply-high-cost'>30</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id="water-supply-high"></input></td>
   </tr>
   <tr>
     
-    <td>Truck clean water into community distribution points</td>
-    <td>$xx</td>
-    <td><input type="checkbox" name="fund"></input></td>
+    <td>Minor Improvements to urban infrastructure.  Truck clean water into community distribution points.  Repair infrastructure.  Major rural improvements.</td>
+    <td><span id='water-supply-med-cost'>18</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id="water-supply-med"></input></td>
   </tr>
   <tr>
     
-    <td># of bore wells for xx people</td>
-    <td>$x</td>
-    <td><input type="checkbox" name="fund"></input></td>
+    <td>Urban infrastructure plan.  Limited targeted rural areas.</td>
+    <td><span id='water-supply-low-cost'>10</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id="water-supply-low"></input></td>
   </tr>
 </table>
+</div></div>
 
-<h3>Sanitation Access</h3>
+<div>
+<h3 class='toggle-control'>Sanitation Access</h3>
+<div class='toggle'>
 <table class="interventions">
  
    <tr>
     <th>Intervention</th>
-    <th>Cost</th>
+    <th>Cost (millions)</th>
     <th>Fund</th>
   </tr>
   <tr>
     
-    <td>Major improvement in urban water infrastructure</td>
-    <td>$30</td>
-    <td><input type="checkbox" name="fund"></input></td>
+    <td>Secondary waste treatment plant for urban centers over 100,000 people.  Large geographic scale rural interventions.</td>
+    <td><span id='sanitation-high-cost'>50</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='sanitation-high'></input></td>
   </tr>
   <tr>
     
-    <td>Truck clean water into community distribution points</td>
-    <td>$xx</td>
-    <td><input type="checkbox" name="fund"></input></td>
+    <td>Urban: large number of people reached but no city-wide system, e.g. septic tank system.  Rural: limited number of people reached.</td>
+    <td><span id='sanitation-med-cost'>40</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='sanitation-med'></input></td>
   </tr>
   <tr>
     
-    <td># of bore wells for xx people</td>
-    <td>$x</td>
-    <td><input type="checkbox" name="fund"></input></td>
+    <td>Basic urban sanitation systems (e.g. community pit latrines).  Rural: education program and limited latrines.</td>
+    <td><span id='sanitation-low-cost'>35</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='sanitation-low'></input></td>
   </tr>
 </table>
+</div></div>
+
+<div>
+<h3 class='toggle-control'>Waste Management</h3>
+<div class='toggle'>
+<table class="interventions">
+ 
+   <tr>
+    <th>Intervention</th>
+    <th>Cost (millions)</th>
+    <th>Fund</th>
+  </tr>
+  <tr>
+    
+    <td>Large urban area waste removal and treatment (e.g. lined landfill and national private waste collection company for door to door collection service).</td>
+    <td><span id='waste-high-cost'>60</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='waste-high'></input></td>
+  </tr>
+  <tr>
+    
+    <td>Large urban area but limited collection sites and reduced standards for disposal and treatment facilities (e.g. disposal site with no protective lining, collection from common drop-off locations).</td>
+    <td><span id='waste-med-cost'>20</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='waste-med'></input></td>
+  </tr>
+  <tr>
+    
+    <td>Urban areas but small scale collection and no organized system (e.g. neighborhood incinerators, small-scale composting).</td>
+    <td><span id='waste-low-cost'>10</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='waste-low'></input></td>
+  </tr>
+</table>
+</div></div>
 
 <h2>Forestry</h2>
-<h3>Illegal Timber</h3>
+<div>
+<h3 class='toggle-control'>Illegal Timber</h3>
+<div class='toggle'>
 <table class="interventions">
  
    <tr>
     <th>Intervention</th>
-    <th>Cost</th>
+    <th>Cost (millions)</th>
     <th>Fund</th>
   </tr>
   <tr>
     
-    <td>Major improvement in urban water infrastructure</td>
-    <td>$30</td>
-    <td><input type="checkbox" name="fund"></input></td>
+    <td>Major national reform of forestry sector, contracts, and management (e.g. concession review, training, monitoring, enforcement, and plan for institutional reform.  Inter-agency initiative to support National Forest Reform Act).</td>
+    <td><span id='timber-high-cost'>8.5</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='timber-high'></input></td>
   </tr>
   <tr>
     
-    <td>Truck clean water into community distribution points</td>
-    <td>$xx</td>
-    <td><input type="checkbox" name="fund"></input></td>
+    <td>Full review of existing system and plans for reform with limited actions (e.g. concession review, establish formal review process, monitor harvests, review international sanctions certification and transparency code).</td>
+    <td><span id='timber-med-cost'>5</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='timber-med'></input></td>
   </tr>
   <tr>
     
-    <td># of bore wells for xx people</td>
-    <td>$x</td>
-    <td><input type="checkbox" name="fund"></input></td>
+    <td>Assessment and study of existing resources (e.g. monitoring harvest, review lumber permits, tax on exports).</td>
+    <td><span id='timber-low-cost'>1.5</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='timber-low'></input></td>
   </tr>
 </table>
+</div>
+</div>
 
+<div>
+<h3 class='toggle-control'>Deforestation (Charcoal Production)</h3>
+<div class='toggle'>
+<table class="interventions">
+ 
+   <tr>
+    <th>Intervention</th>
+    <th>Cost (millions)</th>
+    <th>Fund</th>
+  </tr>
+  <tr>
+    
+    <td>Create national enforcement system, monitoring system, and design alternative energy options and incentives (e.g. regulation and enforcement of illegal harvest while subsidizing private timber plots on sustainable growth cycle).</td>
+    <td><span id='deforestation-high-cost'>5</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='deforestation-high'></input></td>
+  </tr>
+  <tr>
+    
+    <td>Review existing regulations, initiate reforestation, monitoring system, and enable protection of key forested areas.</td>
+    <td><span id='deforestation-med-cost'>2</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='deforestation-med'></input></td>
+  </tr>
+  <tr>
+    
+    <td>Capacity-building for communities, monitoring system, and conservation forest management.</td>
+    <td><span id='deforestation-low-cost'>1</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='deforestation-low'></input></td>
+  </tr>
+</table>
+</div></div>
+
+<h2>Land Management</h2>
+<div>
+<h3 class='toggle-control'>Land Tenure</h3>
+<div class='toggle'>
+<table class="interventions">
+ 
+   <tr>
+    <th>Intervention</th>
+    <th>Cost (millions)</th>
+    <th>Fund</th>
+  </tr>
+  <tr>
+    
+    <td>Full review of land ownership records, review legal system, and establish system of national arbitration courts for disputes (create a system of documentation and require new land leases).</td>
+    <td><span id='tenure-high-cost'>10</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='tenure-high'></input></td>
+  </tr>
+  <tr>
+    
+    <td>Create new legal framework for future land ownership and establish arbitration courts for dispute settlement.</td>
+    <td><span id='tenure-med-cost'>7</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='tenure-med'></input></td>
+  </tr>
+  <tr>
+    
+    <td>Define user rights, control rights, transfer rights.</td>
+    <td><span id='tenure-low-cost'>3</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='tenure-low'></input></td>
+  </tr>
+</table>
+</div></div>
+
+<div>
+<h3 class='toggle-control'>Nomadic Rights</h3>
+<div class='toggle'>
+<table class="interventions">
+ 
+   <tr>
+    <th>Intervention</th>
+    <th>Cost (millions)</th>
+    <th>Fund</th>
+  </tr>
+  <tr>
+    
+    <td>Manage migration routes to protect and utilize environmental resources and mitigate conflict with settled communities using mapping and education programs.</td>
+    <td><span id='nomadic-high-cost'>5</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id="nomadic-high"></input></td>
+  </tr>
+  <tr>
+    
+    <td>Protect existing migration routes and support community awareness programs to reduce conflicts.</td>
+    <td><span id='nomadic-med-cost'>3</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id="nomadic-med"></input></td>
+  </tr>
+  <tr>
+    
+    <td>Land use study and relocation for improved land use practices.</td>
+    <td><span id='nomadic-low-cost'>1</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='nomadic-low'></input></td>
+  </tr>
+</table>
+</div></div>
+
+<h2>Agriculture</h2>
+<div>
+<h3 class='toggle-control'>Agricultural Practices</h3>
+<div class='toggle'>
+<table class="interventions">
+ 
+   <tr>
+    <th>Intervention</th>
+    <th>Cost (millions)</th>
+    <th>Fund</th>
+  </tr>
+  <tr>
+    
+    <td>Package of new policies that provide subsidized fertilizer, improved seeds, irrigation infrastructure, farm machinery, and agricultural extension services.</td>
+    <td><span id='agriculture-high-cost'>11.5</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id="agriculture-high"></input></td>
+  </tr>
+  <tr>
+    
+    <td>Provision of improved seeds to East and Northern areas.</td>
+    <td><span id="agriculture-med-cost">5.5</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id="agriculture-med"></input></td>
+  </tr>
+  <tr>
+    
+    <td>Development of an agricultural plan.</td>
+    <td><span id="agriculture-low-cost">2</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id="agriculture-low"></input></td>
+  </tr>
+</table>
+</div></div>
+
+<div>
+<h3 class='toggle-control'>Desertification</h3>
+<div class='toggle'>
+<table class="interventions">
+ 
+   <tr>
+    <th>Intervention</th>
+    <th>Cost (millions)</th>
+    <th>Fund</th>
+  </tr>
+  <tr>
+    
+    <td>Develop a Desertification National Action Plan in coordination with forecasting service and baseline studies.</td>
+    <td><span id="desertification-high-cost">22.5</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id="desertification-high"></input></td>
+  </tr>
+  <tr>
+    
+    <td>Establish a National Weather and Drought Forecasting Service, updating existing baseline studies.</td>
+    <td><span id="desertification-med-cost">10</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id="desertification-med"></input></td>
+  </tr>
+  <tr>
+    
+    <td>Study to update baseline studies and identify highly prone areas.</td>
+    <td><span id="desertification-low-cost">5</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id="desertification-low"></input></td>
+  </tr>
+</table>
+</div>
+</div>
+
+<h2>Wildlife and Biodiversity</h2>
+<div>
+<h3 class='toggle-control'>Habitat Protection</h3>
+<div class='toggle'>
+<table class="interventions">
+ 
+   <tr>
+    <th>Intervention</th>
+    <th>Cost (millions)</th>
+    <th>Fund</th>
+  </tr>
+  <tr>
+    
+    <td>Create a monitoring and evaluation system, designate protected areas, identify critical habitats, and coordinate management of these areas.</td>
+    <td><span id='habitat-high-cost'>5.6</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='habitat-high'></input></td>
+  </tr>
+  <tr>
+    
+    <td>Designate protected areas, design eco-tourism strategies, monitoring of critical areas.</td>
+    <td><span id='habitat-med-cost">3.4</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='habitat-med'></input></td>
+  </tr>
+  <tr>
+    
+    <td>Provide ecosystem and wildlife assessments, select conservation targets.</td>
+    <td><span id='habitat-low-cost'>1.8</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='habitat-low'></input></td>
+  </tr>
+</table>
+</div>
+</div>
+
+<div>
+<h2>Water Resources</h2>
+<h3 class='toggle-control'>Integrated Water Resource Management</h3>
+<div class='toggle'>
+<table class="interventions">
+ 
+   <tr>
+    <th>Intervention</th>
+    <th>Cost (millions)</th>
+    <th>Fund</th>
+  </tr>
+  <tr>
+    
+    <td>Design and implement nationwide water resource management plan (e.g. multi-objective decision support system, national policy reform, strengthen national regulatory bodies, economic pricing instruments, conflict resolution techniques and mechanisms).</td>
+    <td><span id='water-high-cost'>20</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='water-high'></input></td>
+  </tr>
+  <tr>
+    
+    <td>Design nationwide water resource management plan (e.g. multi-objective decision support system, management and intervention plan including planning and coordination, water allocation, discharge regulation, monitoring, enforcement and information dissemination).</td>
+    <td><span id='water-med-cost'>10</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='water-med'></input></td>
+  </tr>
+  <tr>
+    
+    <td>Water Resource Assessment: user requirements (demand) and water quantity (supply), risk and vulnerability assessment.</td>
+    <td><span id='water-low-cost'>6.5</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='water-low'></input></td>
+  </tr>
+</table>
+</div>
+</div>
+
+<h2>Environmental Institutions</h2>
+<div>
+<h3 class='toggle-control'>Capacity Building</h3>
+<div class='toggle'>
+<table class="interventions">
+ 
+   <tr>
+    <th>Intervention</th>
+    <th>Cost (millions)</th>
+    <th>Fund</th>
+  </tr>
+  <tr>
+    
+    <td>Capacity building in Environment Ministry, review existing environmental legal framework with recommendations for changes, build environmental information and monitoring system, training of environmental officials, increase staff of environmental and resource agencies.</td>
+    <td><span id='capacity-high-cost'>6</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='capacity-high'></input></td>
+  </tr>
+  <tr>
+    
+    <td>Design environmental information monitoring system, training and capacity building within environment and resource agencies.</td>
+    <td><span id='capacity-med-cost'>3</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='capacity-med'></input></td>
+  </tr>
+  <tr>
+    
+    <td>Training and capacity building of existing Environmental Ministry and related agencies staff and create national environmental resource management strategic plan.</td>
+    <td><span id='capacity-low-cost'>1.7</span></td>
+    <td><input type="checkbox" name="fund" class="fund" id='capacity-low'></input></td>
+  </tr>
+</table>
+</div></div>
 
 </div>
 {% endblock %}

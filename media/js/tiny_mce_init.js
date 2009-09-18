@@ -7,7 +7,7 @@ tinyMCE.init({
   /* content_css:"tinyContent.css", CUSTOM CCNMTL--commenting out*/
   content_css:"../style/general.css",
   mode:"textareas",
-    textarea_trigger:"no_tinymce",
+    editor_deselector : "mceNoEditor",
 	    /*CUSTOM CCNMTL: added 'citation' */
   entity_encoding : "numeric",
 	    /*CUSTOM CCNMTL: added 'citation' */

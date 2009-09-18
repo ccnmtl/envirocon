@@ -217,6 +217,7 @@ def include_world_state(sender,request, **kwargs):
   if not isinstance(sender, Assignment):
     return { 'turn_id':1,
              'user_id':1,#hope there's a user.id==1!
+             'editable':1,
              } #TEMPORARY
   else:
     return {} 

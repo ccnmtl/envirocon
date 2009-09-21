@@ -16,7 +16,7 @@ class ConflictAssessment(GameInterface):
         game_context = {'sampledata':"hello"}#, documents:documents}
         if page_id == "country_narrative":
           # instead of serving the file directly, open it and pipe it over (for security)
-          path = InstalledGames.absolute_path("game_many", "files/country_narrative.pdf") 
+          path = InstalledGames.absolute_path("game_many", "files/ConflictAssessment_CountryNarrative.pdf") 
           file = open(path,"rb")
           response = HttpResponse(mimetype='application/pdf')
           response['Content-Disposition'] = 'attachment; filename=country_narrative.pdf'

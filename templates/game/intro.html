@@ -9,8 +9,13 @@
      DUE: {{ world_state.duedate|date:"D M j Y f A" }}
    </div> <h1>Next Activity: {{game.gamename}}</h1>
   
-  <div id="alertbox"><h2>Alert!</h2>  A cholera epidemic is affecting your population.</div>
-
+  {%if world_state.turn.shock%}
+  <div id="alertbox">
+    <h2>Alert! {{world_state.turn.shock.name}}</h2>  
+    {{world_state.turn.shock.outcome|linebreaksbr}}
+    <!--A cholera epidemic is affecting your population.-->
+  </div>
+  {%endif%}
    
 
  <div id="new_materials">

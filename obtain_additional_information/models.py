@@ -20,6 +20,11 @@ class ObtainAdditionalInformation(GameInterface):
     def public_variables(self):
         return ['additional_information']
 
+    def resources(self,game_state,onopen=False,onclosed=False):
+        if onclosed and game_state:
+            import pdb
+            pdb.set_trace()
+        return []
 InstalledGames.register_game('obtain_additional_information',
                              'Obtain Additional Information',
                              ObtainAdditionalInformation() )

@@ -19,7 +19,10 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
   faculty_info = None
   if faculty_view and request.course.is_faculty(request.user):
     user = User.objects.get(pk=user_id)
-    faculty_info={'teams':[{'r':t,} for t in request.course.team_set.all()]
+    faculty_info={'teams':[{'r':team,}
+                           for team in request.course.team_set.all()],
+                  'shocks':Shock.objects.all(),
+                  #'next_assignment':assignment.get_next_in_order(),
                   }
     if not page_id and 'page2' in assignment.gamepages():
       page_id = 'page2'
@@ -209,18 +212,24 @@ def team_view_data(request,teams=None):
           }
   
 def set_shock(request):
+  """team_id,assignment_id,shock_id
+  OR team_id,assignment_id,shock_name,shock_outcome
+  """
   if request.method=='POST' and request.course.is_faculty(request.user):
     team = get_object_or_404(Team,pk=request.POST['team_id'],course=request.course)
     assignment = get_object_or_404(Assignment,pk=request.POST['assignment_id'],
                                    game__course=request.course)
     turn = assignment.turn(team)
-    if request.POST.has_key('shock_id'):
-      shock = get_object_or_404(Shock,pk=request.POST['shock_id'])
+    if request.POST.get('shock_id',False):
+      if request.POST['shock_id']=='none':
+        shock = None
+      else:
+        shock = get_object_or_404(Shock,pk=request.POST['shock_id'])
     else:
       shock = Shock.objects.create(name=request.POST['shock_name'],outcome=request.POST['shock_outcome'])
     turn.shock = shock
     turn.save()
-    return HttpResponse(shock.id)
+    return HttpResponse(shock)
     
 
 

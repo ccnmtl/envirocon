@@ -1,14 +1,54 @@
 if (typeof GameSystem == 'undefined') {
 
+
+  GameSystemAdmin = function() {
+      
+  }  
+  GameSystemAdmin.prototype.loadShock = function() {
+      var select = $('shockselect');
+      var frm_name = document.forms['shockform'].elements['shock_name'];
+      var frm_outcome = document.forms['shockform'].elements['shock_outcome'];
+      if (!select.value) {
+	  frm_name.disabled = false;
+	  frm_outcome.disabled = false;
+      } else {
+	  var shock_li = $('shock-'+select.value);
+	  if (shock_li) {
+	      var vals = shock_li.innerHTML.split('|');
+	      frm_name.value = vals[0];
+	      frm_outcome.value = vals[1];
+	      
+	      frm_name.disabled = true;
+	      frm_outcome.disabled = true;
+	  }
+      }
+  }
+  GameSystemAdmin.prototype.saveShock = function(evt) {
+      var form = evt.src();
+      var def = doXHR(form.action,{method:'POST',
+                      sendContent:queryString(formContents(form)),
+                      headers:[["Content-type","application/x-www-form-urlencoded"]]
+                      });
+      evt.stop();
+      def.addCallback(function(){alert('Shock Saved!');});
+      
+  }
+
+  GameSystemAdmin.prototype.init = function() {
+      connect('shockform','onsubmit',this,'saveShock');
+      connect('shockselect','onchange',this,'loadShock');
+      this.loadShock();
+  }
   function GameSystemClass() {
-     //this.files = "";
-     this.my_vars = {};
-     this.turn_id = null;
-     this.textarea_default = false;
-     this.action = '/save_assignment';
-     this.loaded = false;
+      //this.files = "";
+      this.my_vars = {};
+      this.turn_id = null;
+      this.textarea_default = false;
+      this.action = '/save_assignment';
+      this.loaded = false;
       ///which submit value was clicked?
-     this.published = 'Submit';
+      this.published = 'Submit';
+      this.admin = new GameSystemAdmin();
   }
   GameSystemClass.prototype.getForm = function() {
       return $('assignment-form');
@@ -68,6 +108,7 @@ if (typeof GameSystem == 'undefined') {
   GameSystemClass.prototype.init = function() {
       this.assignment_form = this.getForm();
       this.formlistener = connect(this.assignment_form,'onsubmit',bind(this.saveState,GameSystem));
+      this.admin.init();
   }
   GameSystemClass.prototype.loadState = function(state) {
      var self = this;
@@ -95,7 +136,7 @@ if (typeof GameSystem == 'undefined') {
   }
 
   window.GameSystem = new GameSystemClass();
-    window.GameSystem.init();
+  window.GameSystem.init();
   addLoadEvent(function() {
       if (!GameSystem.loaded) {
 	  GameSystem.loadState({});

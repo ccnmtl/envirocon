@@ -56,7 +56,7 @@ class Shock(models.Model):
   outcome = models.TextField()
   
   def __unicode__(self):
-    return self.name
+    return "%d: %s" %(self.id,self.name)
 
 # breadcrumb - formerly ActivityTeamNode
 class Turn(models.Model):
@@ -93,6 +93,9 @@ class Turn(models.Model):
         if m.id not in subs:
           return False
     return True
+
+  def next(self):
+    return self.assignment.get_next_in_order().turn(self.team)
       
 
 class StateManager(models.Manager):

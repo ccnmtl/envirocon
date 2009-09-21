@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.servers.basehttp import FileWrapper
 from django.http import HttpResponse, Http404
 import os.path
 
@@ -274,7 +275,7 @@ def servefile(filename, name, mimetype="application/pdf"):
     file = open(path,"rb")
   except:
     raise Http404  #TODO this doesn't do what i expected
-  response = HttpResponse(mimetype=mimetype)
+  response = HttpResponse(FileWrapper(file), mimetype=mimetype)
   response['Content-Disposition'] = 'attachment; filename=%s' % name
-  response.write(file.read())
+  response['Content-Length'] = os.path.getsize(path)
   return response

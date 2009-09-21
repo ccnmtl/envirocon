@@ -23,6 +23,7 @@
 
 <h2>Available Reports</h2>
   {%for report,stuff in game_context.pdfs.items %}
-  <input type='checkbox' name='reports' value='{{report}}'/>{{stuff.1}}<br />    
+  <input type='checkbox' name='reports' 
+	 value='{{report}}'/>{{stuff.1}}<br />    
   {%endfor%}
 </div>{% endblock %}

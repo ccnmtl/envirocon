@@ -26,5 +26,8 @@ urlpatterns = patterns(
     url(r'^faculty_view/(?P<game_id>[^/]*)',
         'faculty_view',
         name='faculty-view'),
+    url(r'^set_shock/?',
+        'set_shock',
+        name='set-shock'),
+)
 
-    )

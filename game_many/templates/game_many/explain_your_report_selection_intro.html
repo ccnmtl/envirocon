@@ -7,3 +7,16 @@
 
 <p>Also, summarize key points from the discussion your group had while trying to reach the decision of which reports to select.</p> 
 {% endblock %}
+
+{% block resources %}
+{% for resource in world_state.resources %}
+  {% ifequal resource.a.app "obtain_additional_information" %}
+    {% for file in resource.res %}
+      {% ifequal file.type "file" %}
+        <li><img source="" /><a href="{{file.page_id}}">{{ file.title }}</a></li>
+      {% endifequal %}
+    {% endfor %}
+  {% endifequal %}
+{% endfor %}
+
+{% endblock %}

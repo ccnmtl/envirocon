@@ -15,7 +15,7 @@
 
  <div id="new_materials">
 <h2>New Materials:</h2> 
-
+<ul>
 {% for resource in world_state.resources %}
   {% ifequal resource.a.name game.gamename %}
     {% for file in resource.res %}
@@ -25,7 +25,9 @@
     {% endfor %}
   {% endifequal %}
 {% endfor %}
-
+{% block resources %}
+{% endblock %}
+</ul>
 </div>
 
  <div id="instructions">

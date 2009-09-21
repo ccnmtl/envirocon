@@ -20,7 +20,7 @@
   {% ifequal resource.a.name game.gamename %}
     {% for file in resource.res %}
       {% ifequal file.type "file" %}
-        <img source="" /><a href="{{file.page_id}}">{{ file.title }}</a>
+        <li><img source="" /><a href="{{file.page_id}}">{{ file.title }}</a></li>
       {% endifequal %}
     {% endfor %}
   {% endifequal %}

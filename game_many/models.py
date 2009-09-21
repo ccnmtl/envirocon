@@ -15,7 +15,7 @@ class ConflictAssessment(GameInterface):
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}#, documents:documents}
         if page_id == "country_narrative":
-          return('file',servepdf("ConflictAssessment_CountryNarrative.pdf", "country_narrative.pdf"))
+          return('file',servepdf("ConflictAssessment_CountryNarrative.pdf", "Country_Narrative.pdf"))
 
         if page_id == "page2":
           return ('game_many/conflict_assessment.html',game_context)
@@ -71,7 +71,7 @@ class RecommendingInterventions(GameInterface):
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
         if page_id == "watching_brief":
-          return('file', servepdf("RecommendingInterventions_FirstWatchingBrief.pdf", "first_watching_brief.pdf"))
+          return('file', servepdf("RecommendingInterventions_FirstWatchingBrief.pdf", "First_Watching_Brief.pdf"))
 
         if page_id == "page2":
           return ('game_many/recommending_interventions.html',game_context)
@@ -162,12 +162,43 @@ class DonorsConference(GameInterface):
 
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
+        if page_id == "summary":
+          return('file', servepdf("DonorsConference_DonorsConferenceSummary.pdf", "Donors_Conference_Summary.pdf"))
+        if page_id == "watching_brief_1":
+          return('file', servepdf("DonorsConference_WatchingBrief1.pdf", "Second_Watching_Brief.pdf"))
+        if page_id == "watching_brief_2":
+          return('file', servepdf("DonorsConference_WatchingBrief2.pdf", "Second_Watching_Brief.pdf"))
+        if page_id == "watching_brief_3":
+          return('file', servepdf("DonorsConference_WatchingBrief3.pdf", "Second_Watching_Brief.pdf"))
+
         if page_id == "page2":
           return ('game_many/donors_conference.html',game_context)
         return ('game_many/donors_conference_intro.html',game_context)
     
     def variables(self,page_id=None):
         return ['donors_conference']
+
+    def resources(self,game_state,onopen=False,onclosed=False):
+        if onopen:
+            return [{"page_id":'summary',
+                     "type":'file',
+                     "title":'Donors Conference Summary.pdf',
+                    },
+                    {"page_id":'watching_brief_1',
+                     "type":'file',
+                     "title":'Second Watching Brief.pdf',
+                    },
+                    {"page_id":'watching_brief_2',
+                     "type":'file',
+                     "title":'Second Watching Brief.pdf',
+                    },
+                    {"page_id":'watching_brief_3',
+                     "type":'file',
+                     "title":'Second Watching Brief.pdf',
+                    },
+                   ]
+        else:
+            return []
 
 InstalledGames.register_game('donors_conference',
                              'Donors Conference',

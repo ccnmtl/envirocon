@@ -22,15 +22,7 @@
 {% block form-inputs %}<div class="report_choices">
 
 <h2>Available Reports</h2>
-  <input type='checkbox' name='reports' value='water'/>Water Resources Management<br />
-  <input type='checkbox' name='reports' value='agriculture'/>Agricultural Practices<br />
-  <input type='checkbox' name='reports' value='economy'/>Economic Profile<br />
-  <input type='checkbox' name='reports' value='humanitarian'/>Humanitarian Situation<br />
-  <input type='checkbox' name='reports' value='political'/>Political Vulnerability Profile<br />
-  <input type='checkbox' name='reports' value='environment'/>Environmental Health<br />
-  <input type='checkbox' name='reports' value='disasters'/>Natural Disasters<br />
-  <input type='checkbox' name='reports' value='population'/>Population<br />
-  <input type='checkbox' name='reports' value='wildlife'/>Wildlife<br />
-  <input type='checkbox' name='reports' value='governance'/>Environmental Governance<br />
-  <input type='checkbox' name='reports' value='forest'/>Forest Resources<br />
+  {%for report,stuff in game_context.pdfs.items %}
+  <input type='checkbox' name='reports' value='{{report}}'/>{{stuff.1}}<br />    
+  {%endfor%}
 </div>{% endblock %}

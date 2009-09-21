@@ -40,9 +40,9 @@ class Assignment(Activity):
 
   def submission(self,team,user=None,allUsers=False):
     if not self.individual or allUsers:
-      return Submission.objects.filter(turn__team=team)
+      return Submission.objects.filter(turn__assignment=self,turn__team=team)
     elif user:
-      return Submission.objects.filter(turn__team=team,author=user)
+      return Submission.objects.filter(turn__assignment=self,turn__team=team,author=user)
     else:
       return None
     
@@ -107,7 +107,7 @@ class StateManager(models.Manager):
         state.save()
         return state
       else:
-        raise State.DoesNotExist
+        raise #re-raise it
   
 class State(models.Model):
   objects = StateManager() #manager
@@ -116,6 +116,9 @@ class State(models.Model):
   team = models.OneToOneField(Team)  # singleton per team
   turn = models.ForeignKey(Turn, null=True, blank=True)
   world_state = models.TextField(blank=True)  # state data
+
+  def __unicode__(self):
+    return u'State of '+unicode(self.team)
 
   @property
   def assignment(self):
@@ -190,7 +193,7 @@ class State(models.Model):
         data = (sub and sub[0].data or None)
         res.append({'a':a,
                     'res':a.gameresources(data,#not de-jsoned
-                                          onopen=(turn.open or data),
+                                          onopen=(turn.open or sub),
                                           onclosed=(not turn.open and data)
                                           )})
     return res

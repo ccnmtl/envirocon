@@ -1,5 +1,5 @@
 from django.db import models
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 import os.path
 
 # Create your models here.
@@ -15,14 +15,7 @@ class ConflictAssessment(GameInterface):
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}#, documents:documents}
         if page_id == "country_narrative":
-          # instead of serving the file directly, open it and pipe it over (for security)
-          path = InstalledGames.absolute_path("game_many", "files/ConflictAssessment_CountryNarrative.pdf") 
-          file = open(path,"rb")
-          response = HttpResponse(mimetype='application/pdf')
-          response['Content-Disposition'] = 'attachment; filename=country_narrative.pdf'
-          response.write(file.read())
-          
-          return ('file',response)
+          return('file',servepdf("ConflictAssessment_CountryNarrative.pdf", "country_narrative.pdf"))
 
         if page_id == "page2":
           return ('game_many/conflict_assessment.html',game_context)
@@ -48,7 +41,7 @@ InstalledGames.register_game('conflict_assessment',
                              
 class ExplainYourReportSelection(GameInterface):
     """
-    Week 2, Recommending Interventions
+    Week 1, Explain Your Report Selection
     """
 
     def pages(self):
@@ -77,12 +70,24 @@ class RecommendingInterventions(GameInterface):
 
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
+        if page_id == "watching_brief":
+          return('file', servepdf("RecommendingInterventions_FirstWatchingBrief.pdf", "first_watching_brief.pdf"))
+
         if page_id == "page2":
           return ('game_many/recommending_interventions.html',game_context)
         return ('game_many/recommending_interventions_intro.html',game_context)
     
     def variables(self,page_id=None):
         return ['recommending_interventions']
+
+    def resources(self,game_state,onopen=False,onclosed=False):
+        if onopen:
+            return [{"page_id":'watching_brief',
+                     "type":'file',
+                     "title":'First Watching Brief.pdf',
+                     }]
+        else:
+            return []
 
 InstalledGames.register_game('recommending_interventions',
                              'Recommending Interventions',
@@ -188,3 +193,16 @@ InstalledGames.register_game('final_paper',
                              'Final Paper',
                              FinalPaper() )
 
+## helper function ##
+def servepdf(filename, name):
+  # instead of serving the file directly, open it and pipe it over (for security)
+  path = InstalledGames.absolute_path("game_many", "files/%s" % filename) 
+  # return 404 if the file DNE
+  try:
+    file = open(path,"rb")
+  except:
+    raise Http404  #TODO this doesn't do what i expected
+  response = HttpResponse(mimetype='application/pdf')
+  response['Content-Disposition'] = 'attachment; filename=%s' % name
+  response.write(file.read())
+  return response

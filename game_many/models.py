@@ -15,7 +15,7 @@ class ConflictAssessment(GameInterface):
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}#, documents:documents}
         if page_id == "country_narrative":
-          return('file',servepdf("ConflictAssessment_CountryNarrative.pdf", "Country_Narrative.pdf"))
+          return('file',servefile("ConflictAssessment_CountryNarrative.pdf", "Country_Narrative.pdf"))
 
         if page_id == "page2":
           return ('game_many/conflict_assessment.html',game_context)
@@ -71,7 +71,7 @@ class RecommendingInterventions(GameInterface):
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
         if page_id == "watching_brief":
-          return('file', servepdf("RecommendingInterventions_FirstWatchingBrief.pdf", "First_Watching_Brief.pdf"))
+          return('file', servefile("RecommendingInterventions_FirstWatchingBrief.pdf", "First_Watching_Brief.pdf"))
 
         if page_id == "page2":
           return ('game_many/recommending_interventions.html',game_context)
@@ -142,12 +142,29 @@ class ResultsFramework(GameInterface):
 
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
+        if page_id == "overview":
+          return('file', servefile("ResultsFramework_Overview.pdf", "Results_Framework_Overview.pdf"))
+        if page_id == "matrices":
+          return('file', servefile("ResultsFramework_ClusterMatrices.xls", "Results_Framework_Cluster_Matrices.xls", "excel/ms-excel"))
         if page_id == "page2":
           return ('game_many/results_framework.html',game_context)
         return ('game_many/results_framework_intro.html',game_context)
     
     def variables(self,page_id=None):
         return ['results_framework']
+
+    def resources(self,game_state,onopen=False,onclosed=False):
+        if onopen:
+            return [{"page_id":'overview',
+                     "type":'file',
+                     "title":'Results Framework Overview.pdf',
+                    },
+                    {"page_id":'matrices',
+                     "type":'file',
+                     "title":'Cluster Matrices.xls'}
+                   ]
+        else:
+            return []
 
 InstalledGames.register_game('results_framework',
                              'Results Framework',
@@ -163,13 +180,13 @@ class DonorsConference(GameInterface):
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
         if page_id == "summary":
-          return('file', servepdf("DonorsConference_DonorsConferenceSummary.pdf", "Donors_Conference_Summary.pdf"))
+          return('file', servefile("DonorsConference_DonorsConferenceSummary.pdf", "Donors_Conference_Summary.pdf"))
         if page_id == "watching_brief_1":
-          return('file', servepdf("DonorsConference_WatchingBrief1.pdf", "Second_Watching_Brief.pdf"))
+          return('file', servefile("DonorsConference_WatchingBrief1.pdf", "Second_Watching_Brief.pdf"))
         if page_id == "watching_brief_2":
-          return('file', servepdf("DonorsConference_WatchingBrief2.pdf", "Second_Watching_Brief.pdf"))
+          return('file', servefile("DonorsConference_WatchingBrief2.pdf", "Second_Watching_Brief.pdf"))
         if page_id == "watching_brief_3":
-          return('file', servepdf("DonorsConference_WatchingBrief3.pdf", "Second_Watching_Brief.pdf"))
+          return('file', servefile("DonorsConference_WatchingBrief3.pdf", "Second_Watching_Brief.pdf"))
 
         if page_id == "page2":
           return ('game_many/donors_conference.html',game_context)
@@ -214,11 +231,11 @@ class FinalPaper(GameInterface):
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
         if page_id == "watching_brief_1":
-          return('file', servepdf("FinalPaper_WatchingBrief1.pdf", "Third_Watching_Brief.pdf"))
+          return('file', servefile("FinalPaper_WatchingBrief1.pdf", "Third_Watching_Brief.pdf"))
         if page_id == "watching_brief_2":
-          return('file', servepdf("FinalPaper_WatchingBrief2.pdf", "Third_Watching_Brief.pdf"))
+          return('file', servefile("FinalPaper_WatchingBrief2.pdf", "Third_Watching_Brief.pdf"))
         if page_id == "watching_brief_3":
-          return('file', servepdf("FinalPaper_WatchingBrief3.pdf", "Third_Watching_Brief.pdf"))
+          return('file', servefile("FinalPaper_WatchingBrief3.pdf", "Third_Watching_Brief.pdf"))
 
         if page_id == "page2":
           return ('game_many/final_paper.html',game_context)
@@ -249,7 +266,7 @@ InstalledGames.register_game('final_paper',
                              FinalPaper() )
 
 ## helper function ##
-def servepdf(filename, name):
+def servefile(filename, name, mimetype="application/pdf"):
   # instead of serving the file directly, open it and pipe it over (for security)
   path = InstalledGames.absolute_path("game_many", "files/%s" % filename) 
   # return 404 if the file DNE
@@ -257,7 +274,7 @@ def servepdf(filename, name):
     file = open(path,"rb")
   except:
     raise Http404  #TODO this doesn't do what i expected
-  response = HttpResponse(mimetype='application/pdf')
+  response = HttpResponse(mimetype=mimetype)
   response['Content-Disposition'] = 'attachment; filename=%s' % name
   response.write(file.read())
   return response

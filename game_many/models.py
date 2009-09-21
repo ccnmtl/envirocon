@@ -213,12 +213,36 @@ class FinalPaper(GameInterface):
 
     def template(self,page_id=None,public_state=None):
         game_context = {'sampledata':"hello"}
+        if page_id == "watching_brief_1":
+          return('file', servepdf("FinalPaper_WatchingBrief1.pdf", "Third_Watching_Brief.pdf"))
+        if page_id == "watching_brief_2":
+          return('file', servepdf("FinalPaper_WatchingBrief2.pdf", "Third_Watching_Brief.pdf"))
+        if page_id == "watching_brief_3":
+          return('file', servepdf("FinalPaper_WatchingBrief3.pdf", "Third_Watching_Brief.pdf"))
+
         if page_id == "page2":
           return ('game_many/final_paper.html',game_context)
         return ('game_many/final_paper_intro.html',game_context)
     
     def variables(self,page_id=None):
         return ['final_paper']
+
+    def resources(self,game_state,onopen=False,onclosed=False):
+        if onopen:
+            return [
+                    {"page_id":'watching_brief_1',
+                     "type":'file',
+                     "title":'Third Watching Brief.pdf',
+                    },
+                    {"page_id":'watching_brief_2',
+                     "type":'file',
+                     "title":'Third Watching Brief.pdf',
+                    },
+                    {"page_id":'watching_brief_3',
+                     "type":'file',
+                     "title":'Third Watching Brief.pdf',
+                    },
+                   ]
 
 InstalledGames.register_game('final_paper',
                              'Final Paper',

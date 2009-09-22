@@ -35,11 +35,11 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
   if turn:
     world = team.state.world_slice(assignment.gamepublic_variables())
     resources = team.state.resources(user)
-    resources_by_type = {}
+    resources_by_app = {}
     for act_meta in resources:
+      app_dict = resources_by_app.setdefault(act_meta['a'].app,{})
       for r in act_meta['res']:
-        t_bin = resources_by_type.setdefault(r.get('type','None'),[])
-        t_bin.append({'a':act_meta['a'],'res':r})
+        app_dict[ r['page_id'] ] =  r
   editable = turn.open and not faculty_info
   world_state = { 'duedate':turn.assignment.close_date,
                   'individual':turn.assignment.individual,
@@ -48,7 +48,7 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
                   'editable':editable,
                   'faculty_info':faculty_info,
                   'resources':resources,
-                  'res_by_type':resources_by_type,
+                  'resources_by_app':resources_by_app,
                   'team':team,
                   'assignment':assignment,
                   'turn':turn,

@@ -124,6 +124,7 @@
 	 <li>12 Month Rainfall: 16mm</li></ul>
        </div>
        <div id="maps">
+	 {%with world_state.resources_by_app as appres %}
 	 <h2>Map</h2>
 	 <div>
 	   <form>
@@ -131,9 +132,15 @@
 	       <tr><td>Choose base map:
 	       <select type="dropdown" id="base-map-dropdown" >
 		 <option value="basic" selected="selected">Basic Geography</option>
+		 {%if appres.obtain_additional_information.population %}
 		 <option value="ethnicgroups">Ethnic Group Distribution</option>
+		 {%endif%}
+		 {%if appres.obtain_additional_information.water %}
 		 <option value="rainfall">Rainfall</option>
+		 {%endif%}
+		 {%if appres.obtain_additional_information.disasters %}
 		 <option value="droughtflood">Drought/Flood Hotspots</option>
+		 {%endif%}
 	       </select>
 
 	       </td></tr>
@@ -141,12 +148,24 @@
 		 <td>
 		   Show Layers: <br />
 		   <ul>
+		     {%if appres.obtain_additional_information.humanitarian %}
 		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="refugee">Refugee Camps</input></li>
+		     {%endif%}
+		     {%if appres.obtain_additional_information.environment %}
 		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="cholera">Cholera Outbreaks</input></li>
+		     {%endif%}
+		     {%if appres.obtain_additional_information.wildlife %}
 		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="parks">Protected Areas</input></li>
+		     {%endif%}
+		     {%if appres.obtain_additional_information.political or appres.FOOOOOOOBARRRRRRRRR %}
 		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="conflict">Conflict Incidents</input></li>
+		     {%endif%}
+		     {%if appres.FOOOOOOOBARRRRRRRRR %}
 		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb2">Watching Brief 2</input></li>
+		     {%endif%}
+		     {%if appres.FOOOOOOOBARRRRRRRRR %}
 		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb3">Watching Brief 3</input></li>
+		     {%endif%}
 		   </ul>
 		 </td></tr></table>
 	       </form>
@@ -178,7 +197,8 @@
 		 <div class="legend conflict" id="legend-conflict"><h2>Conflict Instances</h2></div>
 
 	       </div>
-	     </div>
+	     </div><!-- end map div -->
+	     {%endwith%}
 	   </div><!-- end div data_panel -->
  
  

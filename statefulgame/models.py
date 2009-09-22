@@ -171,16 +171,19 @@ class State(models.Model):
   def current_turn(self):
     return self.advance_turn() or self.turn
 
+  def activity_resources(self,activity,turn,sub,world_state):
+    return activity.gameresources(world_state,
+                                  onopen=(turn.open or sub),
+                                  onclosed=(not turn.open and
+                                            sub and sub[0].published)
+                                  )
+
   def resource_access(self,activity,page_id,user=None):
     if not page_id or page_id in activity.gamepages():
       return True #public page
     turn = activity.turn(self.team)    
     sub = activity.submission(self.team, user)
-    res = activity.gameresources(self.world_slice(),
-                                 onopen=(turn.open or sub),
-                                 onclosed=(not turn.open and
-                                           sub and sub[0].published)
-                                 )
+    res = self.activity_resources(activity,turn,sub,self.world_slice())
     for d in res:
       if page_id==d.get('page_id',None):
         return True
@@ -196,11 +199,8 @@ class State(models.Model):
         turn = a.turn(self.team)
         sub = a.submission(self.team, user)
         res.append({'a':a,
-                    'res':a.gameresources(world_state,
-                                          onopen=(turn.open or sub),
-                                          onclosed=(not turn.open and
-                                                    sub and sub[0].published)
-                                          )})
+                    'res':self.activity_resources(a,turn,sub,world_state),
+                    })
     return res
       
 # breadcrumb

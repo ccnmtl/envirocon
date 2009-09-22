@@ -58,8 +58,22 @@ class Shock(models.Model):
   def __unicode__(self):
     return "%d: %s" %(self.id,self.name)
 
+class TurnManager(models.Manager):
+  #auto-create Turn on get() for access from ????
+  def get(self,*args,**kwargs):
+    try:
+      return super(TurnManager, self).get(*args,**kwargs)
+    except Turn.DoesNotExist:
+      if kwargs.has_key('team') and kwargs.has_key('assignment'):
+        return Turn.objects.create(team=kwargs['team'],
+                                   assignment=kwargs['assignment'])
+      else:
+        raise #re-raise it
+
 # breadcrumb - formerly ActivityTeamNode
 class Turn(models.Model):
+  objects = TurnManager() #manager
+  
   team = models.ForeignKey(Team)
   assignment = models.ForeignKey(Assignment)
   shock = models.ForeignKey(Shock, null=True, blank=True)

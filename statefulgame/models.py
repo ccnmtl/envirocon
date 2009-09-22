@@ -207,9 +207,9 @@ class State(models.Model):
 class Submission(models.Model):
   author = models.ForeignKey(User)
   turn = models.ForeignKey(Turn) #not 1-1 when individual assignments
-  published = models.BooleanField()
+  published = models.BooleanField(default=False)
   data = models.TextField()  # submitted data
-
+  modified = models.DateTimeField('date modified', auto_now=True,editable=False)
 
 
 #SIGNAL SUPPORT

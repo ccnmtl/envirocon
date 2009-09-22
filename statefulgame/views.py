@@ -233,5 +233,6 @@ def set_shock(request):
     
 
 
-def update_assignment(request):
+def update_assignments(request):
+  
   pass

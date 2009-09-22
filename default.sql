@@ -23,7 +23,41 @@ SELECT pg_catalog.setval('auth_user_id_seq', 4, true);
 
 INSERT INTO auth_user VALUES (3, 'stud', '', '', '', 'sha1$72714$cae614e80f17de59c607d720e9cb0501bb0220e1', false, true, false, '2009-08-05 17:32:16.022917-04', '2009-08-05 16:33:25-04');
 INSERT INTO auth_user VALUES (1, 'sky', '', '', 'hi@hi.com', 'sha1$dd6b8$7f6039da841ef979dc348528969a72b1acbe07e9', true, true, true, '2009-08-11 13:53:44.264455-04', '2009-08-11 13:52:08.983845-04');
-INSERT INTO auth_user VALUES (4, 'sbd12', 'Schuyler', 'Duveen', 'sbd12@columbia.edu', '!', true, true, true, '2009-08-11 13:54:15.147253-04', '2009-08-11 13:54:15.097573-04');
+INSERT INTO auth_user VALUES (4, 'sbd12', 'Schuyler', 'Duveen', 'sbd12@columbia.edu', '!', true, true, true, '2009-09-22 17:02:06.949423-04', '2009-08-11 13:54:15.097573-04');
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sky
+--
+
+SELECT pg_catalog.setval('auth_group_id_seq', 5, true);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: sky
+--
+
+INSERT INTO auth_group VALUES (1, 'src.cunix.local:columbia.edu');
+INSERT INTO auth_group VALUES (2, 'staff.cunix.local:columbia.edu');
+INSERT INTO auth_group VALUES (3, 'tlc.cunix.local:columbia.edu');
+INSERT INTO auth_group VALUES (4, 'tlcxml.cunix.local:columbia.edu');
+INSERT INTO auth_group VALUES (5, 'ALL_CU');
 
 
 --
@@ -167,7 +201,7 @@ SET search_path = public, pg_catalog;
 -- Name: courseaffils_course_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sky
 --
 
-SELECT pg_catalog.setval('courseaffils_course_id_seq', 1, true);
+SELECT pg_catalog.setval('courseaffils_course_id_seq', 2, true);
 
 
 --
@@ -175,7 +209,6 @@ SELECT pg_catalog.setval('courseaffils_course_id_seq', 1, true);
 --
 
 COPY courseaffils_course (id, group_id, title, faculty_group_id) FROM stdin;
-1	13	asdf	\N
 \.
 
 

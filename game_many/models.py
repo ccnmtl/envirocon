@@ -110,6 +110,10 @@ class FundingInterventions(GameInterface):
     def variables(self,page_id=None):
         return ['funding_interventions']
 
+    def public_variables(self):
+        return ['funding_interventions']
+
+
 InstalledGames.register_game('funding_interventions',
                              'Funding Interventions',
                              FundingInterventions() )
@@ -194,6 +198,9 @@ class DonorsConference(GameInterface):
         return ('game_many/donors_conference_intro.html',game_context)
     
     def variables(self,page_id=None):
+        return ['donors_conference']
+
+    def public_variables(self):
         return ['donors_conference']
 
     def resources(self,game_state,onopen=False,onclosed=False):

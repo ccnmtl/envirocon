@@ -31,6 +31,8 @@ class GameInterface:
         """add these variables into the worldstate
         usable for other games
         don't include resource stuff here--only more interesting info
+        NOTE: apps that are JUST CONSUMERS of the variable should NOT
+        add it here, but in the variables() method.
         """
         return []
         
@@ -38,8 +40,12 @@ class GameInterface:
         """return a list of dicts may not be listed in pages()
         which are global resources for general availability at
         onset of starting the game or at the close of the game
+        
+        @param game_state: a dict() of the variables saved in
+        other applications that the apps put in public_variables()
         """
-        #return [{"page_id":"foo","type":"map"},{"page_id":"foo","type":"file"}]
+        #return [{"page_id":"foo","type":"map"}
+        #        {"page_id":"foo","type":"file","title":"Title.pdf"}]
         return []
 
 

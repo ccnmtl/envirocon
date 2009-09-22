@@ -130,14 +130,15 @@ class State(models.Model):
   @property
   def world_ro(self):
     try:
-      return json.loads(team.state.world_state)
+      return json.loads(self.world_state)
     except:
       return {}
 
-  def world_slice(self,vars):
+  def world_slice(self,vars=None):
     try:
-      world = json.loads(team.state.world_state)
-      return dict([(k,v) for k,v in world.setdefault('app_vars',{}).items() if k in vars])
+      world = json.loads(self.world_state)
+      return dict([(k,v) for k,v in world.setdefault('app_vars',{}).items()
+                   if vars is None or k in vars])
     except:
       return {}
 
@@ -175,10 +176,10 @@ class State(models.Model):
       return True #public page
     turn = activity.turn(self.team)    
     sub = activity.submission(self.team, user)
-    data = (sub and sub[0].data or None)
-    res = activity.gameresources(data,#not de-jsoned
-                                 onopen=(turn.open or data),
-                                 onclosed=(not turn.open and data)
+    res = activity.gameresources(self.world_slice(),
+                                 onopen=(turn.open or sub),
+                                 onclosed=(not turn.open and
+                                           sub and sub[0].published)
                                  )
     for d in res:
       if page_id==d.get('page_id',None):
@@ -190,14 +191,15 @@ class State(models.Model):
     res = []
     if self.turn:
       game = self.turn.assignment.game
+      world_state = self.world_slice()
       for a in game.assignment_set.all():
         turn = a.turn(self.team)
         sub = a.submission(self.team, user)
-        data = (sub and sub[0].data or None)
         res.append({'a':a,
-                    'res':a.gameresources(data,#not de-jsoned
+                    'res':a.gameresources(world_state,
                                           onopen=(turn.open or sub),
-                                          onclosed=(not turn.open and data)
+                                          onclosed=(not turn.open and
+                                                    sub and sub[0].published)
                                           )})
     return res
       

@@ -77,6 +77,7 @@ if (typeof GameSystem == 'undefined') {
   }
   GameSystemClass.prototype.saveState = function(evt) {
       if (tinyMCE) {tinyMCE.triggerSave();}
+      var def = false;
       try {
 	  //easy default
 	  if (this.textarea_default) {
@@ -84,21 +85,31 @@ if (typeof GameSystem == 'undefined') {
 		  this.my_vars[game_variables[0]] = this.textarea_default.value; 
               }
 	  }
-	  doXHR(this.action,{method:'POST',
-                             sendContent:queryString({data:serializeJSON(this.my_vars),
-						      turn_id:this.turn_id,
-						      published:this.published
-						     }),
-                             headers:[["Content-type","application/x-www-form-urlencoded"]]
-			    });
+	  def = doXHR(this.action,
+		      {method:'POST',
+                       sendContent:queryString({data:serializeJSON(this.my_vars),
+						turn_id:this.turn_id,
+						published:this.published
+					       }),
+                       headers:[["Content-type","application/x-www-form-urlencoded"]]
+		      });
       } 
-      catch (e) {
+      catch (err) {
 	  console.log(this);
-	  console.log(e);
+	  console.log(err);
       }
       finally {
 	  //return false;
 	  if (evt) evt.stop();
+	  if (this.published=='Submit') {
+	      def.addCallback(function() {
+		  document.location = '/';
+	      });
+	  } else {
+	      def.addCallback(function() {
+		  alert('Draft saved.');
+	      });
+	  }
       }
   }
 

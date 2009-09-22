@@ -35,9 +35,13 @@ if (typeof GameSystem == 'undefined') {
   }
 
   GameSystemAdmin.prototype.init = function() {
-      connect('shockform','onsubmit',this,'saveShock');
-      connect('shockselect','onchange',this,'loadShock');
-      this.loadShock();
+      try {
+	  connect('shockform','onsubmit',this,'saveShock');
+	  connect('shockselect','onchange',this,'loadShock');
+	  this.loadShock();
+      } catch(e) {
+	  ///NO ADMIN (E.G. during student login)
+      }
   }
   function GameSystemClass() {
       //this.files = "";

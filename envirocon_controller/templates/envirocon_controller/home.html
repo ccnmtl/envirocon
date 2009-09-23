@@ -14,9 +14,26 @@
 {% block content %}
   {%if user.is_anonymous%}
   <div class="textblock">
-  <h1>Welcome!</h1>
-  <p><a href="{%url djangowind.views.login %}?next=/">LOGIN!</a>
-  </p>
+    <h1>Welcome!</h1>
+    <p>
+      <a href="{%url djangowind.views.login %}?next=/">LOGIN!</a>
+    </p>
+    Welcome to ground | work, an online conflict simulation. This program is designed as an online learning tool to accompany and enhance the material discussed in this course on environment and security. The tool should be used as a method to apply both your theoretical understanding of the material, review practical program design concepts and options relevant to this case study and identified in the course readings, and encourage negotiating and team building in cross-disciplinary teams. It is also intended to help you reflect on three main themes that run through the course.
+</p><p>
+<ol>
+<li>The impact of conflict on the environment (with a focus on post-conflict scenarios)</li>
+<li>The impact of natural resources on conflict (with a focus on active conflict scenarios)</li>
+<li>How natural resources can contribute to conflict prevention</li>
+</ol>
+</p><p>
+The simulation occurs based upon the fictional narrative of a country called Nimpala. Although the scenario is fabricated, it is derived from several real world case studies and framed around the key themes and topics discussed throughout the semester.
+</p><p>
+The simulation will be primarily a group activity. Except for the initial conflict analysis and the final writing assignment, you will be divided into teams to complete the rest of the assignments. These groups will represent a UN Country Team responsible for guiding Nimpala's post-conflict needs assessments and help guide the donor distribution of reconstruction and restoration funding.
+</p><p>
+This simulation is not a predictive model and there are no right or wrong decisions. Instead, ground | work is meant to provide a forum to discuss and debate assessment, prioritization, and sequencing of post-conflict aid, specifically as it relates to natural resources and the environment.
+</p><p>
+Good luck and please don't hesitate to ask for assistance throughout the process. 
+</p>
   </div>
   {%else%}
   <div class="textblock">

@@ -121,6 +121,9 @@
 	    {%if is_faculty %}
 	      {%ifequal ateam.data.state.turn ateam.turn %}
 	        <div class="teamoptions"><div
+		   {%if ateam.sub.0.published %}
+		   class="on" title="published"
+		   {%endif%}
 		  >{{ateam.data.index}}</div></div>
 	      {%endifequal%}
 	    {%endif%}

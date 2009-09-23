@@ -5,7 +5,7 @@ from django.template import RequestContext, loader
 from django.db import models
 from django.core.urlresolvers import reverse
 
-from django.forms.models import modelformset_factory,inlineformset_factory
+from django.forms.models import inlineformset_factory
 
 import simplejson as json
 
@@ -70,8 +70,8 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
 
 # saves an assignment blob to the database
 def save_assignment(request):
-  data = getattr(request,request.method).get('data',None)
-  turn_id = getattr(request,request.method)['turn_id']
+  data = request.REQUEST.get('data',None)
+  turn_id = request.REQUEST['turn_id']
   turn = Turn.objects.get(id=turn_id)
   if not turn.open:
     return HttpResponseForbidden()
@@ -97,7 +97,7 @@ def save_assignment(request):
     if dirty:
       state.save_world(world)
   submission.data = data
-  submission.published = (getattr(request,request.method).get('published','Draft').find('Draft') < 0 )
+  submission.published = (request.REQUEST.get('published','Draft').find('Draft') < 0 )
   submission.save()
 
   
@@ -181,14 +181,20 @@ def faculty_assignment_review(request):
   
 
 
-def team_view_data(request,teams=None):
+def team_view_data(request,teams=None,game=None):
   """
   past assignments (with title,status,shock)
   
   """
   is_faculty = (request.user in request.course.faculty)
+  assignment_forms = None
   if is_faculty:
     teams =Team.objects.filter(course=getattr(request,'course',None))
+    AssignmentFormSet = inlineformset_factory(Game, Assignment,
+                                              can_delete=False)
+    if game is None:
+      game = request.course.game_set.all()[0]
+    assignment_forms = AssignmentFormSet(instance=game)
   else:
     teams = [Team.objects.by_user(request.user, getattr(request,'course',None))]
 
@@ -209,6 +215,7 @@ def team_view_data(request,teams=None):
   return {'teams':teams,
           'assignments':assignments,
           'is_faculty':is_faculty,
+          'formset':assignment_forms,
           }
   
 def set_shock(request):

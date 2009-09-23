@@ -192,39 +192,48 @@ def team_view_data(request,teams=None,game=None):
   """
   is_faculty = (request.user in request.course.faculty)
   assignment_forms = None
+  team = None
+  AssignmentFormSet = inlineformset_factory(Game, Assignment,
+                                            can_delete=False,
+                                            form=BasicAssignmentForm,
+                                            extra=0,
+                                            )
+
+  if game is None:
+    game = request.course.game_set.all()[0]
+    
+  team = Team.objects.by_user(request.user, getattr(request,'course',None))
   if is_faculty:
     teams =Team.objects.filter(course=getattr(request,'course',None))
-    AssignmentFormSet = inlineformset_factory(Game, Assignment,
-                                              can_delete=False,
-                                              form=BasicAssignmentForm,
-                                              extra=0)
-    if game is None:
-      game = request.course.game_set.all()[0]
     if request.method == 'POST':
       post_forms = AssignmentFormSet(request.POST, request.FILES, instance=game)
-      post_forms.is_valid()
-    assignment_forms = AssignmentFormSet(instance=game)
+      if post_forms.is_valid():
+        post_forms.save()
   else:
-    teams = [Team.objects.by_user(request.user, getattr(request,'course',None))]
+    teams = [team]
 
-  assignments = [{'data':a,'teams':[],'hidden':False,'current':False}
-                 for a in Assignment.objects.filter(game__course=request.course)]
+
+  assignment_forms = AssignmentFormSet(instance=game)
+
+  assignments = [{'data':f.instance,'form':f,
+                  'teams':[],'hidden':False,'current':False,}
+                 for f in assignment_forms.forms]
   for t in teams:
     for d in assignments:
-      turn = None      
-      try:
-        turn,created = Turn.objects.get_or_create(assignment=d['data'],team=t)
-        if not (turn.open or turn.complete):
-          d['hidden'] = True
-        elif turn == t.state.turn:
-          d['current'] = True
-      except:
-        pass
-      d['teams'].append(turn)
+      turn = d['data'].turn(t)
+      if not (turn.open or turn.complete):
+        d['hidden'] = True
+      elif turn == t.state.turn:
+        d['current'] = True
+      d['teams'].append({'turn':turn,
+                         'data':t,
+                         'sub':d['data'].submission(t, request.user, is_faculty)
+                         })
   return {'teams':teams,
           'assignments':assignments,
           'is_faculty':is_faculty,
           'formset':assignment_forms,
+          'team':team,#user's team (implies a student)
           }
   
 def set_shock(request):

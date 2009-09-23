@@ -15,7 +15,7 @@
   {%if user.is_anonymous%}
   <div class="textblock">
   <h1>Welcome!</h1>
-  <p><a href="{%url djangowind.views.login %}">LOGIN!</a>
+  <p><a href="{%url djangowind.views.login %}?next=/">LOGIN!</a>
   </p>
   </div>
   {%else%}
@@ -49,33 +49,11 @@
  <h2>Assignments</h2>
   <!--fake table-->
 
-  <form method="POST">
-  <input type="submit" value="Save" />
-  {{ formset.management_form }}
-
-  <table>
-    {%for aform in formset.forms%}
-    <tr>
-      <td> {% for hidden in aform.hidden_fields %}
-                {{ hidden }}
-		{% endfor %}
-      </td>
-      {%for field in aform%}
-       {%ifequal field.name "open"%}
-       <td>{{ field.errors }}
-            {{ field.label_tag }}: {{ field }}</td>
-       {%endifequal%}
-       {%ifequal field.name "close_date"%}
-       <td>{{ field.errors }}
-            {{ field.label_tag }}: {{ field }}
-	    {{ field.widget }}
-       </td>
-       {%endifequal%}
-      {%endfor%}
-    </tr>
-    {%endfor%}
-  </table>
-  </form>
+  {%if is_faculty%}
+     <form method="POST">
+     <input type="submit" value="Save" />
+       {{ formset.management_form }}
+  {%endif%}
   <table>
     <thead>
       <tr>
@@ -100,33 +78,70 @@
 		<div>CURRENT ASSIGNMENT</div>
             {%endif%}
 	  {%endif%}
-	  <a href="{%url assignment-page assn.data.id %}">
+	  
 	    {{assn.data.name}}
-	  </a>
+	    {%if team %}
+	    <br />
+	    <a href="{%url assignment-page assn.data.id %}">
+	      {%ifequal assn.data team.state.turn.assignment %}
+	      Open
+	      {%else%}
+	      Review
+	      {%endifequal%}
+	    </a>
+	    {%endif%}
+	    {%if is_faculty%}
+	    <br />
+	    <a href="{%url assignment-page assignment_id=assn.data.id,faculty_view="/instructor/",user_id=teams.0.group.user_set.all.0.id %}">Review Submissions</a>
+	    Open: {{assn.form.visible_fields.1}}
+	    {%endif%}
 	</td>
 	<td>{{assn.data.individual|yesno:"Individual,Group"}}
 	</td>
-	<td>{{assn.data.close_date|date:"l, n/j/y, P"}} Open:{{assn.data.open}}</td>
-	<td>Submitted 2/11/09 11:54PM
-	  {%for turn in assn.teams %}
-	  {{turn.complete}}
-	  {{turn.shock.name}}
+	<td style="width:15em;">
+	  {%if is_faculty%}
+	    {% for hidden in assn.form.hidden_fields %}
+	       {{ hidden }}
+	    {% endfor %}
+
+	    {{assn.form.visible_fields.0}}
+          {%else%}
+            {{assn.data.close_date|date:"l, n/j/y, P"}}
+	  {%endif%}
+	</td>
+	<td>
+	  {%for ateam in assn.teams %}
+	    {%ifequal team ateam.data %}
+	    <!--STUDENT-->
+	      {%if ateam.sub %}
+	         {%if ateam.sub.0.published %}
+		    Submitted
+		    {{ateam.sub.0.modified|date:"n/j/y, P"}}
+		 {%else%}
+		    Draft
+		 {%endif%}
+	      {%endif%}
+	      {%if ateam.turn.shock%}
+	        Shock: {{ateam.turn.shock.name}}
+	      {%endif%}
+	    {%endifequal%}
+	    {%if is_faculty %}
+	      {%ifequal ateam.data.state.turn ateam.turn %}
+	        <div class="teamoptions"><div
+		  class="on">{{ateam.data.index}}</div></div>
+	      {%endifequal%}
+	    {%endif%}
 	  {%endfor%}
-	  <div class="teamoptions">{% for turn in assn.teams %}<div
-		  class="on"
-		data-turnid="{{turn.id}}"
-	      >{{turn.team.index}} 
-	    <a href="{%url assignment-page assignment_id=turn.assignment.id,faculty_view="/instructor/",user_id=turn.team.group.user_set.all.0.id %}">view</a>
-	  </div>{% endfor %}</div
-	      >
 	</td>
       </tr>
       {%endif%}
       {%endfor%}
     </tbody>
   </table>
-  
-   
+  {%if is_faculty%}
+  <input type="submit" value="Save" />
+  </form>  
+  {%endif%}
 
   <h2>Temp game list (TEMP:Just to Display)</h2>
   <ul>

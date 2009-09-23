@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block css %}
+{{formset.media}}
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -48,6 +49,33 @@
  <h2>Assignments</h2>
   <!--fake table-->
 
+  <form method="POST">
+  <input type="submit" value="Save" />
+  {{ formset.management_form }}
+
+  <table>
+    {%for aform in formset.forms%}
+    <tr>
+      <td> {% for hidden in aform.hidden_fields %}
+                {{ hidden }}
+		{% endfor %}
+      </td>
+      {%for field in aform%}
+       {%ifequal field.name "open"%}
+       <td>{{ field.errors }}
+            {{ field.label_tag }}: {{ field }}</td>
+       {%endifequal%}
+       {%ifequal field.name "close_date"%}
+       <td>{{ field.errors }}
+            {{ field.label_tag }}: {{ field }}
+	    {{ field.widget }}
+       </td>
+       {%endifequal%}
+      {%endfor%}
+    </tr>
+    {%endfor%}
+  </table>
+  </form>
   <table>
     <thead>
       <tr>

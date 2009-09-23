@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 import os.path
-
+from django.views.i18n import null_javascript_catalog
 media_root = os.path.join(os.path.dirname(__file__),"media")
 
 urlpatterns = patterns(
@@ -29,5 +29,10 @@ urlpatterns = patterns(
     url(r'^set_shock/?',
         'set_shock',
         name='set-shock'),
+    url(r'^jsi18n/$',
+        null_javascript_catalog,
+        name='jsi18n'),
+
+
 )
 

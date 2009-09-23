@@ -8,6 +8,7 @@ Survey = models.get_model('survey','survey')
 from game.installed_games import InstalledGames
 from statefulgame.views import team_view_data
 
+
 def home(request):
     todo = filled_out_a_profile(request)
     state = {'todo':todo,

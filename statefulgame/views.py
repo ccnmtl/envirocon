@@ -1,4 +1,6 @@
 from statefulgame.models import *
+from statefulgame.forms import BasicAssignmentForm
+
 from django.http import HttpResponse,Http404,HttpResponseRedirect,HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext, loader
@@ -28,6 +30,8 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
       page_id = 'page2'
     
   team = Team.objects.by_user(user, getattr(request,"course",None))
+  if team is None:
+    raise Http404
 
   if not team.state.resource_access(assignment,page_id,user):
     return HttpResponseForbidden('You do not have access to this activity resource at this time.')
@@ -191,9 +195,14 @@ def team_view_data(request,teams=None,game=None):
   if is_faculty:
     teams =Team.objects.filter(course=getattr(request,'course',None))
     AssignmentFormSet = inlineformset_factory(Game, Assignment,
-                                              can_delete=False)
+                                              can_delete=False,
+                                              form=BasicAssignmentForm,
+                                              extra=0)
     if game is None:
       game = request.course.game_set.all()[0]
+    if request.method == 'POST':
+      post_forms = AssignmentFormSet(request.POST, request.FILES, instance=game)
+      post_forms.is_valid()
     assignment_forms = AssignmentFormSet(instance=game)
   else:
     teams = [Team.objects.by_user(request.user, getattr(request,'course',None))]
@@ -204,7 +213,7 @@ def team_view_data(request,teams=None,game=None):
     for d in assignments:
       turn = None      
       try:
-        turn = Turn.objects.get(assignment=d['data'],team=t)
+        turn,created = Turn.objects.get_or_create(assignment=d['data'],team=t)
         if not (turn.open or turn.complete):
           d['hidden'] = True
         elif turn == t.state.turn:

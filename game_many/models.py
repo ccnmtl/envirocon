@@ -8,6 +8,61 @@ from game.installed_games import InstalledGames,GameInterface
 
 fileroot = os.path.abspath(".") + "/game_many/files/"
 
+# point values for funding choices
+def funding_points(week=4):
+  value = {
+             'water-supply-high':1,
+             'water-supply-med' :2,
+             'water-supply-low' :3,
+             'sanitation-high'  :1,
+             'sanitation-med'   :2,
+             'sanitation-low'   :3,
+             'waste-high'       :2,
+             'waste-med'        :1,
+             'waste-low'        :3,
+             'timber-high'      :2,
+             'timber-med'       :2,
+             'timber-low'       :1,
+             'deforestation-high':2,
+             'deforestation-med':1,
+             'deforestation-low':3,
+             'tenure-high'      :3,
+             'tenure-med'       :2,
+             'tenure-low'       :1,
+             'nomadic-high'     :3,
+             'nomadic-med'      :2,
+             'nomadic-low'      :1,
+             'agriculture-high' :2,
+             'agriculture-med'  :3,
+             'agriculture-low'  :1,
+             'desertification-high':3,
+             'desertification-med':2,
+             'desertification-low':1,
+             'habitat-high'     :3,
+             'habitat-med'      :2,
+             'habitat-low'      :1,
+             'water-high'       :2,
+             'water-med'        :1,
+             'water-low'        :3,
+             'capacity-high'    :1,
+             'capacity-med'     :2,
+             'capacity-low'     :3,
+            }
+  if week == 6:
+    value['timber-med'] = 1
+    value['timber-low'] = 3
+    value['tenure-med'] = 1
+    value['tenure-low'] = 2
+    value['nomadic-high'] = 1
+    value['nomadic-low'] = 3
+    value['agricultural-med'] = 1
+    value['agricultural-low'] = 3
+    value['desertification-high'] = 2
+    value['desertification-med'] = 1
+    value['desertification-low'] = 3
+
+  return value
+
 ## week1 ##
 class ConflictAssessment(GameInterface):
     def pages(self):
@@ -179,6 +234,7 @@ class DonorsConference(GameInterface):
     """
     Week 6, Donors Conference & More Interventions
     """
+    
     def pages(self):
         return ('index','page2',)
 
@@ -204,16 +260,21 @@ class DonorsConference(GameInterface):
         return ['donors_conference']
 
     def resources(self,game_state,onopen=False,onclosed=False):
-        #print game_state
         if onopen and game_state.has_key('funding_interventions'):
-          wb1 = {"page_id":'watching_brief_1', "type":'file', "title":'Second Watching Brief.pdf'}
-          wb2 = {"page_id":'watching_brief_2', "type":'file', "title":'Second Watching Brief.pdf'}
-          wb3 = {"page_id":'watching_brief_3', "type":'file', "title":'Second Watching Brief.pdf'}
+          funded = game_state['funding_interventions']
+          pts = funding_points()
+          points = sum([pts[intervention] for intervention in funded])
+          if points < 17:
+            wb = {"page_id":'watching_brief_1', "type":'file', "title":'Second Watching Brief.pdf'}
+          elif points < 30:
+            wb = {"page_id":'watching_brief_2', "type":'file', "title":'Second Watching Brief.pdf'}
+          else:
+            wb = {"page_id":'watching_brief_3', "type":'file', "title":'Second Watching Brief.pdf'}
           return [{"page_id":'summary',
                    "type":'file',
                    "title":'Donors Conference Summary.pdf',
                   },
-                  wb1
+                  wb
                   ]
         else:
             return []

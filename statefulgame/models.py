@@ -190,7 +190,7 @@ class State(models.Model):
                                   onopen=(turn.open or sub),
                                   onclosed=(not turn.open and
                                             sub and sub[0].published)
-                                  )
+                                  ) or []
 
   def resource_access(self,activity,page_id,user=None):
     if not page_id or page_id in activity.gamepages():

@@ -204,24 +204,17 @@ class DonorsConference(GameInterface):
         return ['donors_conference']
 
     def resources(self,game_state,onopen=False,onclosed=False):
-        if onopen:
-            return [{"page_id":'summary',
-                     "type":'file',
-                     "title":'Donors Conference Summary.pdf',
-                    },
-                    {"page_id":'watching_brief_1',
-                     "type":'file',
-                     "title":'Second Watching Brief.pdf',
-                    },
-                    {"page_id":'watching_brief_2',
-                     "type":'file',
-                     "title":'Second Watching Brief.pdf',
-                    },
-                    {"page_id":'watching_brief_3',
-                     "type":'file',
-                     "title":'Second Watching Brief.pdf',
-                    },
-                   ]
+        #print game_state
+        if onopen and game_state.has_key('funding_interventions'):
+          wb1 = {"page_id":'watching_brief_1', "type":'file', "title":'Second Watching Brief.pdf'}
+          wb2 = {"page_id":'watching_brief_2', "type":'file', "title":'Second Watching Brief.pdf'}
+          wb3 = {"page_id":'watching_brief_3', "type":'file', "title":'Second Watching Brief.pdf'}
+          return [{"page_id":'summary',
+                   "type":'file',
+                   "title":'Donors Conference Summary.pdf',
+                  },
+                  wb1
+                  ]
         else:
             return []
 

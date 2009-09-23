@@ -223,7 +223,7 @@ def team_view_data(request,teams=None,game=None):
       turn = d['data'].turn(t)
       if not (turn.open or turn.complete):
         d['hidden'] = True
-      elif turn == t.state.turn:
+      elif t==team and turn == t.state.turn:
         d['current'] = True
       d['teams'].append({'turn':turn,
                          'data':t,

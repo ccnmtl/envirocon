@@ -72,22 +72,15 @@
 	  {%endif%}
 	  >
 	<td>
-	  {%if not is_faculty%}
-	    <!--STUDENT-->
-	    {%if assn.current %}
-		<div>CURRENT ASSIGNMENT</div>
-            {%endif%}
-	  {%endif%}
-	  
 	    {{assn.data.name}}
 	    {%if team %}
 	    <br />
 	    <a href="{%url assignment-page assn.data.id %}">
-	      {%ifequal assn.data team.state.turn.assignment %}
+	      {%if assn.current %}
 	      Open
 	      {%else%}
 	      Review
-	      {%endifequal%}
+	      {%endif%}
 	    </a>
 	    {%endif%}
 	    {%if is_faculty%}
@@ -128,7 +121,7 @@
 	    {%if is_faculty %}
 	      {%ifequal ateam.data.state.turn ateam.turn %}
 	        <div class="teamoptions"><div
-		  class="on">{{ateam.data.index}}</div></div>
+		  >{{ateam.data.index}}</div></div>
 	      {%endifequal%}
 	    {%endif%}
 	  {%endfor%}

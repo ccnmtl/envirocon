@@ -1023,3 +1023,22 @@ tr.current
     border-collapse: collapse;
 }
 
+
+
+#new_materials
+{ 
+  float:right;
+  width:25em;
+  background-color:#DFDFDF;
+  padding-top:0px;
+  margin-top:-10px;
+  padding-bottom:10px;
+ }
+
+#new_materials h2
+{ 
+  padding-top:0px;
+  margin-top:10px;
+  text-align:center;
+  
+  }

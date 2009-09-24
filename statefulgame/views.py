@@ -41,7 +41,7 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
     resources = team.state.resources(user)
     resources_by_app = {}
     for act_meta in resources:
-      app_dict = resources_by_app.setdefault(act_meta['a'].app,{})
+      app_dict = resources_by_app.setdefault(act_meta['a'].app,OrderedDict())
       for r in act_meta['res']:
         app_dict[ r['page_id'] ] =  r
   editable = turn.open and not faculty_info
@@ -57,6 +57,7 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
                   'assignment':assignment,
                   'turn':turn,
                   'user_id':user.id,
+                  'submission':assignment.submission(team,user)
                   }
   # TODO: if you go to the activity page directly but it is
   # also your current assignment, it should pull that assign. data
@@ -258,6 +259,23 @@ def set_shock(request):
     
 
 
-def update_assignments(request):
-  
-  pass
+class OrderedDict:
+  #mostly
+  dic = {}
+  array = []
+  def __get__(self,key):
+    return self.dic[key]
+
+  def __setitem__(self,key,val):
+    if key in self.dic:
+      self.dic[key] = val
+    else:
+      self.array.append(key)
+      self.dic[key] = val
+
+  def values(self):
+    return [self.dic[k] for k in self.array]
+
+  def items(self):
+    return [(k,self.dic[k]) for k in self.array]
+    

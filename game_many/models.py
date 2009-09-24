@@ -239,7 +239,17 @@ class DonorsConference(GameInterface):
         return ('index','page2',)
 
     def template(self,page_id=None,public_state=None):
-        game_context = {'sampledata':"hello"}
+        points = 0
+        if public_state.has_key('funding_interventions'):
+          funded = game_state['funding_interventions']
+          pts = funding_points()
+          points = sum([pts[intervention] for intervention in funded])
+          
+        #import pdb
+        #pdb.set_trace()
+
+        game_context = {'points':points}
+
         if page_id == "summary":
           return('file', servefile("DonorsConference_DonorsConferenceSummary.pdf", "Donors_Conference_Summary.pdf"))
         if page_id == "watching_brief_1":

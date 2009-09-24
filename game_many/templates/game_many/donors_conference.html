@@ -2,6 +2,14 @@
 
 {% block game_js %}
   <script type="text/javascript" src="{{GAME_MEDIA}}js/game_funding.js"></script>
+
+  <script type="text/javascript">
+  var ineligible = [
+  {% for intervention in game_context.ineligible %}
+    "{{intervention}}",
+  {% endfor %}
+  ];
+</script>
 {% endblock %}
 {% block game_css %}
   <!-- add css link here -->

@@ -243,8 +243,9 @@ class DonorsConference(GameInterface):
         points = 0
         if public_state['resources_by_app'].has_key('donors_conference'):
           points = public_state['resources_by_app']['donors_conference']['week4points']['value']
+          ineligible = public_state['resources_by_app']['donors_conference']['ineligible']['value']
 
-        game_context = {'week4points':points}
+        game_context = {'week4points':points, 'ineligible':ineligible}
 
         if page_id == "summary":
           return('file', servefile("DonorsConference_DonorsConferenceSummary.pdf", "Donors_Conference_Summary.pdf"))
@@ -267,7 +268,11 @@ class DonorsConference(GameInterface):
 
     def resources(self,game_state,onopen=False,onclosed=False):
         if onopen and game_state.has_key('funding_interventions'):
-          points = funding_points(game_state['funding_interventions'])
+          funded = game_state['funding_interventions']
+
+          ineligible = [intervention for intervention in funded if intervention in ['timber-low', 'nomadic-low', 'agricultural-low', 'desertification-low', 'habitat-low', 'water-low', ]]
+
+          points = funding_points(funded)
           if points < 17:
             wb = {"page_id":'watching_brief_1', "type":'file', "title":'Second Watching Brief.pdf'}
           elif points < 30:
@@ -280,6 +285,7 @@ class DonorsConference(GameInterface):
                   },
                   wb,
                   {"page_id":'week4points', "type":'data', 'value':points},
+                  {"page_id":'ineligible', "type":'data', "value":ineligible},
                   ]
         else:
             return []

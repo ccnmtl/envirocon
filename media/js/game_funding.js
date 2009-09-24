@@ -3,6 +3,8 @@ var funding_vars = {};
 var starting_budget = 0;
 var budget = 0;
 
+var eligible = [];
+
 function updateBudget() {
   budget = starting_budget;
   forEach(getElementsByTagAndClassName("input", "fund"), function(elem) {
@@ -141,6 +143,11 @@ function initFunding() {
   });
 
   updateBudget();  // run once after loading saved data
+  
+  // disable ineligible interventions, if any
+  for(var i=0; i<ineligible.length; i++) {
+    $(ineligible[i]).disabled = true;
+  }
 }
 
 addLoadEvent(initFunding);

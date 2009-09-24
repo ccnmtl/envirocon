@@ -262,7 +262,7 @@ class OrderedDict:
   #mostly
   dic = {}
   array = []
-  def __get__(self,key):
+  def __getitem__(self,key):
     return self.dic[key]
 
   def __setitem__(self,key,val):

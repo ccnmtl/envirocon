@@ -57,7 +57,6 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
                   'assignment':assignment,
                   'turn':turn,
                   'user_id':user.id,
-                  'submission':assignment.submission(team,user)
                   }
   # TODO: if you go to the activity page directly but it is
   # also your current assignment, it should pull that assign. data

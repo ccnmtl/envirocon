@@ -240,15 +240,10 @@ class DonorsConference(GameInterface):
 
     def template(self,page_id=None,public_state=None):
         points = 0
-        if public_state.has_key('funding_interventions'):
-          funded = game_state['funding_interventions']
-          pts = funding_points()
-          points = sum([pts[intervention] for intervention in funded])
-          
-        #import pdb
-        #pdb.set_trace()
+        if public_state['resources_by_app'].has_key('donors_conference'):
+          points = public_state['resources_by_app']['donors_conference']['week4points']['value']
 
-        game_context = {'points':points}
+        game_context = {'week4points':points}
 
         if page_id == "summary":
           return('file', servefile("DonorsConference_DonorsConferenceSummary.pdf", "Donors_Conference_Summary.pdf"))
@@ -284,7 +279,8 @@ class DonorsConference(GameInterface):
                    "type":'file',
                    "title":'Donors Conference Summary.pdf',
                   },
-                  wb
+                  wb,
+                  {"page_id":'week4points', "type":'data', 'value':points},
                   ]
         else:
             return []

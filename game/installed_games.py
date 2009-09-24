@@ -75,7 +75,7 @@ class InstalledGamesLazySingleton:
         return self.GAME_OBJECTS[game_code].pages()
 
     def template(self,game_code,page_id,public_state=None):
-        return self.GAME_OBJECTS[game_code].template(page_id,public_state=None)
+        return self.GAME_OBJECTS[game_code].template(page_id,public_state=public_state)
         
     def variables(self,game_code,page_id=None):
         return self.GAME_OBJECTS[game_code].variables(page_id)

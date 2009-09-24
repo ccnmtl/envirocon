@@ -8,8 +8,8 @@ from game.installed_games import InstalledGames,GameInterface
 
 fileroot = os.path.abspath(".") + "/game_many/files/"
 
-# point values for funding choices
-def funding_points(week=4):
+# calculate points for funding choices (Funding Interventions and Donor Conference)
+def funding_points(funded_interventions, week=4):
   value = {
              'water-supply-high':1,
              'water-supply-med' :2,
@@ -61,7 +61,8 @@ def funding_points(week=4):
     value['desertification-med'] = 1
     value['desertification-low'] = 3
 
-  return value
+  points = sum([value[intervention] for intervention in funded_interventions])
+  return points
 
 ## week1 ##
 class ConflictAssessment(GameInterface):
@@ -266,9 +267,7 @@ class DonorsConference(GameInterface):
 
     def resources(self,game_state,onopen=False,onclosed=False):
         if onopen and game_state.has_key('funding_interventions'):
-          funded = game_state['funding_interventions']
-          pts = funding_points()
-          points = sum([pts[intervention] for intervention in funded])
+          points = funding_points(game_state['funding_interventions'])
           if points < 17:
             wb = {"page_id":'watching_brief_1', "type":'file', "title":'Second Watching Brief.pdf'}
           elif points < 30:
@@ -313,22 +312,23 @@ class FinalPaper(GameInterface):
         return ['final_paper']
 
     def resources(self,game_state,onopen=False,onclosed=False):
-        if onopen:
-            return [
-                    {"page_id":'watching_brief_1',
-                     "type":'file',
-                     "title":'Third Watching Brief.pdf',
-                    },
-                    {"page_id":'watching_brief_2',
-                     "type":'file',
-                     "title":'Third Watching Brief.pdf',
-                    },
-                    {"page_id":'watching_brief_3',
-                     "type":'file',
-                     "title":'Third Watching Brief.pdf',
-                    },
-                   ]
+        if onopen and game_state.has_key('donors_conference'):
+          # week 4 points carry over
+          week4points = funding_points(game_state['funding_interventions'])
+          week6points = funding_points(game_state['donors_conference'], 6)
+          points = week4points + week6points
 
+          if points < 33:
+            wb = {"page_id":'watching_brief_1', "type":'file', "title":'Third Watching Brief.pdf'}
+          elif points < 59:
+            wb = {"page_id":'watching_brief_2', "type":'file', "title":'Third Watching Brief.pdf'}
+          else:
+            wb = {"page_id":'watching_brief_3', "type":'file', "title":'Third Watching Brief.pdf'}
+          return [wb]
+        else:
+            return []
+
+            
 InstalledGames.register_game('final_paper',
                              'Final Paper',
                              FinalPaper() )

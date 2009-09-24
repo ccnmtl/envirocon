@@ -135,7 +135,7 @@ function initFunding() {
   GameSystem.stopFormListener();
   
   // load saved state
-  funding_vars = GameSystem.getVariable('funding_interventions');
+  funding_vars = GameSystem.getVariable(game_variables[0]);
   forEach (assn_form.elements, function(elt) {
 	elt.checked = (elt.value in funding_vars);
   });

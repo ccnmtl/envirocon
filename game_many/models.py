@@ -320,7 +320,8 @@ class FinalPaper(GameInterface):
     def resources(self,game_state,onopen=False,onclosed=False):
         if onopen and game_state.has_key('donors_conference'):
           # week 4 points carry over
-          week4points = funding_points(game_state['funding_interventions'])
+          if game_state.has_key('funding_interventions'):
+            week4points = funding_points(game_state['funding_interventions'])
           week6points = funding_points(game_state['donors_conference'], 6)
           points = week4points + week6points
 

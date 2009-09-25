@@ -247,8 +247,9 @@ class DonorsConference(GameInterface):
         if public_state['resources_by_app'].has_key('donors_conference'):
           points = public_state['resources_by_app']['donors_conference']['week4points']['value']
           ineligible = public_state['resources_by_app']['donors_conference']['ineligible']['value']
+          wb2 = public_state['resources_by_app']['donors_conference']['wb2']['value']
 
-        game_context = {'week4points':points, 'ineligible':ineligible}
+        game_context = {'week4points':points, 'ineligible':ineligible, 'wb2':wb2}
 
         if page_id == "summary":
           return('file', servefile("DonorsConference_DonorsConferenceSummary.pdf", "Donors_Conference_Summary.pdf"))
@@ -273,15 +274,24 @@ class DonorsConference(GameInterface):
         if onopen and game_state.has_key('funding_interventions'):
           funded = game_state['funding_interventions']
 
+          # certain interventions, if funded in week 4, are ineligible to be funded in week 6
           ineligible = [intervention for intervention in funded if intervention in ['timber-low', 'nomadic-low', 'agricultural-low', 'desertification-low', 'habitat-low', 'water-low', ]]
 
+          # teams who choose the 3-point option in any of the first 3 categories automatically get wb2
+          wb2_choices = [intervention for intervention in funded if intervention in ['water-supply-low', 'sanitation-low', 'waste-low']]
+          autowb2 = False
+          if wb2_choices != []:
+            autowb2 = True
+            
+          unlock_wb2 = False
           points = funding_points(funded)
-          if points < 17:
-            wb = {"page_id":'watching_brief_1', "type":'file', "title":'Second Watching Brief.pdf'}
-          elif points < 30:
+          if autowb2 or (points > 17 and points < 30):
             wb = {"page_id":'watching_brief_2', "type":'file', "title":'Second Watching Brief.pdf'}
-          else:
+          elif points < 17:
+            wb = {"page_id":'watching_brief_1', "type":'file', "title":'Second Watching Brief.pdf'}
+          else: # 30 or more points
             wb = {"page_id":'watching_brief_3', "type":'file', "title":'Second Watching Brief.pdf'}
+            unlock_wb2 = True  # yes, the third watching brief unlocks the WB2 map layers.  confusing but correct.
           return [{"page_id":'summary',
                    "type":'file',
                    "title":'Donors Conference Summary.pdf',
@@ -289,6 +299,7 @@ class DonorsConference(GameInterface):
                   wb,
                   {"page_id":'week4points', "type":'data', 'value':points},
                   {"page_id":'ineligible', "type":'data', "value":ineligible},
+                  {"page_id":'wb2', "type":'data', "value":unlock_wb2},
                   ]
         else:
             return []

@@ -152,7 +152,7 @@
 		     {%if appres.obtain_additional_information.political or appres.recommending_interventions.watching_brief %}
 		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="conflict">Conflict Incidents</input></li>
 		     {%endif%}
-		     {%if appres.FOOOOOOOBARRRRRRRRR %}
+           {% if game_context.wb2 %}
 		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb2">Watching Brief 2</input></li>
 		     {%endif%}
 		     {%if appres.FOOOOOOOBARRRRRRRRR %}
@@ -169,9 +169,11 @@
 		 <div class="layer cholera" id="layer-cholera"></div>
 		 <div class="layer parks" id="layer-parks"></div>
 		 <div class="layer conflict_basic" id="layer-conflict"></div>
-		 <div class="layer wb2_peace" id="layer-wb2-peace"></div>
-		 <div class="layer wb2_humanitarian" id="layer-wb2-humanitarian"></div>
-		 <div class="layer wb2_conflict" id="layer-wb2-conflict"></div>
+       {% if game_context.wb2 %}
+		   <div class="layer wb2_peace" id="layer-wb2-peace"></div>
+		   <div class="layer wb2_humanitarian" id="layer-wb2-humanitarian"></div>
+		   <div class="layer wb2_conflict" id="layer-wb2-conflict"></div>
+		 {% endif %}
 		 <div class="layer wb3_peace" id="layer-wb3-peace"></div>
 		 <div class="layer wb3_humanitarian" id="layer-wb3-humanitarian"></div>
 		 <div class="layer wb3_conflict" id="layer-wb3-conflict"></div>

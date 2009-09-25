@@ -145,8 +145,10 @@ function initFunding() {
   updateBudget();  // run once after loading saved data
   
   // disable ineligible interventions, if any
-  for(var i=0; i<ineligible.length; i++) {
-    $(ineligible[i]).disabled = true;
+  if(ineligible) {
+    for(var i=0; i<ineligible.length; i++) {
+      $(ineligible[i]).disabled = true;
+    }
   }
 }
 

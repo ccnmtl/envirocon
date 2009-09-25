@@ -18,7 +18,7 @@ function saveRestore(e) {
     text_vars[a] = boxes[a];
   }
   
-  alert(text_vars);
+  //alert(text_vars);
   
   //overridden from stopFormListener, so we call it ourselves
   GameSystem.saveState(e);

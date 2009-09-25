@@ -137,6 +137,9 @@ class RecommendingInterventions(GameInterface):
     def variables(self,page_id=None):
         return ['recommending_interventions']
 
+    def public_variables(self):
+        return ['funding_interventions']
+
     def resources(self,game_state,onopen=False,onclosed=False):
         if onopen:
             return [{"page_id":'watching_brief',

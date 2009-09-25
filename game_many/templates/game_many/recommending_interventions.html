@@ -1,6 +1,7 @@
 {% extends "game/game.html" %}
 
 {% block game_js %}
+   <script type="text/javascript" src="{{GAME_MEDIA}}/js/saverestore.js"></script>
 {% endblock %}
 {% block game_css %}
   <!-- add css link here -->
@@ -22,15 +23,15 @@
 <table class="interventions">
   <tr>
     <td>High Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='water-supply-high' id='water-supply-high'></textarea></td>
   </tr>
   <tr>
     <td>Medium Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='water-supply-med' id='water-supply-med'></textarea></td>
   </tr>
   <tr>
     <td>Low Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='water-supply-low' id='water-supply-low'></textarea></td>
   </tr>
 </table>
 
@@ -38,15 +39,15 @@
 <table class="interventions">
   <tr>
     <td>High Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='sanitation-high' id='sanitation-high'></textarea></td>
   </tr>
   <tr>
     <td>Medium Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='sanitation-med' id='sanitation-med'></textarea></td>
   </tr>
   <tr>
     <td>Low Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='sanitation-low' id='sanitation-low'></textarea></td>
   </tr>
 </table>
 
@@ -54,15 +55,15 @@
 <table class="interventions">
   <tr>
     <td>High Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='waste-high' id='waste-high'></textarea></td>
   </tr>
   <tr>
     <td>Medium Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='waste-med' id='waste-med'></textarea></td>
   </tr>
   <tr>
     <td>Low Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='waste-low' id='waste-low'></textarea></td>
   </tr>
 </table>
 <br />
@@ -72,15 +73,15 @@
 <table class="interventions">
   <tr>
     <td>High Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='timber-high' id='timber-high'></textarea></td>
   </tr>
   <tr>
     <td>Medium Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='timber-med' id='timber-med'></textarea></td>
   </tr>
   <tr>
     <td>Low Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='timber-low' id='timber-low'></textarea></td>
   </tr>
 </table>
 
@@ -88,15 +89,15 @@
 <table class="interventions">
   <tr>
     <td>High Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='deforestation-high' id='deforestation-high'></textarea></td>
   </tr>
   <tr>
     <td>Medium Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='deforestation-med' id='deforestation-med'></textarea></td>
   </tr>
   <tr>
     <td>Low Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='deforestation-low' id='deforestation-low'></textarea></td>
   </tr>
 </table>
 <br />
@@ -106,15 +107,15 @@
 <table class="interventions">
   <tr>
     <td>High Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='tenure-high' id='tenure-high'></textarea></td>
   </tr>
   <tr>
     <td>Medium Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='tenure-med' id='tenure-med'></textarea></td>
   </tr>
   <tr>
     <td>Low Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='tenure-low' id='tenure-low'></textarea></td>
   </tr>
 </table>
 
@@ -122,15 +123,15 @@
 <table class="interventions">
   <tr>
     <td>High Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='nomadic-high' id='nomadic-high'></textarea></td>
   </tr>
   <tr>
     <td>Medium Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='nomadic-med' id='nomadic-med'></textarea></td>
   </tr>
   <tr>
     <td>Low Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='nomadic-low' id='nomadic-low'></textarea></td>
   </tr>
 </table>
 
@@ -141,15 +142,15 @@
 <table class="interventions">
   <tr>
     <td>High Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='agricultural-high' id='agricultural-high'></textarea></td>
   </tr>
   <tr>
     <td>Medium Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='agricultural-med' id='agricultural-med'></textarea></td>
   </tr>
   <tr>
     <td>Low Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='agricultural-low' id='agricultural-low'></textarea></td>
   </tr>
 </table>
 
@@ -157,15 +158,15 @@
 <table class="interventions">
   <tr>
     <td>High Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='desertification-high' id='desertification-high'></textarea></td>
   </tr>
   <tr>
     <td>Medium Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='desertification-med' id='desertification-med'></textarea></td>
   </tr>
   <tr>
     <td>Low Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='desertification-low' id='desertification-low'></textarea></td>
   </tr>
 </table>
 
@@ -176,15 +177,15 @@
 <table class="interventions">
   <tr>
     <td>High Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='habitat-high' id='habitat-high'></textarea></td>
   </tr>
   <tr>
     <td>Medium Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='habitat-med' id='habitat-med'></textarea></td>
   </tr>
   <tr>
     <td>Low Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='habitat-low' id='habitat-low'></textarea></td>
   </tr>
 </table>
 
@@ -196,15 +197,15 @@
 <table class="interventions">
   <tr>
     <td>High Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='water-high' id='water-high'></textarea></td>
   </tr>
   <tr>
     <td>Medium Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='water-med' id='water-med'></textarea></td>
   </tr>
   <tr>
     <td>Low Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='water-low' id='water-low'></textarea></td>
   </tr>
 </table>
 
@@ -216,15 +217,15 @@
 <table class="interventions">
   <tr>
     <td>High Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='capacity-high' id='capacity-high'></textarea></td>
   </tr>
   <tr>
     <td>Medium Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='capacity-med' id='capacity-med'></textarea></td>
   </tr>
   <tr>
     <td>Low Cost:</td>
-    <td><textarea class="mceNoEditor"></textarea></td>
+    <td><textarea class="mceNoEditor" name='capacity-low' id='capacity-low'></textarea></td>
   </tr>
 </table>
 

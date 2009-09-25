@@ -71,8 +71,14 @@ Good luck and please don't hesitate to ask for assistance throughout the process
 
   {%if is_faculty%}
   <ul>
-    <li>  <h3>Instructor Information</h3></li>
+    <lh>Possible Rules with Auto-advance</lh>
     <li>When an assignment is open, teams can auto-advance once they have submitted the previous assignment.</li>
+    <li>Teams can only edit one assignment at a time.  The team markers under <b>Status</b> represent where each team is.</li>
+    <li>You can manually move a team to a particular assignment by dragging the markers. </li>
+    <li>Due dates are not enforced by the system.</li>
+
+    <lh>Possible Rules without Auto-advance</lh>
+    <li>Opening/Closing an assignment does nothing</li>
     <li>Teams can only edit one assignment at a time.  The team markers under <b>Status</b> represent where each team is.</li>
     <li>You can manually move a team to a particular assignment by dragging the markers. </li>
     <li>Due dates are not enforced by the system.</li>
@@ -112,9 +118,13 @@ Good luck and please don't hesitate to ask for assistance throughout the process
 	    </a>
 	    {%endif%}
 	    {%if is_faculty%}
-	    <br />
-	    <a href="{%url assignment-page assignment_id=assn.data.id,faculty_view="/instructor/",user_id=teams.0.group.user_set.all.0.id %}">Review Submissions</a>
-	    Open: {{assn.form.visible_fields.1}}
+	       {%with assn.data.any_submission as first_submission %}
+	          {%if first_submission %}
+		  <br />
+		  <a href="{%url assignment-page assignment_id=assn.data.id,faculty_view="/instructor/",user_id=first_submission.author.id %}">Review Submissions</a>
+		  {%endif%}
+	       {%endwith%}
+	       Open: {{assn.form.visible_fields.1}}
 	    {%endif%}
 	</td>
 	<td>{{assn.data.individual|yesno:"Individual,Group"}}

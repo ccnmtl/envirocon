@@ -45,6 +45,10 @@ class Assignment(Activity):
       return Submission.objects.filter(turn__assignment=self,turn__team=team,author=user)
     else:
       return None
+
+  def any_submission(self):
+    subs = Submission.objects.filter(turn__assignment=self)[:1]
+    return (subs and subs[0] or None)
     
   def turn(self,team):
     turn,created = Turn.objects.get_or_create(team=team,assignment=self)

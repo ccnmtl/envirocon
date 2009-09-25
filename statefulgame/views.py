@@ -40,10 +40,11 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
     world = team.state.world_slice(assignment.gamepublic_variables())
     resources = team.state.resources(user)
     resources_by_app = {}
-    for act_meta in resources:
-      app_dict = resources_by_app.setdefault(act_meta['a'].app,OrderedDict())
-      for r in act_meta['res']:
-        app_dict[ r['page_id'] ] =  r
+    for act_meta in resources: #all resources
+      if not resources_by_app.has_key(act_meta['a'].app):
+        resources_by_app[act_meta['a'].app] = OrderedDict()
+      for r in act_meta['res']: #each resource
+        resources_by_app[act_meta['a'].app][ r['page_id'] ] =  r
   editable = turn.open and not faculty_info
   world_state = { 'duedate':turn.assignment.close_date,
                   'individual':turn.assignment.individual,
@@ -268,8 +269,13 @@ def set_turn(request):
 
 class OrderedDict:
   #mostly
-  dic = {}
-  array = []
+  #if you set it here, it'll be the SAME DAMN DICT FOR ALL
+  dic = None
+  array = None
+  def __init__(self):
+    self.dic = {}
+    self.array = []
+  
   def __getitem__(self,key):
     return self.dic[key]
 

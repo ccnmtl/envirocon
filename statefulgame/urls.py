@@ -26,9 +26,12 @@ urlpatterns = patterns(
     url(r'^faculty_view/(?P<game_id>[^/]*)',
         'faculty_view',
         name='faculty-view'),
-    url(r'^set_shock/?',
-        'set_shock',
+    url(r'^set_shock/?',#for backwards compatibility
+        'set_turn',
         name='set-shock'),
+    url(r'^set_turn/?',#same as above
+        'set_turn',
+        name='set-turn'),
     url(r'^jsi18n/$',
         null_javascript_catalog,
         name='jsi18n'),

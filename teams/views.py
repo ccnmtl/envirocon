@@ -1,6 +1,6 @@
 # Create your views here.
 from django.template import RequestContext, loader
-from django.http import HttpResponse,Http404,HttpResponseRedirect
+from django.http import HttpResponse,Http404,HttpResponseRedirect,HttpResponseForbidden
 from django.conf import settings
 from django.shortcuts import get_object_or_404, render_to_response
 from django.db import models
@@ -31,7 +31,8 @@ def addmember(request, user_id, course_id=None, team_id=None):
     if request.method == "POST":
         course = (course_id is None) and request.course \
                  or Course.objects.get(pk=course_id)
-            
+        if not course.is_faculty(request.user):
+            return HttpResponseForbidden()
         user = User.objects.get(pk=user_id)
         current_team = Team.objects.by_user(user, course)
         if current_team and current_team.id != team_id:
@@ -43,10 +44,11 @@ def addmember(request, user_id, course_id=None, team_id=None):
     return HttpResponse(done)
 
 def deleteteam(request, team_id, remove_group=True):
-    #TODO: test for addteam permission or faculty
-    #doesn't remove the group--
     if request.method in ("POST","DELETE"):
         team = get_object_or_404(Team, pk=team_id)
+        if not team.course.is_faculty(request.user):
+            return HttpResponseForbidden()
+
         if remove_group:
             team.group.delete()
         team.delete()
@@ -55,6 +57,8 @@ def deleteteam(request, team_id, remove_group=True):
 def team_admin(request):
     c = request.course
     teams = request.course.team_set.all()
+    if not request.course.is_faculty(request.user):
+        return HttpResponseForbidden()
     
     return render_to_response('teams/teamassignment.html',
                               {'course':c,

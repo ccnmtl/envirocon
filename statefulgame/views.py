@@ -238,7 +238,7 @@ def team_view_data(request,teams=None,game=None):
           'team':team,#user's team (implies a student)
           }
   
-def set_shock(request):
+def set_turn(request):
   """team_id,assignment_id,shock_id
   OR team_id,assignment_id,shock_name,shock_outcome
   """
@@ -247,16 +247,21 @@ def set_shock(request):
     assignment = get_object_or_404(Assignment,pk=request.POST['assignment_id'],
                                    game__course=request.course)
     turn = assignment.turn(team)
-    if request.POST.get('shock_id',False):
-      if request.POST['shock_id']=='none':
-        shock = None
+    if request.POST.has_key('shock_id') or request.POST.has_key('shock_name'):
+      if request.POST.has_key('shock_id'):
+        if request.POST['shock_id']=='none':
+          shock = None
+        else:
+          shock = get_object_or_404(Shock,pk=request.POST['shock_id'])
       else:
-        shock = get_object_or_404(Shock,pk=request.POST['shock_id'])
-    else:
-      shock = Shock.objects.create(name=request.POST['shock_name'],outcome=request.POST['shock_outcome'])
-    turn.shock = shock
-    turn.save()
-    return HttpResponse(shock)
+        shock = Shock.objects.create(name=request.POST['shock_name'],outcome=request.POST['shock_outcome'])
+      turn.shock = shock
+      turn.save()
+      return HttpResponse(shock)
+    elif request.POST.get('set_turn',False):
+      team.state.turn = turn
+      team.state.save()
+      return HttpResponse(turn.id)
     
 
 

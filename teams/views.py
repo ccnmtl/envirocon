@@ -42,7 +42,7 @@ def addmember(request, user_id, course_id=None, team_id=None):
         done = 'yes'
     return HttpResponse(done)
 
-def deleteteam(request, team_id, remove_group=False):
+def deleteteam(request, team_id, remove_group=True):
     #TODO: test for addteam permission or faculty
     #doesn't remove the group--
     if request.method in ("POST","DELETE"):

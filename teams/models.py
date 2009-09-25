@@ -44,6 +44,8 @@ class Team(models.Model):
     
     def save(self, *args, **kwargs):
         #auto-create group
+        #TODO: to avoid team removal (without group removal)
+        #try name for group and catch it with something alt name
         if self.group_id is None:
             group_name = ['Team %d: ' % (Team.objects.filter(course=self.course_id).count()+1) ]
             if self.course_id:

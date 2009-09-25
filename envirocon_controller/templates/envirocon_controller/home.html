@@ -122,7 +122,7 @@ Good luck and please don't hesitate to ask for assistance throughout the process
             {{assn.data.close_date|date:"l, n/j/y, P"}}
 	  {%endif%}
 	</td>
-	<td>
+	<td class="teamstatus" data-assn="{{assn.data.id}}">
 	  {%for ateam in assn.teams %}
 	    {%ifequal team ateam.data %}
 	    <!--STUDENT-->
@@ -137,7 +137,7 @@ Good luck and please don't hesitate to ask for assistance throughout the process
 	    {%endifequal%}
 	    {%if is_faculty %}
 	      {%ifequal ateam.data.state.turn ateam.turn %}
-	        <div class="teamoptions"><div
+	        <div id="teammarker-{{ateam.data.id}}" class="teamoptions"><div
 		   {%if ateam.sub.0.published %}
 		   class="team-marker on" title="published"
 		   {%else%}
@@ -145,6 +145,7 @@ Good luck and please don't hesitate to ask for assistance throughout the process
 		   {%endif%}
 		  >{{ateam.data.index}}</div></div>
 	      {%endifequal%}
+	      <div id="teamstatus-{{ateam.data.id}}-{{assn.data.id}}" data-status="{{ateam.sub.0.published}}"></div>
 	    {%endif%}
 	  {%endfor%}
 	</td>

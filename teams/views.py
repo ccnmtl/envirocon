@@ -26,7 +26,6 @@ def addteam(request,course_id=None):
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 def addmember(request, user_id, course_id=None, team_id=None):
-    #TODO: test for addteam permission or faculty
     done = 'no'
     if request.method == "POST":
         course = (course_id is None) and request.course \

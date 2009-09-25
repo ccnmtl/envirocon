@@ -31,6 +31,7 @@ if (typeof GameSystem == 'undefined') {
                       });
       evt.stop();
       def.addCallback(function(){alert('Shock Saved!');});
+      def.addErrback(function(){alert('There was an error trying to save.  After checking your network configuration, contact the system administrator.');});
       
   }
 

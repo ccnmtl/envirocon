@@ -137,7 +137,7 @@ Good luck and please don't hesitate to ask for assistance throughout the process
 	    {%endifequal%}
 	    {%if is_faculty %}
 	      {%ifequal ateam.data.state.turn ateam.turn %}
-	        <div id="teammarker-{{ateam.data.id}}" class="teamoptions"><div
+	        <div id="teammarker-{{ateam.data.id}}" data-team="{{ateam.data.id}}" class="teamoptions markerparent"><div data-current="{{assn.data.id}}"
 		   {%if ateam.sub.0.published %}
 		   class="team-marker on" title="published"
 		   {%else%}

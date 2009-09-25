@@ -247,8 +247,9 @@ def set_turn(request):
     assignment = get_object_or_404(Assignment,pk=request.POST['assignment_id'],
                                    game__course=request.course)
     turn = assignment.turn(team)
-    if request.POST.has_key('shock_id') or request.POST.has_key('shock_name'):
-      if request.POST.has_key('shock_id'):
+    #no has_key here because shock_id could equal ''
+    if request.POST.get('shock_id',False) or request.POST.has_key('shock_name'):
+      if request.POST.get('shock_id',False): 
         if request.POST['shock_id']=='none':
           shock = None
         else:

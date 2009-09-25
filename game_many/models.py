@@ -247,9 +247,9 @@ class DonorsConference(GameInterface):
         if public_state['resources_by_app'].has_key('donors_conference'):
           points = public_state['resources_by_app']['donors_conference']['week4points']['value']
           ineligible = public_state['resources_by_app']['donors_conference']['ineligible']['value']
-          wb2 = public_state['resources_by_app']['donors_conference']['wb2']['value']
+          #wb2 = public_state['resources_by_app']['donors_conference']['wb2']['value']
 
-        game_context = {'week4points':points, 'ineligible':ineligible, 'wb2':wb2}
+        game_context = {'week4points':points, 'ineligible':ineligible}#, 'wb2':wb2}
 
         if page_id == "summary":
           return('file', servefile("DonorsConference_DonorsConferenceSummary.pdf", "Donors_Conference_Summary.pdf"))
@@ -316,7 +316,12 @@ class FinalPaper(GameInterface):
         return ('index','page2',)
 
     def template(self,page_id=None,public_state=None):
-        game_context = {'sampledata':"hello"}
+        #if public_state['resources_by_app'].has_key('final_paper'):
+        #  wb3 = public_state['resources_by_app']['donors_conference']['wb3']['value']
+
+        #game_context = {'week4points':points, 'ineligible':ineligible, 'wb3':wb3}
+        game_context = {}
+
         if page_id == "watching_brief_1":
           return('file', servefile("FinalPaper_WatchingBrief1.pdf", "Third_Watching_Brief.pdf"))
         if page_id == "watching_brief_2":
@@ -330,6 +335,9 @@ class FinalPaper(GameInterface):
     
     def variables(self,page_id=None):
         return ['final_paper']
+        
+    def public_variables(self,page_id=None):
+        return ['final_paper']
 
     def resources(self,game_state,onopen=False,onclosed=False):
         if onopen and game_state.has_key('donors_conference'):
@@ -339,13 +347,24 @@ class FinalPaper(GameInterface):
           week6points = funding_points(game_state['donors_conference'], 6)
           points = week4points + week6points
 
-          if points < 33:
-            wb = {"page_id":'watching_brief_1', "type":'file', "title":'Third Watching Brief.pdf'}
-          elif points < 59:
+          # teams who choose the 3-point option in any of the first 3 categories automatically get wb2
+          funded = game_state['donors_conference']
+          wb2_choices = [intervention for intervention in funded if intervention in ['water-supply-low', 'sanitation-low', 'waste-low']]
+          autowb2 = False
+          if wb2_choices != []:
+            autowb2 = True
+            
+          unlock_wb3 = False
+          if autowb2 or (points > 32 and points < 59):
             wb = {"page_id":'watching_brief_2', "type":'file', "title":'Third Watching Brief.pdf'}
-          else:
+          elif points < 33:
+            wb = {"page_id":'watching_brief_1', "type":'file', "title":'Third Watching Brief.pdf'}
+          else:  # points > 58
             wb = {"page_id":'watching_brief_3', "type":'file', "title":'Third Watching Brief.pdf'}
-          return [wb]
+            unlock_wb3 = True
+          return [wb,
+                  {"page_id":'wb3', "type":'data', "value":unlock_wb3},
+                 ]
         else:
             return []
 

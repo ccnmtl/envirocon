@@ -5,11 +5,14 @@ function updateMap() {
     changeBaseMap(false,$('base-map-dropdown'));
     var show_conflicts = false;
     forEach(getElementsByTagAndClassName("input", "layer-choice"), function(elem) {
-	show_conflicts = toggleLayer(false,elem) | show_conflicts;
+      show_conflicts = toggleLayer(false,elem) | show_conflicts;
     });
     // hide conflict legend if none of wb2, wb3, or conflict is checked
     if(show_conflicts) {
-	showElement("legend-conflict");
+      showElement("legend-conflict");
+    }
+    else {
+      hideElement("legend-conflict");
     }
 }
 
@@ -18,10 +21,10 @@ function changeBaseMap(evt,elt/*optional*/) {
   var map = elt.value;
   swapElementClass("basemap", currentmap, map);
   if($("legend-"+currentmap)) {
-    setStyle("legend-"+currentmap, {"display":"none"});
+    hideElement("legend-"+currentmap);
   }
   if($("legend-"+map)) {
-    setStyle("legend-"+map, {"display":"block"});
+    showElement("legend-"+map);
   }
   currentmap = map;
 }
@@ -32,31 +35,26 @@ function toggleLayer(evt,elt/*optional*/) {
   var checked = elt.checked;
   var conflict = false;
   if(layer == "wb2" || layer == "wb3") {
-    // layer-wb#-peace, layer-wb#-humanitarian, layer-wb#-conflict
     if(checked){
-      setStyle("layer-"+layer+"-peace", {"display":"block"});
-      setStyle("layer-"+layer+"-humanitarian", {"display":"block"});
-      setStyle("layer-"+layer+"-conflict", {"display":"block"});
-      setStyle("legend-conflict", {"display":"block"});
-	conflict = true;
+      showElement("layer-"+layer+"-conflict");
+      showElement("legend-conflict");
+      conflict = true;
     }
     else {
-      setStyle("layer-"+layer+"-peace", {"display":"none"});
-      setStyle("layer-"+layer+"-humanitarian", {"display":"none"});
-      setStyle("layer-"+layer+"-conflict", {"display":"none"});
-	conflict = false;
+      hideElement("layer-"+layer+"-conflict");
+      conflict = false;
     }
   }
   else {
     if(checked) {
-      setStyle("layer-"+layer, {"display":"block"});
-      setStyle("legend-"+layer, {"display":"block"});
+      showElement("layer-"+layer);
+      showElement("legend-"+layer);
       if(layer=="conflict") { conflict = true; }
     }
     else {
-      setStyle("layer-"+layer, {"display":"none"});
+      hideElement("layer-"+layer);
       if(layer=="conflict") { conflict = false; }
-      else { setStyle("legend-"+layer, {"display":"none"}); }
+      else { hideElement("legend-"+layer); }
     }
   }
 

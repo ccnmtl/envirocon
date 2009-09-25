@@ -111,7 +111,7 @@ class ExplainYourReportSelection(GameInterface):
         return ('game_many/explain_your_report_selection_intro.html',game_context)
     
     def variables(self,page_id=None):
-        return ['explain_your_report_selection','additional_information']
+        return ['explain_your_report_selection']#,'additional_information']
 
 InstalledGames.register_game('explain_your_report_selection',
                              'Explain Your Report Selection',

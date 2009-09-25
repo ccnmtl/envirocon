@@ -373,7 +373,10 @@ table.interventions td textarea{
    display: none;
 }
 
-
+#form-block {
+  max-height: 500px;
+  overflow: auto;
+}
                    
 #game-content {
                    
@@ -496,8 +499,6 @@ font-size: 85%;
 margin-bottom: 1em;
 background-color: #fff;
 padding: 0 10px 10px 10px;
-max-height: 500px;
-overflow: auto;
 
 }
 

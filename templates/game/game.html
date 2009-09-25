@@ -258,7 +258,7 @@
 
 {% block form-instructions %}<p>Write or paste your answer in the box below.</p>{% endblock %}
      
-    <form action="{%url save-assignment %}" method="POST" id="assignment-form">
+    <div id='form-block'><form action="{%url save-assignment %}" method="POST" id="assignment-form">
 
   {% block form-inputs %}
        <textarea rows=17 cols=58 name="data"
@@ -276,6 +276,7 @@
   </div>
   {%endif %}
      </form>
+   </div><!-- end div form-block -->
    </div>
 {% endblock %}
 

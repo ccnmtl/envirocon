@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block js %}
+<script type="text/javascript" src="/site_media/js/mochikit/MochiKit/MochiKit.js"></script>
+<script type="text/javascript" src="/site_media/js/mochikit/MochiKit/DragAndDrop.js"></script>
+<script type="text/javascript" src="/site_media/js/moveteams.js"></script>
 {% endblock %}
 
 {% block css %}
@@ -136,7 +139,9 @@ Good luck and please don't hesitate to ask for assistance throughout the process
 	      {%ifequal ateam.data.state.turn ateam.turn %}
 	        <div class="teamoptions"><div
 		   {%if ateam.sub.0.published %}
-		   class="on" title="published"
+		   class="team-marker on" title="published"
+		   {%else%}
+		   class="team-marker"
 		   {%endif%}
 		  >{{ateam.data.index}}</div></div>
 	      {%endifequal%}

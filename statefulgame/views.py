@@ -203,6 +203,7 @@ def team_view_data(request,teams=None,game=None):
     game = request.course.game_set.all()[0]
     
   team = Team.objects.by_user(request.user, getattr(request,'course',None))
+  teams = []
   if is_faculty:
     teams =Team.objects.filter(course=getattr(request,'course',None))
     if request.method == 'POST':
@@ -210,7 +211,8 @@ def team_view_data(request,teams=None,game=None):
       if post_forms.is_valid():
         post_forms.save()
   else:
-    teams = [team]
+    if team:
+      teams = [team]
 
 
   assignment_forms = AssignmentFormSet(instance=game)

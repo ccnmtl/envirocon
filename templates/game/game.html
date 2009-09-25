@@ -252,7 +252,7 @@
 
 {% block form-instructions %}<p>Write or paste your answer in the box below.</p>{% endblock %}
      
-    <div id='form-block'><form action="{%url save-assignment %}" method="POST" id="assignment-form">
+    <form action="{%url save-assignment %}" method="POST" id="assignment-form"><div id='form-block'>
 
   {% block form-inputs %}
        <textarea rows=17 cols=58 name="data"
@@ -261,6 +261,7 @@
        {% endif %}
        ></textarea><br />
   {% endblock %}
+   </div><!-- end div form-block -->
   {%if world_state.editable %}
   <div id="buttons">
      <input class="game-system floatright" type="submit" name="published" value="Submit" onclick="GameSystem.published='Submit'" />
@@ -269,8 +270,7 @@
      <input class="game-system" type="hidden" name="author" value={{ user }}" />
   </div>
   {%endif %}
-     </form>
-   </div><!-- end div form-block -->
+   </form>
    </div>
 {% endblock %}
 

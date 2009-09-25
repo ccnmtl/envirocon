@@ -3,6 +3,7 @@
 var text_vars = {}
 
 function saveRestore(e) {
+  if (tinyMCE) {tinyMCE.triggerSave();}
   boxes = formContents(e.src());
   // formContents returns [listOfNames, listOfValues];
   var vals = {};
@@ -17,7 +18,7 @@ function saveRestore(e) {
     text_vars[a] = boxes[a];
   }
   
-  //alert(text_vars);
+  alert(text_vars);
   
   //overridden from stopFormListener, so we call it ourselves
   GameSystem.saveState(e);

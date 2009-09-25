@@ -137,9 +137,6 @@ class RecommendingInterventions(GameInterface):
     def variables(self,page_id=None):
         return ['recommending_interventions']
 
-    def public_variables(self):
-        return ['funding_interventions']
-
     def resources(self,game_state,onopen=False,onclosed=False):
         if onopen:
             return [{"page_id":'watching_brief',
@@ -185,7 +182,10 @@ class TrackingYourProjects(GameInterface):
         return ('index','page2',)
 
     def template(self,page_id=None,public_state=None):
-        game_context = {'sampledata':"hello"}
+        funded = {}
+        if public_state['resources_by_app'].has_key('tracking_your_projects'):
+          funded = public_state['resources_by_app']['tracking_your_projects']['funded']['value']
+        game_context = {'funded':funded}
         if page_id == "page2":
           return ('game_many/tracking_your_projects.html',game_context)
         return ('game_many/tracking_your_projects_intro.html',game_context)
@@ -193,7 +193,13 @@ class TrackingYourProjects(GameInterface):
     def variables(self,page_id=None):
         return ['tracking_your_projects']
 
-InstalledGames.register_game('tracking_your_projecst',
+    def resources(self,game_state,onopen=False,onclosed=False):
+        if onopen and game_state.has_key('funding_interventions'):
+          funded = game_state['funding_interventions']
+          return [{"page_id":'funded', "type":'data', 'value':funded.keys()}]
+
+
+InstalledGames.register_game('tracking_your_projects',
                              'Tracking Your Projects',
                              TrackingYourProjects() )
 

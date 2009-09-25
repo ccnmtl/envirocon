@@ -1,6 +1,7 @@
 {% extends "game/game.html" %}
 
 {% block game_js %}
+   <script type="text/javascript" src="{{GAME_MEDIA}}/js/textarea_saverestore.js"></script>
 {% endblock %}
 {% block game_css %}
   <!-- add css link here -->
@@ -17,46 +18,46 @@
 
 {% block form-inputs %}
 <p>Identify the key lessons learned from this exercise in relation to both the process of post-conflict reconstruction/peacebuilding as well as the themes/topics as they relate and integrate the environment.
-<textarea class="mceNoEditor" rows='10' cols='60'></textarea></p>
+<textarea class="mceNoEditor" rows='10' cols='60' name='question1' id='question1'></textarea></p>
 
 <p>Where are the limitations and advantages of this peacebuilding/ post-conflict analysis through this model? Are these tools capable of representing environmental concerns in complex peacebuilding scenarios?
-<textarea class="mceNoEditor" rows='10' cols='60'></textarea></p>
+<textarea class="mceNoEditor" rows='10' cols='60'name='question2' id='question2'></textarea></p>
 
 <p>Are there other tools that more effectively identify environmental issues in post-conflict assessments and reconstruction planning?
-<textarea class="mceNoEditor" rows='10' cols='60'></textarea></p>
+<textarea class="mceNoEditor" rows='10' cols='60'name='question3' id='question3'></textarea></p>
 
 <p>What are the strengths of this process for prioritizing and sequencing environmental needs? How could you improve the analysis process to help identify or clarify these needs better?
-<textarea class="mceNoEditor" rows='10' cols='60'></textarea></p>
+<textarea class="mceNoEditor" rows='10' cols='60'name='question4' id='question4'></textarea></p>
 
 <p>What role do you think environmental needs have in the broader framework of post-conflict peacebuilding?
-<textarea class="mceNoEditor" rows='10' cols='60'></textarea></p>
+<textarea class="mceNoEditor" rows='10' cols='60'name='question5' id='question5'></textarea></p>
 
 <hr />
 
 <p><strong>Please also consider the following questions about your experience in the simulation and with your group members.</strong></p>
 
 <p>Discuss any points when your recommendations differed from that of your team. Did you change your perspective?  If so, why?
-<textarea class="mceNoEditor" rows='10' cols='60'></textarea></p>
+<textarea class="mceNoEditor" rows='10' cols='60'name='question6' id='question6'></textarea></p>
 
 <p>What were the primary or key factors you considered when making your allocation decisions throughout the process? Are there any other factors or information you felt would have been needed to improve your ability?
-<textarea class="mceNoEditor" rows='10' cols='60'></textarea></p>
+<textarea class="mceNoEditor" rows='10' cols='60'name='question7' id='question7'></textarea></p>
 
 <p>Discuss how the conflict needs assessments shaped your decisions later in the simulation.
-<textarea class="mceNoEditor" rows='10' cols='60'></textarea></p>
+<textarea class="mceNoEditor" rows='10' cols='60'name='question8' id='question8'></textarea></p>
 
 <p>How did the additional information reports impact your allocation spending and analysis of the conflict?
-<textarea class="mceNoEditor" rows='10' cols='60'></textarea></p>
+<textarea class="mceNoEditor" rows='10' cols='60'name='question9' id='question9'></textarea></p>
 
 <p>How did your group's discussions impact your decision making and understanding? What would have been different if you were acting alone?
-<textarea class="mceNoEditor" rows='10' cols='60'></textarea></p>
+<textarea class="mceNoEditor" rows='10' cols='60'name='question10' id='question10'></textarea></p>
 
 <p>Did you have sufficient information to convince donors of your prioritization and sequencing?
-<textarea class="mceNoEditor" rows='10' cols='60'></textarea></p>
+<textarea class="mceNoEditor" rows='10' cols='60'name='question11' id='question11'></textarea></p>
 
 <p>What key assumptions did you make to reach your decision? Would it be realistic to have had that information or did it help you analyze the process?
-<textarea class="mceNoEditor" rows='10' cols='60'></textarea></p>
+<textarea class="mceNoEditor" rows='10' cols='60'name='question12' id='question12'></textarea></p>
 
 <p>How did other teams' class discussions impact your understanding? Please provide examples.
-<textarea class="mceNoEditor" rows='10' cols='60'></textarea></p>
+<textarea class="mceNoEditor" rows='10' cols='60'name='question13' id='question13'></textarea></p>
 
 {% endblock %}

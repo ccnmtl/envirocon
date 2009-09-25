@@ -13,8 +13,11 @@ function saveRestore(e) {
   }
   //enter new
   for (a in boxes) {
+    //alert(boxes[a]);
     text_vars[a] = boxes[a];
   }
+  
+  //alert(text_vars);
   
   //overridden from stopFormListener, so we call it ourselves
   GameSystem.saveState(e);
@@ -28,11 +31,13 @@ function initSaveRestore() {
 
     text_vars = GameSystem.getVariable(game_variables[0]);
 
-    for(var i=0; i<text_vars[0].length; i++){
-      var name = text_vars[0][i];
-      var val = text_vars[1][i];
-      if($(name)) {
-        $(name).value = val;
+    if(text_vars[0]) {
+      for(var i=0; i<text_vars[0].length; i++){
+        var name = text_vars[0][i];
+        var val = text_vars[1][i];
+        if($(name)) {
+          $(name).value = val;
+        }
       }
     }
 }

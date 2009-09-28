@@ -48,4 +48,4 @@ function initSaveRestore() {
     });
 }
 
-addLoadEvent(initSaveRestore);
+initSaveRestore();

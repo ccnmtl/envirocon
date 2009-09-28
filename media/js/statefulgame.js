@@ -65,11 +65,21 @@ if (typeof GameSystem == 'undefined') {
   GameSystemClass.prototype.stateLoaded = function() {
       ///defined globally in the game template
       if (!editable_view) {
+	  //preload the array, because forEach does it by
+	  //index, but we are undermining the index list
+	  //out from under it.
+	  var arr = [];
 	  forEach(this.assignment_form.elements,function(elt) {
+	      arr.push(elt);
+	  });
+	  forEach(arr,function(elt) {
 	      elt.disabled = true;
 	      if (elt.tagName.toLowerCase()=='textarea') {
 		  var value = elt.value;
 		  var wrapper = P();
+		  if (hasElementClass(elt,'mceNoEditor')) {
+		      value = value.replace("\n","<br />");
+		  }
 		  wrapper.innerHTML = value;
 		  swapDOM(elt,wrapper);
 	      }
@@ -147,13 +157,18 @@ if (typeof GameSystem == 'undefined') {
         this.action = this.assignment_form.action;
      }
      this.loaded = true;
-      this.stateLoaded();
 
+     if (this.windowloaded) {
+	  this.stateLoaded();
+     } else {
+	 addLoadEvent(bind(this.stateLoaded,this));
+     }
   }
 
   window.GameSystem = new GameSystemClass();
   window.GameSystem.init();
   addLoadEvent(function() {
+      GameSystem.windowloaded = true;
       if (!GameSystem.loaded) {
 	  GameSystem.loadState({});
       }

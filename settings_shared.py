@@ -130,5 +130,6 @@ COURSEAFFILS_EXEMPT_PATHS = ('/accounts/',
 ANONYMOUS_PATHS = ('/accounts/',
                    '/site_media/',
                    '/admin/',
+                   '/about',
                    re.compile(r'^/$'),
                    )

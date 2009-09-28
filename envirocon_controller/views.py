@@ -27,6 +27,8 @@ def home(request):
                               state,
                               context_instance=RequestContext(request))
 
+def about(request):
+    return render_to_response('envirocon_controller/about.html')
 
 #NOT A VIEW
 def filled_out_a_profile(request):

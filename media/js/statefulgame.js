@@ -65,10 +65,14 @@ if (typeof GameSystem == 'undefined') {
   GameSystemClass.prototype.stateLoaded = function() {
       ///defined globally in the game template
       if (!editable_view) {
+<<<<<<< .mine
+      return;
+=======
 	  //preload the array, because forEach does it by
 	  //index, but we are undermining the index list
 	  //out from under it.
 	  var arr = [];
+>>>>>>> .r16989
 	  forEach(this.assignment_form.elements,function(elt) {
 	      arr.push(elt);
 	  });

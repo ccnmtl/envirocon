@@ -19,6 +19,8 @@ class Game(models.Model):
 class Assignment(Activity):
   game = models.ForeignKey(Game)
   close_date = models.DateTimeField()
+  #so we auto-close only once
+  auto_closed = models.BooleanField(default=False)
 
   #open means Teams are allowed to advance to this assignment
   #only one assignment is editable by a team at a particular moment (see turn.open)
@@ -53,6 +55,13 @@ class Assignment(Activity):
   def turn(self,team):
     turn,created = Turn.objects.get_or_create(team=team,assignment=self)
     return turn
+
+  def auto_close(self):
+    if self.open and not self.auto_closed and self.close_date < datetime.datetime.now():
+      self.open = False
+      self.auto_closed = True
+      self.save()
+      return True
 
 # abstract
 class Shock(models.Model):
@@ -93,13 +102,17 @@ class Turn(models.Model):
       return False
 
   @property
+  def visible(self):
+    return (self.assignment.id in self.team.state.visible_assignments())
+
+  @property
   def open(self):
     """When a turn is open, the team can edit their submission
     only one (at most) turn can be open for a particular team, at once.
     """
     #TODO: if self.team.state.turn is earlier than self
     #      are we open, or do they have to finish the first part?
-    return (self==self.team.state.turn or self.assignment.open)
+    return (self==self.team.state.turn and self.assignment.open)
 
   @property
   def complete(self):
@@ -113,7 +126,11 @@ class Turn(models.Model):
     return True
 
   def next(self):
-    return self.assignment.get_next_in_order().turn(self.team)
+    try:
+      next_a = self.assignment.get_next_in_order()
+      return next_a.turn(self.team)
+    except Assignment.DoesNotExist:
+      return None
       
 
 class StateManager(models.Manager):
@@ -170,30 +187,51 @@ class State(models.Model):
       assert(self.turn.team == self.team)
     return super(State,self).save(*args,**kwargs)
 
-  def advance_turn(self):
+  def advance_turn(self):#TODOX
     if self.turn is None:
       next_a = self.game.assignment_set.all()[0]
       if not getattr(next_a,'open',False):
         return False
     else:
-      try:
-        next_a = self.turn.assignment.get_next_in_order()
-      except Assignment.DoesNotExist:
+      next_t = self.turn.next()
+      if not next_t or not next_t.assignment.open or not self.turn.complete:
         return False
-      if not next_a.open or not self.turn.complete:
-        return False
-    self.turn = next_a.turn(self.team)
+    self.turn = next_t
     self.save()
     return self.turn
 
   def current_turn(self):
     return self.advance_turn() or self.turn
 
+  def visible_assignments(self):
+    order = self.game.get_assignment_order()
+    if self.turn:
+      max_turn = order.index(self.turn.assignment.id)
+      if self.turn.assignment.open:
+        return order[0:max_turn+1] #include current
+      else:
+        return order[0:max_turn] #all previous
+
+    return []
+      
+
   def activity_resources(self,activity,turn,sub,world_state):
+    onclosed = False
+    if self.turn:
+      order = self.game.get_assignment_order()
+      turn_ind = order.index(turn.assignment.id)
+      ahead_by = order.index(self.turn.assignment.id) - turn_ind
+      if ahead_by > 1:
+        onclosed = True
+      elif ahead_by == 1:
+        # note: last game can never have an
+        # exposed onclosed resource.
+        next_turn = self.turn.next()
+        if next_turn:
+          onclosed = next_turn.open
     return activity.gameresources(world_state,
-                                  onopen=(turn.open or sub),
-                                  onclosed=(not turn.open and
-                                            sub and sub[0].published)
+                                  onopen=(turn.assignment.id in self.visible_assignments()),
+                                  onclosed=onclosed
                                   ) or []
 
   def resource_access(self,activity,page_id,user=None):

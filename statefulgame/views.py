@@ -16,6 +16,7 @@ Team = models.get_model('teams','team')
 
 def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id=None):
   assignment = get_object_or_404(Assignment,pk=assignment_id,game__course=getattr(request,"course",None))
+  assignment.auto_close()
   #we can assume request.course from now on
   user = request.user
   faculty_info = None
@@ -37,6 +38,8 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
     return HttpResponseForbidden('You do not have access to this activity resource at this time.')
   turn = assignment.turn(team)
   if turn:
+    if not faculty_info and not turn.visible:
+      return HttpResponseForbidden()
     world = team.state.world_slice(assignment.gamepublic_variables())
     resources = team.state.resources(user)
     resources_by_app = {}
@@ -78,6 +81,9 @@ def save_assignment(request):
   data = request.REQUEST.get('data',None)
   turn_id = request.REQUEST['turn_id']
   turn = Turn.objects.get(id=turn_id)
+  turn.assignment.auto_close()
+  
+  state = turn.team.state
   if not turn.open:
     return HttpResponseForbidden()
   if turn.assignment.individual:
@@ -90,7 +96,6 @@ def save_assignment(request):
       submission = Submission(turn=turn,author=request.user)
       created = True
     #save global state if we have public vars
-    state = turn.team.state
     pubs = turn.assignment.gamepublic_variables()
     world = state.world_ro
     dirty = False
@@ -104,8 +109,6 @@ def save_assignment(request):
   submission.data = data
   submission.published = (request.REQUEST.get('published','Draft').find('Draft') < 0 )
   submission.save()
-
-  
 
   return HttpResponse(created)
 
@@ -191,6 +194,7 @@ def team_view_data(request,teams=None,game=None):
   past assignments (with title,status,shock)
   
   """
+  just_advanced = False
   is_faculty = (request.user in request.course.faculty)
   assignment_forms = None
   team = None
@@ -214,11 +218,14 @@ def team_view_data(request,teams=None,game=None):
   else:
     if team:
       teams = [team]
+      just_advanced = team.state.advance_turn()
 
 
   assignment_forms = AssignmentFormSet(instance=game)
 
-  assignments = [{'data':f.instance,'form':f,
+  assignments = [{'auto_closed':f.instance.auto_close(),
+                  'data':f.instance,
+                  'form':f,
                   'teams':[],'hidden':False,'current':False,}
                  for f in assignment_forms.forms]
   for t in teams:
@@ -237,6 +244,7 @@ def team_view_data(request,teams=None,game=None):
           'is_faculty':is_faculty,
           'formset':assignment_forms,
           'team':team,#user's team (implies a student)
+          'just_advanced':just_advanced,
           }
   
 def set_turn(request):
@@ -265,7 +273,6 @@ def set_turn(request):
       team.state.save()
       return HttpResponse(turn.id)
     
-
 
 class OrderedDict:
   #mostly

@@ -41,6 +41,11 @@ function initSaveRestore() {
         }
       }
     }
+    
+    // fix tinyMCE load bugginess
+    forEach(getElementsByTagAndClassName("textarea", "wysiwyg"), function(elem) {
+      tinyMCE.get(elem.id).load();
+    });
 }
 
 addLoadEvent(initSaveRestore);

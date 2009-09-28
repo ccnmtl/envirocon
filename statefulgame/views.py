@@ -228,16 +228,16 @@ def team_view_data(request,teams=None,game=None):
                   'form':f,
                   'teams':[],'hidden':False,'current':False,}
                  for f in assignment_forms.forms]
-  for t in teams:
+  for team in teams:
     for d in assignments:
-      turn = d['data'].turn(t)
+      turn = d['data'].turn(team)
       if not (turn.open or turn.complete):
         d['hidden'] = True
-      elif t==team and turn == t.state.turn:
+      elif team==team and turn == team.state.turn:
         d['current'] = True
       d['teams'].append({'turn':turn,
-                         'data':t,
-                         'sub':d['data'].submission(t, request.user, is_faculty)
+                         'data':team,
+                         'sub':d['data'].submission(team, request.user, is_faculty)
                          })
   return {'teams':teams,
           'assignments':assignments,

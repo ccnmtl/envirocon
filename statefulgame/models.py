@@ -38,7 +38,7 @@ class Assignment(Activity):
   def save(self,*args,**kwargs):
     super(Assignment,self).save(*args,**kwargs)
     for team in self.game.course.team_set.all():
-      Turn.objects.get_or_create(team=team,assignment=self)
+      Turn.objects.get(team=team,assignment=self)
 
   def submission(self,team,user=None,allUsers=False):
     if not self.individual or allUsers:
@@ -53,7 +53,7 @@ class Assignment(Activity):
     return (subs and subs[0] or None)
     
   def turn(self,team):
-    turn,created = Turn.objects.get_or_create(team=team,assignment=self)
+    turn = Turn.objects.get(team=team,assignment=self)
     return turn
 
   def auto_close(self):

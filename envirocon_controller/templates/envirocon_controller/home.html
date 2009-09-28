@@ -71,17 +71,19 @@ Good luck and please don't hesitate to ask for assistance throughout the process
 
   {%if is_faculty%}
   <ul>
-    <lh>Possible Rules with Auto-advance</lh>
-    <li>When an assignment is open, teams can auto-advance once they have submitted the previous assignment.</li>
-    <li>Teams can only edit one assignment at a time.  The team markers under <b>Status</b> represent where each team is.</li>
-    <li>You can manually move a team to a particular assignment by dragging the markers. </li>
-    <li>Due dates are not enforced by the system.</li>
-
-    <lh>Possible Rules without Auto-advance</lh>
-    <li>Opening/Closing an assignment does nothing</li>
-    <li>Teams can only edit one assignment at a time.  The team markers under <b>Status</b> represent where each team is.</li>
-    <li>You can manually move a team to a particular assignment by dragging the markers. </li>
-    <li>Due dates are not enforced by the system.</li>
+    <li>Teams can only edit an assignment if it is both marked open and their team-marker is on that assignment.  Therefore, only one at a time.</li>
+    <li>If the next assignment is open, teams can auto-advance by submitting their current assignment.</li>
+    <li>The due date auto-closes the assignment.</li>
+    <li>You can manually move a team to a particular assignment by dragging the markers.
+        <br /><br />
+	<p>For instance, if you want to give one team an extension on an assignment that is now closed, then:
+	<ol>
+	  <li>Move the other team-markers to the next assignment. (Which you can leave closed, if you don't want anyone to start that one, yet.</li>
+	  <li>Leave the exception-team on the extension-assignment (or move it back, manually to that assignment).</li>
+	  <li>Re-open the extension-assignment.  Since the other teams are on a later assignment, they will not be able to edit it.</li>
+	</ol>
+	</p>
+    </li>
   </ul>
 
      <form method="POST">

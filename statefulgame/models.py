@@ -35,11 +35,6 @@ class Assignment(Activity):
   class Meta:
     order_with_respect_to = 'game'
 
-  def save(self,*args,**kwargs):
-    super(Assignment,self).save(*args,**kwargs)
-    for team in self.game.course.team_set.all():
-      Turn.objects.get(team=team,assignment=self)
-
   def submission(self,team,user=None,allUsers=False):
     if not self.individual or allUsers:
       return Submission.objects.filter(turn__assignment=self,turn__team=team)
@@ -187,7 +182,7 @@ class State(models.Model):
       assert(self.turn.team == self.team)
     return super(State,self).save(*args,**kwargs)
 
-  def advance_turn(self):#TODOX
+  def advance_turn(self):
     if self.turn is None:
       next_a = self.game.assignment_set.all()[0]
       if not getattr(next_a,'open',False):
@@ -196,7 +191,8 @@ class State(models.Model):
       next_t = self.turn.next()
       if not next_t or not next_t.assignment.open or not self.turn.complete:
         return False
-    self.turn = next_t
+      next_a = next_t.assignment
+    self.turn =  next_a.turn(self.team)
     self.save()
     return self.turn
 

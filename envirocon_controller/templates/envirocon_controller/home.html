@@ -111,7 +111,7 @@ Good luck and please don't hesitate to ask for assistance throughout the process
 	  >
 	<td>
 	    {{assn.data.name}}
-	    {%if team %}
+	    {%if team and not assn.hidden %}
 	    <br />
 	    <a href="{%url assignment-page assn.data.id %}">
 	      {%if assn.current %}
@@ -122,10 +122,13 @@ Good luck and please don't hesitate to ask for assistance throughout the process
 	    </a>
 	    {%endif%}
 	    {%if is_faculty%}
+	       <br />
 	       {%with assn.data.any_submission as first_submission %}
-	          {%if first_submission %}
 		  <br />
+	          {%if first_submission %}
 		  <a href="{%url assignment-page assignment_id=assn.data.id,faculty_view="/instructor/",user_id=first_submission.author.id %}">Review Submissions</a>
+		  {%else%}
+		  <a href="{%url game-page assn.data.app %}">preview</a>
 		  {%endif%}
 	       {%endwith%}
 	       Open: {{assn.form.visible_fields.1}}

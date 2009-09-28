@@ -218,7 +218,9 @@ def team_view_data(request,teams=None,game=None):
   else:
     if team:
       teams = [team]
-      just_advanced = team.state.advance_turn()
+
+  for tm in teams:
+    just_advanced = (tm.state.advance_turn() or just_advanced)
 
 
   assignment_forms = AssignmentFormSet(instance=game)
@@ -228,16 +230,16 @@ def team_view_data(request,teams=None,game=None):
                   'form':f,
                   'teams':[],'hidden':False,'current':False,}
                  for f in assignment_forms.forms]
-  for team in teams:
+  for tm in teams:
     for d in assignments:
-      turn = d['data'].turn(team)
+      turn = d['data'].turn(tm)
       if not (turn.open or turn.complete):
         d['hidden'] = True
-      elif team==team and turn == team.state.turn:
+      elif tm==team and turn == tm.state.turn:
         d['current'] = True
       d['teams'].append({'turn':turn,
-                         'data':team,
-                         'sub':d['data'].submission(team, request.user, is_faculty)
+                         'data':tm,
+                         'sub':d['data'].submission(tm, request.user, is_faculty)
                          })
   return {'teams':teams,
           'assignments':assignments,

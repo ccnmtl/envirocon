@@ -184,7 +184,8 @@ class TrackingYourProjects(GameInterface):
     def template(self,page_id=None,public_state=None):
         funded = {}
         if public_state['resources_by_app'].has_key('tracking_your_projects'):
-          funded = public_state['resources_by_app']['tracking_your_projects']['funded']['value']
+          if public_state['resources_by_app']['tracking_your_projects'].has_key('funded'):
+            funded = public_state['resources_by_app']['tracking_your_projects']['funded']['value']
         game_context = {'funded':funded}
         if page_id == "page2":
           return ('game_many/tracking_your_projects.html',game_context)

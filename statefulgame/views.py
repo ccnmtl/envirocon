@@ -295,6 +295,11 @@ class OrderedDict:
     else:
       self.array.append(key)
       self.dic[key] = val
+      
+  def has_key(self,key):
+    if key in self.dic:
+      return True
+    return False
 
   def values(self):
     return [self.dic[k] for k in self.array]

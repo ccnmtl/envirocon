@@ -263,6 +263,7 @@ class Submission(models.Model):
   data = models.TextField()  # submitted data
   modified = models.DateTimeField('date modified', auto_now=True,editable=False)
 
+  archival = models.BooleanField(default=False)
 
 #SIGNAL SUPPORT
 def create_state_for_team(sender, instance, created, **kwargs):

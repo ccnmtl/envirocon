@@ -304,7 +304,7 @@ SELECT pg_catalog.setval('survey_survey_id_seq', 1, true);
 --
 
 COPY survey_survey (id, title, slug, description, opens, closes, visible, public, restricted, allows_multiple_interviews, template_name, created_by_id, editable_by_id, recipient_type_id, recipient_id) FROM stdin;
-1	Profile	profile	Fill out the questions, please.	2009-08-04 10:37:11-04	2009-08-31 10:37:20-04	t	f	t	f		1	1	17	1
+1	Profile	profile	Fill out the questions, please.	2009-08-04 10:37:11-04	2009-12-31 10:37:20-04	t	f	t	f		1	1	17	2
 \.
 
 

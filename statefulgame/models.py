@@ -86,6 +86,10 @@ class Turn(models.Model):
   assignment = models.ForeignKey(Assignment)
   shock = models.ForeignKey(Shock, null=True, blank=True)
   
+  class Meta:
+    unique_together = ("team", "assignment")
+
+
   def __unicode__(self):
     return "Turn ID %s for Team %s (%s)" % (self.id, self.team, self.assignment)
 
@@ -144,9 +148,10 @@ class StateManager(models.Manager):
   
 class State(models.Model):
   objects = StateManager() #manager
-  
+  # singleton per team  
+  team = models.OneToOneField(Team, primary_key=True)
+
   game = models.ForeignKey(Game)
-  team = models.OneToOneField(Team)  # singleton per team
   turn = models.ForeignKey(Turn, null=True, blank=True)
   world_state = models.TextField(blank=True)  # state data
 
@@ -278,6 +283,7 @@ def include_world_state(sender,request, **kwargs):
     return { 'turn_id':1,
              'user_id':1,#hope there's a user.id==1!
              'editable':1,
+             'resources_by_app':{},
              } #TEMPORARY
   else:
     return {} 

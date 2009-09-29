@@ -131,5 +131,7 @@ ANONYMOUS_PATHS = ('/accounts/',
                    '/site_media/',
                    '/admin/',
                    '/about',
+                   '/help',
+                   '/contact',
                    re.compile(r'^/$'),
                    )

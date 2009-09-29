@@ -36,7 +36,7 @@
 			  <a href="/accounts/login/?next=/">LOGIN</a>
 			  {%else%}
 			  Hello {{user}}, 
-			  <a href="/accounts/logout/?next=/">LOGOUT</a>			  
+			  <a href="/accounts/logout_then_login/">LOGOUT</a>			  
 			  {%endif%}
 			</li>
 			<li>
@@ -45,8 +45,8 @@
 			  {%endif%}
 			</li>
 			<li><a href="/about">About</a></li>
-			<!--li><a href="#">Help</a></li>
-			<li><a href="#">Contact</a></li-->
+			<li><a href="/help">Help</a></li>
+			<li><a href="/contact">Contact</a></li>
 		</ul>
 		</div>
 		{% endblock %}

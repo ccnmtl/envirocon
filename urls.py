@@ -21,6 +21,8 @@ urlpatterns = patterns('',
                        (r'^teams/',include('teams.urls')),
 
                        (r'^about','envirocon_controller.views.about'),
+                       (r'^help','envirocon_controller.views.help'),
+                       (r'^contact','envirocon_controller.views.contact'),
 
                        
                        (r'', 'envirocon_controller.views.home'),

@@ -30,6 +30,12 @@ def home(request):
 def about(request):
     return render_to_response('envirocon_controller/about.html')
 
+def help(request):
+    return render_to_response('envirocon_controller/help.html')
+
+def contact(request):
+    return render_to_response('envirocon_controller/contact.html')
+
 #NOT A VIEW
 def filled_out_a_profile(request):
     c = getattr(request,'course',None)

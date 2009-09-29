@@ -113,7 +113,6 @@ class Turn(models.Model):
     #      are we open, or do they have to finish the first part?
     return (self==self.team.state.turn and self.assignment.open)
 
-  @property
   def complete(self):
     subs = [s.author.id for s in Submission.objects.filter(turn=self,published=True)]
     if not subs:
@@ -194,7 +193,7 @@ class State(models.Model):
         return False
     else:
       next_t = self.turn.next()
-      if not next_t or not next_t.assignment.open or not self.turn.complete:
+      if not next_t or not next_t.assignment.open or not self.turn.complete():
         return False
       next_a = next_t.assignment
     self.turn =  next_a.turn(self.team)
@@ -208,7 +207,9 @@ class State(models.Model):
     order = self.game.get_assignment_order()
     if self.turn:
       max_turn = order.index(self.turn.assignment.id)
-      if self.turn.assignment.open:
+      if (self.turn.assignment.open
+          or self.turn.assignment.auto_closed
+          or self.turn.complete):
         return order[0:max_turn+1] #include current
       else:
         return order[0:max_turn] #all previous

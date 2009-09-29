@@ -234,9 +234,9 @@ def team_view_data(request,teams=None,game=None):
   for tm in teams:
     for d in assignments:
       turn = d['data'].turn(tm)
-      if turn.open or turn.complete:
+      if turn.visible:
         d['hidden'] = False
-      if tm==team and turn == tm.state.turn:
+      if tm==team and turn == tm.state.turn and turn.open:
         d['current'] = True
       d['teams'].append({'turn':turn,
                          'data':tm,

@@ -43,9 +43,11 @@ class GameInterface:
         
         @param game_state: a dict() of the variables saved in
         other applications that the apps put in public_variables()
+
+        NOTE: resources of type:'file' MUST be first!
         """
-        #return [{"page_id":"foo","type":"map"}
-        #        {"page_id":"foo","type":"file","title":"Title.pdf"}]
+        #return [{"page_id":"foo","type":"file","title":"Title.pdf"},
+        #        {"page_id":"foo","type":"map"}]
         return []
 
 

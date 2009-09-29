@@ -197,7 +197,7 @@
      <div id="files_panel" class="tabbertab tabbertabhide" title="Files">   
        
        {%for activity in world_state.resources %}
-       {%if activity.res.0 %}
+       {%ifequal activity.res.0.type "file" %}
        <div class="week"><!--not really a week-->
 	 <h2>{{activity.a.name}}</h2>
 	 <ul>
@@ -208,7 +208,7 @@
 	   {%endfor%}
 	 </ul>
        </div>
-       {%endif%}
+       {%endifequal%}
        {%endfor%}
   
      </div>

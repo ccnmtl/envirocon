@@ -36,3 +36,9 @@
 <p>What role do you think environmental needs have in the broader framework of post-conflict peacebuilding?
 <textarea rows='10' cols='60'name='question5' id='question5'></textarea></p>
 {% endblock %}
+
+{% block navbuttons %}
+{% if not world_state.editable %}
+     <input type="button" id="next" name="next" value="Next Page" onclick="location.href='page3'" />
+{% endif %}
+{% endblock %}

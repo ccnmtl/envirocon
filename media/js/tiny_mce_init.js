@@ -21,7 +21,7 @@ tinyMCE.init({
   theme_advanced_toolbar_location:"top",
   theme_advanced_toolbar_align:"left",
 	    /* CUSTOM CCNMTL: peared down the UI buttons available */
-  theme_advanced_buttons1:((false && tinyMCE.isSafari) ? "bold, italic, underline, spacer, code" : "bold, italic, underline, spacer, bullist, numlist, spacer, undo, redo, spacer, link, unlink, image, spacer, code, pasteword"),
+  theme_advanced_buttons1:"bold, italic, underline, spacer, bullist, numlist, spacer, undo, redo, spacer, link, unlink, image, spacer, code, pasteword",
   theme_advanced_buttons2:"",
   /*theme_advanced_path_location:"bottom",*/
   remove_linebreaks:true,

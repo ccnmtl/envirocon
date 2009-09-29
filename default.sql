@@ -14,7 +14,7 @@ SET search_path = public, pg_catalog;
 -- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sky
 --
 
-SELECT pg_catalog.setval('auth_user_id_seq', 10, true);
+SELECT pg_catalog.setval('auth_user_id_seq', 12, true);
 
 
 --
@@ -23,13 +23,15 @@ SELECT pg_catalog.setval('auth_user_id_seq', 10, true);
 
 INSERT INTO auth_user VALUES (3, 'stud', '', '', '', 'sha1$72714$cae614e80f17de59c607d720e9cb0501bb0220e1', false, true, false, '2009-08-05 17:32:16.022917-04', '2009-08-05 16:33:25-04');
 INSERT INTO auth_user VALUES (1, 'sky', '', '', 'hi@hi.com', 'sha1$dd6b8$7f6039da841ef979dc348528969a72b1acbe07e9', true, true, true, '2009-08-11 13:53:44.264455-04', '2009-08-11 13:52:08.983845-04');
-INSERT INTO auth_user VALUES (4, 'sbd12', 'Schuyler', 'Duveen', 'sbd12@columbia.edu', '!', true, true, true, '2009-09-29 12:42:33-04', '2009-08-11 13:54:15-04');
 INSERT INTO auth_user VALUES (6, 'rdk24', 'Ryan', 'Kelsey', 'rdk24@columbia.edu', '!', true, true, false, '2009-09-29 13:00:44.441282-04', '2009-09-29 13:00:44.347117-04');
 INSERT INTO auth_user VALUES (8, 'pjs2153', 'Paul', 'Stengel', 'pjs2153@columbia.edu', '!', true, true, false, '2009-09-29 13:14:33.118397-04', '2009-09-29 13:14:33.04282-04');
-INSERT INTO auth_user VALUES (7, 'kmh2124', 'Kathryn', 'Hagan', 'kmh2124@columbia.edu', '!', true, true, true, '2009-09-29 13:06:10-04', '2009-09-29 13:06:10-04');
 INSERT INTO auth_user VALUES (9, 'dbeeby0', 'Daniel', 'Beeby', 'dbeeby0@columbia.edu', '!', true, true, false, '2009-09-29 13:23:16.60475-04', '2009-09-29 13:23:16.50154-04');
 INSERT INTO auth_user VALUES (10, 'akq3', 'Ashlinn', 'Quinn', 'akq3@columbia.edu', '!', true, true, false, '2009-09-29 14:08:34.794937-04', '2009-09-29 14:02:32.849553-04');
-INSERT INTO auth_user VALUES (5, 'mj2402', 'Maria', 'Janelli', 'mj2402@columbia.edu', '!', true, true, false, '2009-09-29 15:07:45.542633-04', '2009-09-29 12:43:54-04');
+INSERT INTO auth_user VALUES (11, 'mal85', '', '', '', 'sha1$cc46c$6a2e6548a58559fb8d4e105d7a4e6bbef6f18b36', false, true, false, '2009-09-29 17:07:00-04', '2009-09-29 17:07:00-04');
+INSERT INTO auth_user VALUES (12, 'amf2145', '', '', '', 'sha1$c10a9$49b964a2c985a6c9bdf3ff4a7228f2a51c080079', false, true, false, '2009-09-29 17:07:29-04', '2009-09-29 17:07:29-04');
+INSERT INTO auth_user VALUES (5, 'mj2402', 'Maria', 'Janelli', 'mj2402@columbia.edu', '!', true, true, false, '2009-09-29 15:07:45-04', '2009-09-29 12:43:54-04');
+INSERT INTO auth_user VALUES (4, 'sbd12', 'Schuyler', 'Duveen', 'sbd12@columbia.edu', '!', true, true, true, '2009-09-29 16:09:54-04', '2009-08-11 13:54:15-04');
+INSERT INTO auth_user VALUES (7, 'kmh2124', 'Kathryn', 'Hagan', 'kmh2124@columbia.edu', '!', true, true, true, '2009-09-29 13:06:10-04', '2009-09-29 13:06:10-04');
 
 
 --
@@ -65,42 +67,8 @@ INSERT INTO auth_group VALUES (3, 'tlc.cunix.local:columbia.edu');
 INSERT INTO auth_group VALUES (4, 'tlcxml.cunix.local:columbia.edu');
 INSERT INTO auth_group VALUES (5, 'ALL_CU');
 INSERT INTO auth_group VALUES (6, 'test_faculty');
-INSERT INTO auth_group VALUES (7, 't3.y2009.s001.cg4201.anth.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (8, 't3.y2008.s001.cv3937.anth.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (9, 't2.y2008.s002.cs1001.crea.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (10, 't3.y2009.s001.cg0003.resi.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (11, 'Team 1:  - Test Course (CCNMTL)');
-INSERT INTO auth_group VALUES (12, 'Team 2:  - Test Course (CCNMTL)');
-INSERT INTO auth_group VALUES (13, 'Team 3:  - Test Course (CCNMTL)');
-INSERT INTO auth_group VALUES (14, 't1.y2004.s002.cy4036.mstu.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (15, 't3.y2004.s002.cy4036.mstu.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (16, 't1.y2008.s001.cy5515.mstu.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (17, 't3.y2009.s001.cy5515.mstu.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (18, 't3.y2005.s025.cc1100.scnc.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (19, 't1.y2006.s025.cc1100.scnc.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (20, 't1.y2005.s026.cc1100.scnc.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (21, 't1.y2004.s002.cy4036.mstu.fc.course:columbia.edu');
-INSERT INTO auth_group VALUES (22, 't3.y2004.s002.cy4036.mstu.fc.course:columbia.edu');
-INSERT INTO auth_group VALUES (23, 't1.y2008.s001.cy5515.mstu.fc.course:columbia.edu');
-INSERT INTO auth_group VALUES (24, 't3.y2009.s001.cy5515.mstu.fc.course:columbia.edu');
-INSERT INTO auth_group VALUES (25, 't3.y2005.s025.cc1100.scnc.fc.course:columbia.edu');
-INSERT INTO auth_group VALUES (26, 't1.y2006.s025.cc1100.scnc.fc.course:columbia.edu');
-INSERT INTO auth_group VALUES (27, 't1.y2005.s026.cc1100.scnc.fc.course:columbia.edu');
-INSERT INTO auth_group VALUES (28, 't3.y2006.s002.ce6998.coms.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (29, 't1.y2007.s002.ce6998.coms.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (30, 't1.y2007.s003.ce6998.coms.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (31, 't3.y2005.s001.cw4733.coms.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (32, 't3.y2006.s001.ce6832.csee.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (33, 't1.y2006.s001.ce6847.csee.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (34, 't3.y2005.s001.cw4823.csee.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (35, 't3.y2005.s001.cw4824.csee.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (36, 't1.y2006.s001.cw4840.csee.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (37, 't1.y2006.s001.cw4861.csee.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (38, 't3.y2009.s004.cc1201.jpns.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (39, 't3.y2008.s001.cf1101.jpns.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (40, 't1.y2009.s001.cf1102.jpns.st.course:columbia.edu');
-INSERT INTO auth_group VALUES (41, 'Team 4:  - Test Course (CCNMTL)');
-INSERT INTO auth_group VALUES (42, 'Team 5:  - Test Course (CCNMTL)');
+INSERT INTO auth_group VALUES (8, 't3.y2009.s001.cu8909.inaf.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (7, 't3.y2009.s001.cu8909.inaf.fc.course:columbia.edu');
 
 
 --
@@ -154,6 +122,8 @@ ALTER TABLE ONLY public.django_site DROP CONSTRAINT django_site_pkey;
 ALTER TABLE public.django_site ALTER COLUMN id DROP DEFAULT;
 DROP SEQUENCE public.django_site_id_seq;
 DROP TABLE public.django_site;
+SET search_path = public, pg_catalog;
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -164,7 +134,7 @@ SET default_with_oids = false;
 
 CREATE TABLE django_site (
     id integer NOT NULL,
-    "domain" character varying(100) NOT NULL,
+    domain character varying(100) NOT NULL,
     name character varying(50) NOT NULL
 );
 
@@ -209,7 +179,7 @@ ALTER TABLE django_site ALTER COLUMN id SET DEFAULT nextval('django_site_id_seq'
 -- Data for Name: django_site; Type: TABLE DATA; Schema: public; Owner: sky
 --
 
-COPY django_site (id, "domain", name) FROM stdin;
+COPY django_site (id, domain, name) FROM stdin;
 1	example.com	example.com
 \.
 
@@ -242,7 +212,7 @@ SET search_path = public, pg_catalog;
 -- Name: courseaffils_course_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sky
 --
 
-SELECT pg_catalog.setval('courseaffils_course_id_seq', 2, true);
+SELECT pg_catalog.setval('courseaffils_course_id_seq', 3, true);
 
 
 --
@@ -250,7 +220,8 @@ SELECT pg_catalog.setval('courseaffils_course_id_seq', 2, true);
 --
 
 COPY courseaffils_course (id, group_id, title, faculty_group_id) FROM stdin;
-2	3	Test Course (CCNMTL)	6
+2	3	Test Course (CCNMTL)	4
+3	8	Environment, Conflict, and Resolution Strategies	7
 \.
 
 
@@ -346,7 +317,7 @@ SELECT pg_catalog.setval('survey_survey_id_seq', 1, true);
 --
 
 COPY survey_survey (id, title, slug, description, opens, closes, visible, public, restricted, allows_multiple_interviews, template_name, created_by_id, editable_by_id, recipient_type_id, recipient_id) FROM stdin;
-1	Profile	profile	Fill out the questions, please.	2009-08-04 10:37:11-04	2009-12-31 09:37:20-05	t	f	t	f		1	1	17	2
+1	Profile	profile	Fill out the questions, please.	2009-08-04 10:37:11-04	2009-12-31 09:37:20-05	t	f	t	f		1	1	17	3
 \.
 
 

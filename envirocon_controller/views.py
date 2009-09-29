@@ -1,7 +1,7 @@
 from django.template import RequestContext, loader
 from django.http import HttpResponse,Http404
 from django.conf import settings
-from django.shortcuts import get_object_or_404, render_to_response
+from django.shortcuts import get_object_or_404, render_to_response,redirect
 from django.db import models
 
 Survey = models.get_model('survey','survey')
@@ -22,7 +22,9 @@ def home(request):
         for k,v in team_view_data(request).items():
             state[k] = v
 
-
+    if request.method == 'POST':
+        #so reloads on posts aren't annoying
+        return redirect('/')
     return render_to_response('envirocon_controller/home.html',
                               state,
                               context_instance=RequestContext(request))

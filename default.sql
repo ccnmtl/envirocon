@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UTF8';
+SET client_encoding = 'SQL_ASCII';
 SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
@@ -14,7 +14,7 @@ SET search_path = public, pg_catalog;
 -- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sky
 --
 
-SELECT pg_catalog.setval('auth_user_id_seq', 4, true);
+SELECT pg_catalog.setval('auth_user_id_seq', 10, true);
 
 
 --
@@ -23,7 +23,13 @@ SELECT pg_catalog.setval('auth_user_id_seq', 4, true);
 
 INSERT INTO auth_user VALUES (3, 'stud', '', '', '', 'sha1$72714$cae614e80f17de59c607d720e9cb0501bb0220e1', false, true, false, '2009-08-05 17:32:16.022917-04', '2009-08-05 16:33:25-04');
 INSERT INTO auth_user VALUES (1, 'sky', '', '', 'hi@hi.com', 'sha1$dd6b8$7f6039da841ef979dc348528969a72b1acbe07e9', true, true, true, '2009-08-11 13:53:44.264455-04', '2009-08-11 13:52:08.983845-04');
-INSERT INTO auth_user VALUES (4, 'sbd12', 'Schuyler', 'Duveen', 'sbd12@columbia.edu', '!', true, true, true, '2009-09-22 17:02:06.949423-04', '2009-08-11 13:54:15.097573-04');
+INSERT INTO auth_user VALUES (4, 'sbd12', 'Schuyler', 'Duveen', 'sbd12@columbia.edu', '!', true, true, true, '2009-09-29 12:42:33-04', '2009-08-11 13:54:15-04');
+INSERT INTO auth_user VALUES (6, 'rdk24', 'Ryan', 'Kelsey', 'rdk24@columbia.edu', '!', true, true, false, '2009-09-29 13:00:44.441282-04', '2009-09-29 13:00:44.347117-04');
+INSERT INTO auth_user VALUES (8, 'pjs2153', 'Paul', 'Stengel', 'pjs2153@columbia.edu', '!', true, true, false, '2009-09-29 13:14:33.118397-04', '2009-09-29 13:14:33.04282-04');
+INSERT INTO auth_user VALUES (7, 'kmh2124', 'Kathryn', 'Hagan', 'kmh2124@columbia.edu', '!', true, true, true, '2009-09-29 13:06:10-04', '2009-09-29 13:06:10-04');
+INSERT INTO auth_user VALUES (9, 'dbeeby0', 'Daniel', 'Beeby', 'dbeeby0@columbia.edu', '!', true, true, false, '2009-09-29 13:23:16.60475-04', '2009-09-29 13:23:16.50154-04');
+INSERT INTO auth_user VALUES (10, 'akq3', 'Ashlinn', 'Quinn', 'akq3@columbia.edu', '!', true, true, false, '2009-09-29 14:08:34.794937-04', '2009-09-29 14:02:32.849553-04');
+INSERT INTO auth_user VALUES (5, 'mj2402', 'Maria', 'Janelli', 'mj2402@columbia.edu', '!', true, true, false, '2009-09-29 15:07:45.542633-04', '2009-09-29 12:43:54-04');
 
 
 --
@@ -34,7 +40,7 @@ INSERT INTO auth_user VALUES (4, 'sbd12', 'Schuyler', 'Duveen', 'sbd12@columbia.
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UTF8';
+SET client_encoding = 'SQL_ASCII';
 SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
@@ -46,7 +52,7 @@ SET search_path = public, pg_catalog;
 -- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sky
 --
 
-SELECT pg_catalog.setval('auth_group_id_seq', 5, true);
+SELECT pg_catalog.setval('auth_group_id_seq', 42, true);
 
 
 --
@@ -58,6 +64,43 @@ INSERT INTO auth_group VALUES (2, 'staff.cunix.local:columbia.edu');
 INSERT INTO auth_group VALUES (3, 'tlc.cunix.local:columbia.edu');
 INSERT INTO auth_group VALUES (4, 'tlcxml.cunix.local:columbia.edu');
 INSERT INTO auth_group VALUES (5, 'ALL_CU');
+INSERT INTO auth_group VALUES (6, 'test_faculty');
+INSERT INTO auth_group VALUES (7, 't3.y2009.s001.cg4201.anth.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (8, 't3.y2008.s001.cv3937.anth.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (9, 't2.y2008.s002.cs1001.crea.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (10, 't3.y2009.s001.cg0003.resi.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (11, 'Team 1:  - Test Course (CCNMTL)');
+INSERT INTO auth_group VALUES (12, 'Team 2:  - Test Course (CCNMTL)');
+INSERT INTO auth_group VALUES (13, 'Team 3:  - Test Course (CCNMTL)');
+INSERT INTO auth_group VALUES (14, 't1.y2004.s002.cy4036.mstu.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (15, 't3.y2004.s002.cy4036.mstu.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (16, 't1.y2008.s001.cy5515.mstu.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (17, 't3.y2009.s001.cy5515.mstu.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (18, 't3.y2005.s025.cc1100.scnc.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (19, 't1.y2006.s025.cc1100.scnc.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (20, 't1.y2005.s026.cc1100.scnc.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (21, 't1.y2004.s002.cy4036.mstu.fc.course:columbia.edu');
+INSERT INTO auth_group VALUES (22, 't3.y2004.s002.cy4036.mstu.fc.course:columbia.edu');
+INSERT INTO auth_group VALUES (23, 't1.y2008.s001.cy5515.mstu.fc.course:columbia.edu');
+INSERT INTO auth_group VALUES (24, 't3.y2009.s001.cy5515.mstu.fc.course:columbia.edu');
+INSERT INTO auth_group VALUES (25, 't3.y2005.s025.cc1100.scnc.fc.course:columbia.edu');
+INSERT INTO auth_group VALUES (26, 't1.y2006.s025.cc1100.scnc.fc.course:columbia.edu');
+INSERT INTO auth_group VALUES (27, 't1.y2005.s026.cc1100.scnc.fc.course:columbia.edu');
+INSERT INTO auth_group VALUES (28, 't3.y2006.s002.ce6998.coms.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (29, 't1.y2007.s002.ce6998.coms.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (30, 't1.y2007.s003.ce6998.coms.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (31, 't3.y2005.s001.cw4733.coms.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (32, 't3.y2006.s001.ce6832.csee.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (33, 't1.y2006.s001.ce6847.csee.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (34, 't3.y2005.s001.cw4823.csee.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (35, 't3.y2005.s001.cw4824.csee.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (36, 't1.y2006.s001.cw4840.csee.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (37, 't1.y2006.s001.cw4861.csee.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (38, 't3.y2009.s004.cc1201.jpns.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (39, 't3.y2008.s001.cf1101.jpns.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (40, 't1.y2009.s001.cf1102.jpns.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (41, 'Team 4:  - Test Course (CCNMTL)');
+INSERT INTO auth_group VALUES (42, 'Team 5:  - Test Course (CCNMTL)');
 
 
 --
@@ -68,7 +111,7 @@ INSERT INTO auth_group VALUES (5, 'ALL_CU');
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UTF8';
+SET client_encoding = 'SQL_ASCII';
 SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
@@ -99,7 +142,7 @@ COPY auth_group_permissions (id, group_id, permission_id) FROM stdin;
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UTF8';
+SET client_encoding = 'SQL_ASCII';
 SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
@@ -111,8 +154,6 @@ ALTER TABLE ONLY public.django_site DROP CONSTRAINT django_site_pkey;
 ALTER TABLE public.django_site ALTER COLUMN id DROP DEFAULT;
 DROP SEQUENCE public.django_site_id_seq;
 DROP TABLE public.django_site;
-SET search_path = public, pg_catalog;
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -123,7 +164,7 @@ SET default_with_oids = false;
 
 CREATE TABLE django_site (
     id integer NOT NULL,
-    domain character varying(100) NOT NULL,
+    "domain" character varying(100) NOT NULL,
     name character varying(50) NOT NULL
 );
 
@@ -168,7 +209,7 @@ ALTER TABLE django_site ALTER COLUMN id SET DEFAULT nextval('django_site_id_seq'
 -- Data for Name: django_site; Type: TABLE DATA; Schema: public; Owner: sky
 --
 
-COPY django_site (id, domain, name) FROM stdin;
+COPY django_site (id, "domain", name) FROM stdin;
 1	example.com	example.com
 \.
 
@@ -189,7 +230,7 @@ ALTER TABLE ONLY django_site
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UTF8';
+SET client_encoding = 'SQL_ASCII';
 SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
@@ -209,6 +250,7 @@ SELECT pg_catalog.setval('courseaffils_course_id_seq', 2, true);
 --
 
 COPY courseaffils_course (id, group_id, title, faculty_group_id) FROM stdin;
+2	3	Test Course (CCNMTL)	6
 \.
 
 
@@ -220,7 +262,7 @@ COPY courseaffils_course (id, group_id, title, faculty_group_id) FROM stdin;
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UTF8';
+SET client_encoding = 'SQL_ASCII';
 SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
@@ -252,7 +294,7 @@ COPY django_flatpage (id, url, title, content, enable_comments, template_name, r
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UTF8';
+SET client_encoding = 'SQL_ASCII';
 SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
@@ -284,7 +326,7 @@ COPY django_flatpage_sites (id, flatpage_id, site_id) FROM stdin;
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UTF8';
+SET client_encoding = 'SQL_ASCII';
 SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
@@ -304,7 +346,7 @@ SELECT pg_catalog.setval('survey_survey_id_seq', 1, true);
 --
 
 COPY survey_survey (id, title, slug, description, opens, closes, visible, public, restricted, allows_multiple_interviews, template_name, created_by_id, editable_by_id, recipient_type_id, recipient_id) FROM stdin;
-1	Profile	profile	Fill out the questions, please.	2009-08-04 10:37:11-04	2009-12-31 10:37:20-04	t	f	t	f		1	1	17	2
+1	Profile	profile	Fill out the questions, please.	2009-08-04 10:37:11-04	2009-12-31 09:37:20-05	t	f	t	f		1	1	17	2
 \.
 
 
@@ -316,7 +358,7 @@ COPY survey_survey (id, title, slug, description, opens, closes, visible, public
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UTF8';
+SET client_encoding = 'SQL_ASCII';
 SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
@@ -338,15 +380,15 @@ SELECT pg_catalog.setval('survey_question_id_seq', 11, true);
 COPY survey_question (id, survey_id, qtype, required, text, "order", image, choice_num_min, choice_num_max, qstyle, _order) FROM stdin;
 2	1	T	f	Other Program:	2		\N	\N		1
 3	1	A	t	Please describe your previous academic experience and interests.	3		\N	\N		2
-4	1	C	t	Please check the box that best describes your area of expertise	5		\N	\N		3
 5	1	T	f	Other expertise	6		\N	\N		4
 8	1	A	f	If yes please detail, Conflict resolution courses, natural resource management, development projects, or general project management etc.	75		\N	\N		7
 6	1	R	t	Have you participated in previous training programs related to this course? 	70		1	1		5
-7	1	R	t	Do you have previous professional experience focusing specifically on positions that are relevant to the topics in this course and any development project management or design?	80		1	1		6
 9	1	A	f	If yes, please detail and note how much time.	90		\N	\N		8
 10	1	R	t	Have you had any previous fieldwork in a post-conflict context or direct experiences in a conflict zone?	100		1	1		9
 11	1	A	f	If yes please detail.	110		\N	\N		10
 1	1	R	t	Please list your current *program* of study.	1		1	1		0
+4	1	R	t	Please select the category that best describes your area of expertise.	5		\N	\N		3
+7	1	R	t	Do you have professional experience focusing on areas that are relevant to the topics in this course and/or development, project management, or design?	80		1	1		6
 \.
 
 
@@ -358,7 +400,7 @@ COPY survey_question (id, survey_id, qtype, required, text, "order", image, choi
 -- PostgreSQL database dump
 --
 
-SET client_encoding = 'UTF8';
+SET client_encoding = 'SQL_ASCII';
 SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;

@@ -2,6 +2,7 @@
 **(?:<(?!t[dhr]|a\\b)[^>]*?>)*(?=(?:(?!<t[dhr]\\b).)*?<\\/t[dh]>)++++ig
 */
 var regexes="class\\s*=?\\s*\"?(?:Mso[^\"]*?)\"?++++gi**<![-]-.*?--\\s*>++++g";
+if (editable_view) {
 tinyMCE.init({
   theme:"advanced",
   /* content_css:"tinyContent.css", CUSTOM CCNMTL--commenting out*/
@@ -102,3 +103,4 @@ tinyMCE.init({
   +"u[class|id|title],"
   +"ul[class|compact<compact|id|title|type]"
 });
+}

@@ -84,6 +84,8 @@ if (typeof GameSystem == 'undefined') {
 		  swapDOM(elt,wrapper);
 	      }
 	  });
+      } else {
+	  
       }
   }
   GameSystemClass.prototype.saveState = function(evt) {

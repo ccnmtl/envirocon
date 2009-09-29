@@ -220,11 +220,10 @@ class State(models.Model):
       if ahead_by > 1:
         onclosed = True
       elif ahead_by == 1:
+        #current IS the next turn
+        onclosed = self.turn.open 
         # note: last game can never have an
         # exposed onclosed resource.
-        next_turn = self.turn.next()
-        if next_turn:
-          onclosed = next_turn.open
     return activity.gameresources(world_state,
                                   onopen=(turn.assignment.id in self.visible_assignments()),
                                   onclosed=onclosed

@@ -263,9 +263,16 @@
   {% endblock %}
    </div><!-- end div form-block -->
   {%if world_state.editable %}
+
+  <div id="navbuttons">
+    {% block navbuttons %}
+    {% endblock %}
+  </div>
   <div id="buttons">
-     <input class="game-system floatright" type="submit" name="published" value="Submit" onclick="GameSystem.published='Submit'" />
-     <input class="game-system" type="submit" name="published" value="Save Draft" onclick="GameSystem.published='Draft'" />
+  {% block buttons %}
+     <input class="game-system floatright" type="submit" id="submit" name="published" value="Submit" onclick="GameSystem.published='Submit'" />
+     <input class="game-system" type="submit" id="draft" name="published" value="Save Draft" onclick="GameSystem.published='Draft'" />
+  {% endblock %}
      <input class="game-system" type="hidden" name="turn_id" value="{{ world_state.turn_id }}" />
      <input class="game-system" type="hidden" name="author" value={{ user }}" />
   </div>

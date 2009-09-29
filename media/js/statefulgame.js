@@ -88,7 +88,7 @@ if (typeof GameSystem == 'undefined') {
 	  
       }
   }
-  GameSystemClass.prototype.saveState = function(evt) {
+  GameSystemClass.prototype.saveState = function(evt, next) {
       if (tinyMCE) {tinyMCE.triggerSave();}
       var def = false;
       try {
@@ -116,7 +116,11 @@ if (typeof GameSystem == 'undefined') {
 	  if (evt) evt.stop();
 	  if (this.published=='Submit') {
 	      def.addCallback(function() {
-		  document.location = '/';
+	        if(next) {
+	          document.location = next;
+	        } else {
+		      document.location = '/';
+		    }
 	      });
 	  } else {
 	      def.addCallback(function() {

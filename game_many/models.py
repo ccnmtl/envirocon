@@ -322,7 +322,7 @@ class FinalPaper(GameInterface):
     Week 8, Final Paper
     """
     def pages(self):
-        return ('index','page2',)
+        return ('index','page2','page3')
 
     def template(self,page_id=None,public_state=None):
         #if public_state['resources_by_app'].has_key('final_paper'):
@@ -340,6 +340,8 @@ class FinalPaper(GameInterface):
 
         if page_id == "page2":
           return ('game_many/final_paper.html',game_context)
+        if page_id == "page3":
+          return ('game_many/final_paper2.html',game_context)
         return ('game_many/final_paper_intro.html',game_context)
     
     def variables(self,page_id=None):

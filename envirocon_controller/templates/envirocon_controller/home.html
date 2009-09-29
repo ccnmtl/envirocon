@@ -47,24 +47,36 @@ Good luck and please don't hesitate to ask for assistance throughout the process
   <a href="{%url team-admin %}">Team Administration and Assignment</a>
   {%endif%}
 
-   {%if team%}
- <div id="alertbox">
- <h2>Your Team</h2>
+   {%if not is_faculty%}
+   <div id="alertbox">
+   
+     {%if team%}
+     <h2>Your Team</h2>
   
-  <ul>
-    {%for member in team.group.user_set.all %}
-    <li>{{member.get_full_name|default:member.username}}</li>
-    {%endfor%}
-  </ul>
-  </div>
-  {%endif%}
+     <ul>
+       {%for member in team.group.user_set.all %}
+       <li>{{member.get_full_name|default:member.username}}</li>
+       {%endfor%}
+     </ul>
+     {%else%}
+     <p>You have not yet been assigned to a team.</p>
+     {%endif%}
+   </div>
+   {%endif%}
 
   <p>
-  {%for survey in todo %}
-  <h2>Welcome!</h2>
-  <b> Please fill out your <a href="{%url survey-detail survey.slug %}">{{survey.title}}</a></b>
-  {%endfor%}
- 
+    <h2>Welcome!</h2>
+    {%for survey in todo %}
+    <p><b> Please fill out your <a href="{%url survey-detail survey.slug %}">{{survey.title}}</a></b></p>
+    {%empty%}
+    <p>Thank you for filling out your survey!</p>
+    {%endfor%}
+    {%if not team.state.turn.open %}
+       <p>
+       Currently, there is no open assignment to work on.  Please wait for your instructor
+       to open then next assignment.
+       </p>
+    {%endif%}
   </p>
  <h2>Assignments</h2>
   <!--fake table-->

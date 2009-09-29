@@ -543,3 +543,19 @@ padding: 0 10px 10px 10px;
   color:black;
   font-weight:bold;
 }
+
+.nomembers
+{ 
+  font-size:80%;
+ }
+
+.last-submitted
+{ 
+  font-style:italic; 
+  font-size:120%;
+ }
+
+.last-date, .last-author
+{ 
+  font-style:normal;
+ }

@@ -47,12 +47,20 @@
        {%for otherteam in world_state.faculty_info.teams %}
 	 <h2>
 	   {%ifnotequal world_state.team otherteam.r %}
-	   <a href="{%url assignment-page assignment_id=world_state.assignment.id,faculty_view="/instructor/",user_id=otherteam.r.group.user_set.all.0.id %}">
+	     {%if otherteam.r.group.user_set.all.0 %}
+	     <a href="{%url assignment-page assignment_id=world_state.assignment.id,faculty_view="/instructor/",user_id=otherteam.r.group.user_set.all.0.id %}">
+	     {%else%}
+	     <em class="nomembers"><span class="teamname">
+	     {%endif%}
 	   {%endifnotequal%}
 
 	  Team: {{otherteam.r}}
 	   {%ifnotequal world_state.team otherteam.r %}
-	   </a>
+	     {%if otherteam.r.group.user_set.all.0 %}	   
+	     </a>
+	     {%else%}
+	     </span> --no team members</em>
+	     {%endif%}
 	   {%endifnotequal%}
        </h2>
 	 
@@ -278,6 +286,13 @@
   </div>
   {%endif %}
    </form>
+   {%if world_state.submission %}
+   <div class="last-submitted">
+     Last saved at 
+     <span class="last-date">{{world_state.submission.0.modified|date:"M j Y f A"}}</span> 
+     by <span class="last-author">{{world_state.submission.0.author.get_full_name|default:world_state.submission.0.author.username}}</span>
+   </div>
+   {%endif%}
    </div>
 {% endblock %}
 

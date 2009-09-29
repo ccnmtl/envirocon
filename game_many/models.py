@@ -251,10 +251,12 @@ class DonorsConference(GameInterface):
 
     def template(self,page_id=None,public_state=None):
         points = 0
+        ineligible = {}
         if public_state['resources_by_app'].has_key('donors_conference'):
-          points = public_state['resources_by_app']['donors_conference']['week4points']['value']
-          ineligible = public_state['resources_by_app']['donors_conference']['ineligible']['value']
-          #wb2 = public_state['resources_by_app']['donors_conference']['wb2']['value']
+          if public_state['resources_by_app']['donors_conference'].has_key('week4points'):
+            points = public_state['resources_by_app']['donors_conference']['week4points']['value']
+          if public_state['resources_by_app']['donors_conference'].has_key('ineligible'):
+            ineligible = public_state['resources_by_app']['donors_conference']['ineligible']['value']
 
         game_context = {'week4points':points, 'ineligible':ineligible}#, 'wb2':wb2}
 

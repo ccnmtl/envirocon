@@ -270,12 +270,12 @@
        ></textarea><br />
   {% endblock %}
    </div><!-- end div form-block -->
-  {%if world_state.editable %}
-
   <div id="navbuttons">
     {% block navbuttons %}
     {% endblock %}
   </div>
+
+  {%if world_state.editable %}
   <div id="buttons">
   {% block buttons %}
      <input class="game-system floatright" type="submit" id="submit" name="published" value="Submit" onclick="GameSystem.published='Submit'" />

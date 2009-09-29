@@ -73,19 +73,24 @@ if (typeof GameSystem == 'undefined') {
 	      arr.push(elt);
 	  });
 	  forEach(arr,function(elt) {
-	      elt.disabled = true;
-	      if (elt.tagName.toLowerCase()=='textarea') {
-		  var value = elt.value;
-		  var wrapper = P();
-		  if (hasElementClass(elt,'mceNoEditor')) {
-		      value = value.replace("\n","<br />");
+	      if (elt.parentNode.getAttribute('id') != 'navbuttons') {
+		  elt.disabled = true;
+		  if (elt.tagName.toLowerCase()=='textarea') {
+		      var value = elt.value;
+		      var wrapper = P({'class':'response'});
+		      if (hasElementClass(elt,'mceNoEditor')) {
+			  value = value.replace("\n","<br />");
+		      }
+		      wrapper.innerHTML = value;
+		      swapDOM(elt,wrapper);
 		  }
-		  wrapper.innerHTML = value;
-		  swapDOM(elt,wrapper);
 	      }
 	  });
       } else {
-	  
+	  /*actually, check out the MAJOR HACKITUDE
+            that is in tiny_mce_init.js that tests for
+            editable_view!
+           */
       }
   }
   GameSystemClass.prototype.saveState = function(evt, next) {

@@ -68,13 +68,11 @@ Good luck and please don't hesitate to ask for assistance throughout the process
     <h2>Welcome!</h2>
     {%for survey in todo %}
     <p><b> Please fill out your <a href="{%url survey-detail survey.slug %}">{{survey.title}}</a></b></p>
-    {%empty%}
-    <p>Thank you for filling out your survey!</p>
     {%endfor%}
-    {%if not team.state.turn.open %}
+    {%if not team.state.turn.open and not todo %}
        <p>
-       Currently, there is no open assignment to work on.  Please wait for your instructor
-       to open then next assignment.
+	 Thank you for your submission.
+	 There are no current activities for you to complete. Please check back soon to continue the simulation.
        </p>
     {%endif%}
   </p>

@@ -964,7 +964,6 @@ table.sortable th {
 
 td.teamlist {white-space:nowrap;}
 div.teamoptions {white-space:nowrap;}
-th {cursor:pointer;}
 div.teamoptions div.on 
 {
   border:1px solid red;

@@ -2,9 +2,16 @@
 {% block content %}
 <div class="textblock">
 <h1>Login</h1>
-{% if form.has_errors %}
-<p>Your username and password didn't match. Please try again.</p>
+{% if form.errors %}
+<p style="font-weight:bold;color:red;">Your username and password didn't match. Please try again.
+
+<br /><br />
+  WARNING: Columbia UNI logins should not go into the Username/Password field here.  
+<br />
+Instead, click the "Columbia UNI Login" button.
+</p>
 {% endif %}
+
 <form method="get" action="{{ wind_base }}login">
 <input type="hidden" name="service" value="{{ wind_service }}" />
 <input type="hidden" name="destination" value="http://{{ request.get_host }}/accounts/windlogin/?next={{ next }}" />

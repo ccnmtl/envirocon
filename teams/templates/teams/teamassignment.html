@@ -118,7 +118,13 @@
 	  {% endfor %}
 	  {#END PROFILE FIELDS#}
 	  <td class="teamlist"
-	      ><div class="teamoptions">{% for t in teams %}<div
+	      ><div class="teamoptions" 
+		    {%for g in student.record.groups.all %}
+		    {%if g.team%}
+		    data-team="{{g.team.id}}"
+		    {%endif%}
+		    {%endfor%}
+		    >{% for t in teams %}<div
 	        {%if t.group in student.record.groups.all %}
 		  class="on"
 	        {%endif %}

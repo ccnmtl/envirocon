@@ -142,14 +142,20 @@ table#choose_layers td {
 	border-bottom: 1px solid #ccc;
 
 }
-
+table.interventions 
+{
+  width:95%;
+  }
 table.interventions td input{
 	
 		width: 98%;
 		margin: 2px 0;
 		
 }
-
+table.interventions td.celllabel
+{ 
+  width:15%;
+ }
 table.interventions td textarea{
 	
 		height: 8em;
@@ -570,3 +576,4 @@ padding: 0 10px 10px 10px;
   /*IE insists on making that box small. so this doesn't work, but someday!  SOMEDAY!!! */
   width:100%;
  }
+

@@ -108,6 +108,7 @@ def save_assignment(request):
     if dirty:
       state.save_world(world)
   submission.data = data
+  submission.author = request.user
   submission.published = (request.REQUEST.get('published','Draft').find('Draft') < 0 )
   submission.save()
 

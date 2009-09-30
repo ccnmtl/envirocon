@@ -12,7 +12,8 @@ tinyMCE.init({
 	    /*CUSTOM CCNMTL: added 'citation' */
   entity_encoding : "numeric",
 	    /*CUSTOM CCNMTL: added 'citation' */
-  plugins:"citation,paste",
+  //plugins:"citation,paste",
+  plugins:"paste",
 	    /* CUSTOM CCNMTL: visual is set to false, so anchor tags don't get messed up.  This is probably a bug
 	       to be reported to tinyMCE */
   visual:false,

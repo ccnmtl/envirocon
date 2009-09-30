@@ -275,6 +275,10 @@ class Submission(models.Model):
 
   archival = models.BooleanField(default=False)
 
+  def __unicode__(self):
+    return u'Submission:' + unicode(self.turn.team) + ':' + unicode(self.turn.assignment)
+
+
 #SIGNAL SUPPORT
 def create_state_for_team(sender, instance, created, **kwargs):
   #possibly redundant to the StateManager auto-create workflow as well

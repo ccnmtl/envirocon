@@ -1,18 +1,35 @@
 //var plot_sectors_state = GameSystem.getVar('plot_sectors');
 //GameSystem.saveState();
 
+//get/set a select element value
+///does NOT support multi-select (assumes single)
+function selectVal(select_elt,val) {
+	///nicer, if only IE didn't SUCK
+	//return select_elt.value = val;
+	var opt_i = select_elt.options.length;
+	while (--opt_i >= 0) {
+	    if (val && select_elt.options[opt_i].value == val) {
+		select_elt.options[opt_i].selected = true;//write
+		return val;
+	    } else if (select_elt.options[opt_i].selected) {
+		return select_elt.options[opt_i].value;//read
+	    }
+	}
+    }
+
 TableSortCasts["Select"] = function(cell){ 
     try { 
-	return cell.getElementsByTagName('select')[0].value;
+	return Number(selectVal(cell.getElementsByTagName('select')[0]));
     } catch(e) {return 0;}
 }
 
 var myPlots = new (function() {
     this.updateLocalState = function() {
 	var elts = this.form.elements;
-	for (a in elts) {
-	    if (elts[a].value && !hasElementClass(elts[a],'game-system')) {
-		this.state[elts[a].name] = elts[a].value;
+	var a = elts.length;
+	while (--a >= 0) {
+	    if (!hasElementClass(elts[a],'game-system')) {
+		this.state[elts[a].name] = selectVal(elts[a]);
 	    }
 	}
 	this.updateChart();
@@ -21,7 +38,7 @@ var myPlots = new (function() {
 	this.form = GameSystem.getForm();
 	this.state = GameSystem.getVariable('game_plot_sectors');
 	for (a in this.state) {
-	    this.form.elements[a].value = this.state[a];
+	    selectVal(this.form.elements[a],this.state[a]);
 	}
 	this.updateChart();
     }
@@ -65,8 +82,9 @@ var myPlots = new (function() {
 	forEach($('chart-data').getElementsByTagName('tr'),function(row) {
 	    var tds = row.getElementsByTagName('td');
 	    var selects = row.getElementsByTagName('select');
-	    var key = trim(tds[0].textContent);
-	    data[key] = [selects[0].value, selects[1].value];
+	    var innerText = ((tds[0].textContent) ? tds[0].textContent : tds[0].innerText);
+	    var key = trim(innerText);
+	    data[key] = [selectVal(selects[0]), selectVal(selects[1])];
 	    if (!row.style.backgroundColor) {
 		row.style.backgroundColor = self.colors.shift();
 	    }

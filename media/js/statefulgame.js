@@ -77,7 +77,11 @@ if (typeof GameSystem == 'undefined') {
 		  elt.disabled = true;
 		  if (elt.tagName.toLowerCase()=='textarea') {
 		      var value = elt.value;
-		      var wrapper = P({'class':'response'});
+		      ///WOW, IE NEVER FAILS TO SUCK!
+		      ///without a TD wrapper, we get Unknown Error
+		      ///when setting innerHTML
+		      var TAG = (/MSIE/.test(navigator.userAgent))?TD:P;
+		      var wrapper = TAG({'class':'response'});
 		      if (hasElementClass(elt,'mceNoEditor')) {
 			  value = value.replace("\n","<br />");
 		      }

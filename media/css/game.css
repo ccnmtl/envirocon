@@ -566,4 +566,7 @@ padding: 0 10px 10px 10px;
   min-height:2em;
   margin:4px 0 2px 0;
   padding:6px 4px 4px 4px;
+
+  /*IE insists on making that box small. so this doesn't work, but someday!  SOMEDAY!!! */
+  width:100%;
  }

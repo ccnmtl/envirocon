@@ -206,7 +206,11 @@ def team_view_data(request,teams=None,game=None):
                                             )
 
   if game is None:
-    game = request.course.game_set.all()[0]
+    games = request.course.game_set.all()
+    if not games:
+      return {}
+    else:
+      game = games[0]
     
   team = Team.objects.by_user(request.user, getattr(request,'course',None))
   teams = []

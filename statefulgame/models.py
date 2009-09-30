@@ -56,6 +56,12 @@ class Assignment(Activity):
       self.open = False
       self.auto_closed = True
       self.save()
+      #auto-publish -- we need this so they're seen as 'complete'
+      #and thus reviewable/visible
+      for sub in Submission.objects.filter(turn__assignment=self,
+                                           published=False,archival=False):
+        sub.published=True
+        sub.save()
       return True
 
 # abstract
@@ -208,7 +214,6 @@ class State(models.Model):
     if self.turn:
       max_turn = order.index(self.turn.assignment.id)
       if (self.turn.assignment.open
-          or self.turn.assignment.auto_closed
           or self.turn.complete):
         return order[0:max_turn+1] #include current
       else:

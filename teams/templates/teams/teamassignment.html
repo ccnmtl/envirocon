@@ -121,7 +121,7 @@
 	      ><div class="teamoptions" 
 		    {%for g in student.record.groups.all %}
 		    {%if g.team%}
-		    data-team="{{g.team.id}}"
+		    data-team="{{g.team.index}}"
 		    {%endif%}
 		    {%endfor%}
 		    >{% for t in teams %}<div

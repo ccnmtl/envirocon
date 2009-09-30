@@ -139,6 +139,8 @@ def get_assignment_data(request,turn_id,user_id):
 def current_turn(request):
   user = request.user
   team = Team.objects.by_user(user, getattr(request,"course",None))
+  if not team:
+    return HttpResponseRedirect('/')
   turn = team.state.current_turn()
   
   if turn:

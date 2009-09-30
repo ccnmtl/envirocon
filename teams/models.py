@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, IntegrityError
 
 Course = models.get_model('courseaffils','course')
 Group = models.get_model('auth','group')
@@ -52,7 +52,15 @@ class Team(models.Model):
                 group_name.append(self.course.title)
             if self.name:
                 group_name.append(self.name)
-            self.group = Group.objects.create(name=' - '.join(group_name))
+            group_name_string = ' - '.join(group_name)
+            extra = ''
+            while True:
+                self.group,created = Group.objects.get_or_create(name=group_name_string+extra)
+                if created:
+                    break
+                else:
+                    if not extra: extra = 'a'
+                    extra = chr(ord(extra)+1)
             if not self.name:
                 self.name = self.group.name
             

@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, render_to_response,redirect
 from django.db import models
 
 Survey = models.get_model('survey','survey')
+Answer = models.get_model('survey','answer')
 from game.installed_games import InstalledGames
 from statefulgame.views import team_view_data
 
@@ -44,7 +45,7 @@ def filled_out_a_profile(request):
     if Survey and c:
         surveys = Survey.objects.surveys_for(c)
         return [sy for sy in surveys
-                if not sy.has_answers_from(request.session.session_key)]
+                if not Answer.objects.filter(question__survey=sy,user=request.user)]
     else:
         return tuple()
         

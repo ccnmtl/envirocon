@@ -30,13 +30,13 @@ def home(request):
                               context_instance=RequestContext(request))
 
 def about(request):
-    return render_to_response('envirocon_controller/about.html')
+    return render_to_response('envirocon_controller/about.html', context_instance=RequestContext(request))
 
 def help(request):
-    return render_to_response('envirocon_controller/help.html')
+    return render_to_response('envirocon_controller/help.html', context_instance=RequestContext(request))
 
 def contact(request):
-    return render_to_response('envirocon_controller/contact.html')
+    return render_to_response('envirocon_controller/contact.html', context_instance=RequestContext(request))
 
 #NOT A VIEW
 def filled_out_a_profile(request):

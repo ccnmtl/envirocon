@@ -2,6 +2,15 @@
 
 var text_vars = {}
 
+function saveRestoreButton(e) {
+  var btn = e.src();
+  if(e.src().value == "Next Page") {
+    GameSystem.published = 'Draft';
+    GameSystem.saveState(e,"page3");
+  }
+  $("assignment-form").submit();
+}
+
 function saveRestore(e) {
   if (tinyMCE) {tinyMCE.triggerSave();}
   boxes = formContents(e.src());
@@ -19,6 +28,7 @@ function saveRestore(e) {
 
   //overridden from stopFormListener, so we call it ourselves
   if($("submit").value == "Next Page") {
+    GameSystem.published = 'Draft';
     GameSystem.saveState(e,"page3");
   }
   else {

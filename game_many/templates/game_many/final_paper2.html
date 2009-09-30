@@ -50,5 +50,8 @@ Final Paper: Page 2
 {% endblock %}
 
 {% block navbuttons %}
-     <input type="button" id="prev" name="prev" value="Previous Page" onclick="location.href='page2'" />
+     <input type="button" id="prev" name="prev" value="Previous Page"/>
+     <script type="text/javascript">
+       connect("prev", onclick, saveRestore);
+     </script>
 {% endblock %}

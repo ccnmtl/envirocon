@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class='textblock'>
+<h1>Please select a course</h1>
+
+<ul>
+{% for course in courses %}
+ <li>
+  <a href="?set_course={{course.group.name|urlencode}}">{{course.title}}</a>
+ </li>
+{% endfor %}
+</ul>
+</div>
+{% endblock %}

@@ -2,15 +2,6 @@
 
 var text_vars = {}
 
-function saveRestoreButton(e) {
-  var btn = e.src();
-  if(e.src().value == "Next Page") {
-    GameSystem.published = 'Draft';
-    GameSystem.saveState(e,"page3");
-  }
-  $("assignment-form").submit();
-}
-
 function saveRestore(e) {
   if (tinyMCE) {tinyMCE.triggerSave();}
   boxes = formContents(e.src());
@@ -27,9 +18,19 @@ function saveRestore(e) {
   }
 
   //overridden from stopFormListener, so we call it ourselves
-  if($("submit").value == "Next Page") {
-    GameSystem.published = 'Draft';
-    GameSystem.saveState(e,"page3");
+  if(GameSystem.published == "DefaultNext") {
+    GameSystem.quiet = true;
+    var def = GameSystem.saveState(e);
+    def.addCallback(function() {
+      document.location = "page3";
+    });
+  }
+  else if(GameSystem.published == "DefaultPrev") {
+    GameSystem.quiet = true;
+    var def = GameSystem.saveState(e);
+    def.addCallback(function() {
+      document.location = "page2";
+    });
   }
   else {
     GameSystem.saveState(e);

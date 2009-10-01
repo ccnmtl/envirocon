@@ -2,10 +2,6 @@
 
 {% block game_js %}
    <script type="text/javascript" src="{{GAME_MEDIA}}/js/textarea_saverestore.js"></script>
-   <script type="text/javascript">
-     $("submit").value = "Next Page";
-   
-   </script>
 {% endblock %}
 {% block game_css %}
   <!-- add css link here -->
@@ -41,4 +37,9 @@
 {% if not world_state.editable %}
      <input type="button" id="next" name="next" value="Next Page" onclick="location.href='page3'" />
 {% endif %}
+{% endblock %}
+
+{% block buttons %}
+     <input class="game-system floatright" type="submit" id="submit" name="published" value="Next Page" onclick="GameSystem.published='DefaultNext'" />
+     <input class="game-system" type="submit" id="draft" name="published" value="Save Draft" onclick="GameSystem.published='Draft'" />
 {% endblock %}

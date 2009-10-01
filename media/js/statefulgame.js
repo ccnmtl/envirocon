@@ -123,20 +123,19 @@ if (typeof GameSystem == 'undefined') {
       finally {
 	  //return false;
 	  if (evt) evt.stop();
-	  if (this.published=='Submit') {
+	  if (! this.quiet) {
+	    if (this.published=='Submit') {
 	      def.addCallback(function() {
-	        if(next) {
-	          document.location = next;
-	        } else {
 		      document.location = '/';
-		    }
 	      });
-	  } else {
+	    } else {
 	      def.addCallback(function() {
-		  alert('Draft saved.');
+		     alert('Draft saved.');
 	      });
-	  }
+	    }
       }
+    }
+    return def;
   }
 
   GameSystemClass.prototype.getVariable = function(var_name) {

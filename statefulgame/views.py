@@ -109,7 +109,8 @@ def save_assignment(request):
       state.save_world(world)
   submission.data = data
   submission.author = request.user
-  submission.published = (request.REQUEST.get('published','Draft').find('Draft') < 0 )
+  if not request.REQUEST.get('published','NO').startswith('Default'):
+     submission.published = (request.REQUEST.get('published','Draft').find('Draft') < 0 )
   submission.save()
 
   return HttpResponse(created)

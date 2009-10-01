@@ -50,8 +50,11 @@ Final Paper: Page 2
 {% endblock %}
 
 {% block navbuttons %}
+{% if not world_state.editable %}
      <input type="button" id="prev" name="prev" value="Previous Page" onclick="location.href='page2'" />
-     <script type="text/javascript">
-       connect("prev", onclick, saveRestore);
-     </script>
+{% endif %}
+
+{% if world_state.editable %}
+     <input type="submit" id="prev" name="prev" value="Previous Page" onclick="GameSystem.published='DefaultPrev'" />
+{% endif %}
 {% endblock %}

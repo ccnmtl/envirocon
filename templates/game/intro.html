@@ -2,6 +2,11 @@
 
 {% block title %}{{game.gamename}}{% endblock %}
 
+{% block js %}
+   <script type="text/javascript" src="{{GAME_MEDIA}}/js/mochikit/MochiKit/MochiKit.js"></script>
+   <script type="text/javascript" src="{{GAME_MEDIA}}/js/hide_new_materials.js"></script>
+{% endblock %}
+
 {% block content %}
 
 <div id="intro_container">
@@ -20,7 +25,8 @@
 
  <div id="new_materials" >
 <h2>New Materials</h2> 
-<ul>
+  <div id="new_materials_inner">
+<ul id="new_materials_list">
 {% for app,resourcedict in world_state.resources_by_app.items %}
   {% ifequal app game.app %}
 
@@ -35,7 +41,7 @@
 {% block resources %}
 {% endblock %}
 </ul>
-</div>
+</div></div>
 
  <div id="instructions">
 <h2>Instructions:</h2>

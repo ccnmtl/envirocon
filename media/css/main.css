@@ -189,6 +189,11 @@ img, img a
 	width: 14em;
 }
 
+#new_materials_inner {
+  margin: 0 20px 0 20px;
+}
+
+
 /* ---- Clearing block ---------- */
 .visualclear
 {

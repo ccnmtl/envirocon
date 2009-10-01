@@ -214,7 +214,7 @@ class State(models.Model):
     if self.turn:
       max_turn = order.index(self.turn.assignment.id)
       if (self.turn.assignment.open
-          or self.turn.complete):
+          or self.turn.complete()):
         return order[0:max_turn+1] #include current
       else:
         return order[0:max_turn] #all previous

@@ -283,6 +283,14 @@ def set_turn(request):
     elif request.POST.get('set_turn',False):
       team.state.turn = turn
       team.state.save()
+      #would auto-advance, so make them drafts
+      if turn.complete() and turn.next() and turn.next().assignment.open:
+        #we do it to all subs, so if we push back to an individual assn
+        #all the team members are equally fsck'd
+        for sub in Submission.objects.filter(turn=turn,archival=False):
+          sub.published = False
+          sub.save()
+
       return HttpResponse(turn.id)
     
 

@@ -287,7 +287,7 @@
   {%endif %}
    </form>
    {%if world_state.submission %}
-   <div class="last-submitted">
+   <div id="last-submitted" class="last-submitted">
      Last saved at 
      <span class="last-date">{{world_state.submission.0.modified|date:"M j Y f A"}}</span> 
      by <span class="last-author">{{world_state.submission.0.author.get_full_name|default:world_state.submission.0.author.username}}</span>

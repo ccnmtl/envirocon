@@ -130,7 +130,8 @@ if (typeof GameSystem == 'undefined') {
 	      });
 	    } else {
 	      def.addCallback(function() {
-		     alert('Draft saved.');
+		  alert('Draft saved.');
+		  removeElement('last-submitted'); //could fail
 	      });
 	    }
       }

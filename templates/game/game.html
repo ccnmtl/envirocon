@@ -211,7 +211,7 @@
 	 <ul>
 	   {%for res in activity.res %}
 	     {%ifequal res.type "file" %}
-	   <li><a href="{%url assignment-page activity.a.id res.page_id %}" target="blank">{{res.title|default:"File"}}</a></li>
+	   <li><a href="{%url assignment-page activity.a.id res.page_id %}">{{res.title|default:"File"}}</a></li>
 	     {%endifequal %}
 	   {%endfor%}
 	 </ul>

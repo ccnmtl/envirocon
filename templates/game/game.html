@@ -172,17 +172,20 @@
 	     </div>
 	     <div id="basemap" class="basic">
 		 <div id="layers">
-	
-		 <div class="layer refugee" id="layer-refugee"></div>
+
+		
 		 <div class="layer cholera" id="layer-cholera"></div>
 		 <div class="layer parks" id="layer-parks"></div>
 		 <div class="layer conflict_basic" id="layer-conflict"></div>
+		 
        {% if appres.donors_conference.wb2.value %}
 		   <div class="layer wb2_conflict" id="layer-wb2-conflict"></div>
 		 {% endif %}
        {% if appres.final_paper.wb3.value %}
 		   <div class="layer wb3_conflict" id="layer-wb3-conflict"></div>
 		 {% endif %}
+		 		<div class="layer labels" id="layer-labels"></div>
+		 		<div class="layer refugee" id="layer-refugee"></div>
 		 </div>
 	     </div>
      

@@ -221,6 +221,14 @@ table.interventions td textarea{
 }
 
 
+.layer.labels
+{
+	background-image: url(../img/maps/map_layer_labels.png);
+	background-repeat: no-repeat;
+	position: absolute;
+	
+}
+
 
 .layer.refugee
 {

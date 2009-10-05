@@ -14,7 +14,7 @@ SET search_path = public, pg_catalog;
 -- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sky
 --
 
-SELECT pg_catalog.setval('auth_user_id_seq', 12, true);
+SELECT pg_catalog.setval('auth_user_id_seq', 13, true);
 
 
 --
@@ -28,10 +28,11 @@ INSERT INTO auth_user VALUES (8, 'pjs2153', 'Paul', 'Stengel', 'pjs2153@columbia
 INSERT INTO auth_user VALUES (9, 'dbeeby0', 'Daniel', 'Beeby', 'dbeeby0@columbia.edu', '!', true, true, false, '2009-09-29 13:23:16.60475-04', '2009-09-29 13:23:16.50154-04');
 INSERT INTO auth_user VALUES (10, 'akq3', 'Ashlinn', 'Quinn', 'akq3@columbia.edu', '!', true, true, false, '2009-09-29 14:08:34.794937-04', '2009-09-29 14:02:32.849553-04');
 INSERT INTO auth_user VALUES (11, 'mal85', '', '', '', 'sha1$cc46c$6a2e6548a58559fb8d4e105d7a4e6bbef6f18b36', false, true, false, '2009-09-29 17:07:00-04', '2009-09-29 17:07:00-04');
-INSERT INTO auth_user VALUES (12, 'amf2145', '', '', '', 'sha1$c10a9$49b964a2c985a6c9bdf3ff4a7228f2a51c080079', false, true, false, '2009-09-29 17:07:29-04', '2009-09-29 17:07:29-04');
-INSERT INTO auth_user VALUES (5, 'mj2402', 'Maria', 'Janelli', 'mj2402@columbia.edu', '!', true, true, false, '2009-09-29 15:07:45-04', '2009-09-29 12:43:54-04');
-INSERT INTO auth_user VALUES (4, 'sbd12', 'Schuyler', 'Duveen', 'sbd12@columbia.edu', '!', true, true, true, '2009-09-29 16:09:54-04', '2009-08-11 13:54:15-04');
-INSERT INTO auth_user VALUES (7, 'kmh2124', 'Kathryn', 'Hagan', 'kmh2124@columbia.edu', '!', true, true, true, '2009-09-29 13:06:10-04', '2009-09-29 13:06:10-04');
+INSERT INTO auth_user VALUES (4, 'sbd12', 'Schuyler', 'Duveen', 'sbd12@columbia.edu', '!', true, true, true, '2009-10-01 11:59:29.435604-04', '2009-08-11 13:54:15-04');
+INSERT INTO auth_user VALUES (13, 'ed2198', 'Elizabeth', 'Day', 'ed2198@columbia.edu', '!', true, true, true, '2009-10-02 11:09:51.02553-04', '2009-10-02 11:09:50.869521-04');
+INSERT INTO auth_user VALUES (5, 'mj2402', 'Maria', 'Janelli', 'mj2402@columbia.edu', '!', true, true, false, '2009-10-05 11:06:49.252798-04', '2009-09-29 12:43:54-04');
+INSERT INTO auth_user VALUES (12, 'amf2145', '', '', '', 'sha1$c10a9$49b964a2c985a6c9bdf3ff4a7228f2a51c080079', false, true, false, '2009-10-05 11:37:18.863846-04', '2009-09-29 17:07:29-04');
+INSERT INTO auth_user VALUES (7, 'kmh2124', 'Kathryn', 'Hagan', 'kmh2124@columbia.edu', '!', true, true, true, '2009-10-05 11:13:04-04', '2009-09-29 13:06:10-04');
 
 
 --
@@ -54,7 +55,7 @@ SET search_path = public, pg_catalog;
 -- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sky
 --
 
-SELECT pg_catalog.setval('auth_group_id_seq', 42, true);
+SELECT pg_catalog.setval('auth_group_id_seq', 59, true);
 
 
 --
@@ -69,6 +70,23 @@ INSERT INTO auth_group VALUES (5, 'ALL_CU');
 INSERT INTO auth_group VALUES (6, 'test_faculty');
 INSERT INTO auth_group VALUES (8, 't3.y2009.s001.cu8909.inaf.st.course:columbia.edu');
 INSERT INTO auth_group VALUES (7, 't3.y2009.s001.cu8909.inaf.fc.course:columbia.edu');
+INSERT INTO auth_group VALUES (43, 't3.y2009.s001.cg4201.anth.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (44, 't3.y2008.s001.cv3937.anth.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (45, 't2.y2008.s002.cs1001.crea.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (46, 't3.y2009.s001.cg0003.resi.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (47, 't3.y2006.s002.ce6998.coms.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (48, 't1.y2007.s002.ce6998.coms.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (49, 't1.y2007.s003.ce6998.coms.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (50, 't3.y2005.s001.cw4733.coms.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (51, 't3.y2006.s001.ce6832.csee.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (52, 't1.y2006.s001.ce6847.csee.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (53, 't3.y2005.s001.cw4823.csee.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (54, 't3.y2005.s001.cw4824.csee.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (55, 't1.y2006.s001.cw4840.csee.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (56, 't1.y2006.s001.cw4861.csee.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (57, 't3.y2009.s004.cc1201.jpns.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (58, 't3.y2008.s001.cf1101.jpns.st.course:columbia.edu');
+INSERT INTO auth_group VALUES (59, 't1.y2009.s001.cf1102.jpns.st.course:columbia.edu');
 
 
 --
@@ -341,7 +359,7 @@ SET search_path = public, pg_catalog;
 -- Name: survey_question_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sky
 --
 
-SELECT pg_catalog.setval('survey_question_id_seq', 11, true);
+SELECT pg_catalog.setval('survey_question_id_seq', 12, true);
 
 
 --
@@ -350,16 +368,17 @@ SELECT pg_catalog.setval('survey_question_id_seq', 11, true);
 
 COPY survey_question (id, survey_id, qtype, required, text, "order", image, choice_num_min, choice_num_max, qstyle, _order) FROM stdin;
 2	1	T	f	Other Program:	2		\N	\N		1
-3	1	A	t	Please describe your previous academic experience and interests.	3		\N	\N		2
 5	1	T	f	Other expertise	6		\N	\N		4
 8	1	A	f	If yes please detail, Conflict resolution courses, natural resource management, development projects, or general project management etc.	75		\N	\N		7
 6	1	R	t	Have you participated in previous training programs related to this course? 	70		1	1		5
 9	1	A	f	If yes, please detail and note how much time.	90		\N	\N		8
 10	1	R	t	Have you had any previous fieldwork in a post-conflict context or direct experiences in a conflict zone?	100		1	1		9
 11	1	A	f	If yes please detail.	110		\N	\N		10
-1	1	R	t	Please list your current *program* of study.	1		1	1		0
 4	1	R	t	Please select the category that best describes your area of expertise.	5		\N	\N		3
 7	1	R	t	Do you have professional experience focusing on areas that are relevant to the topics in this course and/or development, project management, or design?	80		1	1		6
+3	1	A	t	Please describe your previous academic experience and interests.	4		\N	\N		2
+1	1	R	t	Please list your current *program* of study.	1		1	1		0
+12	1	R	f	If SIPA MIA or MPA, select your concentration.	3		\N	\N		11
 \.
 
 
@@ -383,7 +402,7 @@ SET search_path = public, pg_catalog;
 -- Name: survey_choice_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sky
 --
 
-SELECT pg_catalog.setval('survey_choice_id_seq', 20, true);
+SELECT pg_catalog.setval('survey_choice_id_seq', 57, true);
 
 
 --
@@ -392,14 +411,6 @@ SELECT pg_catalog.setval('survey_choice_id_seq', 20, true);
 
 COPY survey_choice (id, question_id, text, image, "order", _order) FROM stdin;
 9	1	Other		100	8
-1	1	SIPA MIA EPS		1	0
-2	1	SIPA MIA EPD		2	1
-3	1	SIPA MIA IPS		3	2
-4	1	SIPA MIA Other		4	3
-5	1	MPA-ESP		5	4
-6	1	Climate and Society		6	5
-7	1	E3B		7	6
-8	1	Teacher's College		8	7
 10	4	environment resource management		1	0
 11	4	conflict resolution/prevention		2	1
 12	4	development		3	2
@@ -411,6 +422,25 @@ COPY survey_choice (id, question_id, text, image, "order", _order) FROM stdin;
 18	7	No		2	1
 19	10	Yes		1	0
 20	10	No		2	1
+41	1	Program in Economic Policy Management Executive MPA		30	21
+42	1	MPA in Environmental Science and Policy		31	22
+43	1	MPA in Development Practice		32	23
+44	1	PhD in Sustainable Development		33	24
+45	1	MA in Climate and Society		34	25
+46	1	Ecology, Evolution, and Environmental Biology (E3B)		35	26
+47	1	Teacher's College		36	27
+48	12	Economic and Political Development (EPD)		1	0
+49	12	Energy and  Environment (EE)		2	1
+50	12	Human Rights (HR)		3	2
+51	12	International Finance and Economic Policy (IFEP)		4	3
+52	12	International Security Policy (ISP)		5	4
+53	12	Urban and Social Policy (USP)		6	5
+54	12	Gender Policy (GP)		7	6
+55	12	Humanitarian Affairs Program (HA)		8	7
+56	12	International Conflict Resolution Program (ICRP)		9	8
+57	12	UN Studies Program (UNSP)		10	9
+22	1	SIPA Master of International Affairs (MIA)		1	2
+40	1	SIPA Master of Public Administration (MPA)		20	20
 \.
 
 

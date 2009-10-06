@@ -63,16 +63,6 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
                   'user_id':user.id,
                   'submission':assignment.submission(team,user),
                   }
-  # TODO: if you go to the activity page directly but it is
-  # also your current assignment, it should pull that assign. data
-  # TODO: if assignment exists, old assignment so use that
-  # (not editable)
-  #assignment = Assignment.objects.get(app=activity)
-  #turn = Turn.objects.get(team=team, assignment=assignment)
-  # if assignment does not exist, just show the activity
-  # for now (though actually we should disallow)
-  #elif team.state.assignment.app == activity.app:
-  #else: turn = team.state.turn
   
   return game(request,assignment,page_id=page_id,
               extra_world_state=world_state)

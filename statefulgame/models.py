@@ -115,8 +115,6 @@ class Turn(models.Model):
     """When a turn is open, the team can edit their submission
     only one (at most) turn can be open for a particular team, at once.
     """
-    #TODO: if self.team.state.turn is earlier than self
-    #      are we open, or do they have to finish the first part?
     return (self==self.team.state.turn and self.assignment.open)
 
   def complete(self):

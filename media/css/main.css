@@ -871,9 +871,18 @@ body.fluid #content
 
 
 table.sortable th { 
-               cursor: pointer;      
+               cursor: pointer;   
+               padding-right: 18px;
+               vertical-align: bottom;
  
  }
+ 
+table.sortable th .arrow { 
+
+	float: right; 
+	margin:-14px -12px 0 0;
+
+}
  
  .floatright {
 		float: right;

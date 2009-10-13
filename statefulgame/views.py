@@ -70,7 +70,11 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
 # saves an assignment blob to the database
 def save_assignment(request):
   data = request.REQUEST.get('data',None)
-  turn_id = request.REQUEST['turn_id']
+  try:
+    turn_id = request.REQUEST['turn_id']
+  except:
+    return HttpResponseForbidden()
+
   turn = Turn.objects.get(id=turn_id)
   turn.assignment.auto_close()
   
@@ -90,13 +94,14 @@ def save_assignment(request):
     pubs = turn.assignment.gamepublic_variables()
     world = state.world_ro
     dirty = False
-    for k,v in json.loads(data).items():
-      if k in pubs:
-        world.setdefault('app_vars',{})
-        world['app_vars'][k] = v
-        dirty = True
-    if dirty:
-      state.save_world(world)
+    if data != "":
+      for k,v in json.loads(data).items():
+        if k in pubs:
+          world.setdefault('app_vars',{})
+          world['app_vars'][k] = v
+          dirty = True
+      if dirty:
+        state.save_world(world)
   submission.data = data
   submission.author = request.user
   if not request.REQUEST.get('published','NO').startswith('Default'):
@@ -119,7 +124,8 @@ def get_assignment_data(request,turn_id,user_id):
       submission = Submission.objects.get(author=user,turn=turn)
     else:
       submission = Submission.objects.get(turn=turn)
-    data.update(json.loads(submission.data))
+    if submission.data != "":
+      data.update(json.loads(submission.data))
   except Submission.DoesNotExist:
     pass
   serialized_data = json.dumps(data)

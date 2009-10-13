@@ -128,7 +128,9 @@ def get_assignment_data(request,turn_id,user_id):
       data.update(json.loads(submission.data))
   except Submission.DoesNotExist:
     pass
-  serialized_data = json.dumps(data)
+  serialized_data = '{}'
+  if data:
+    serialized_data = json.dumps(data)
   if request.GET.has_key("jsonp"):
     return HttpResponse("%s(%s)" % (request.GET["jsonp"], serialized_data))
   return HttpResponse(serialized_data)

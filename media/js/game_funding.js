@@ -23,6 +23,8 @@ function resetBudget() {
 }
 
 function calculateCosts(e) {
+  var id = e.src().id;
+
   var cost = getCost(e.src().id);
   var checked = e.src().checked;
   
@@ -65,6 +67,8 @@ function calculateCosts(e) {
   }
 
   updateBudgetDisplay();
+  var parent_id = id.substring(0,id.lastIndexOf('-'));
+  updateToggleDisplay(parent_id);
 }
 
 function validateFundingChoices(e) {
@@ -125,12 +129,37 @@ function format_money(amount) {
    return strCash;
 }
 
+function updateToggleDisplayOnClick(e) {
+  updateToggleDisplay(e.src().id);
+}
+
+function updateToggleDisplay(id) {
+  var levels = ['-high', '-med', '-low'];
+  var cost = "";
+  for (i in levels) {
+    var level = levels[i];
+    if($(id+level).checked == true) {
+      cost = $(id+level+"-cost").innerHTML;
+    }
+  }
+  if(cost != "") {
+    $(id+'-budget').innerHTML = "($" + cost + " million)";
+  }
+  else {
+    $(id+'-budget').innerHTML = "";
+  }
+}
 
 function initFunding() {
   starting_budget = parseFloat($("budget").innerHTML.replace(/,/g,'').replace(/\$/g,''));
   forEach(getElementsByTagAndClassName("input", "fund"), function(elem) {
-    connect(elem, "onclick", calculateCosts);
+    connect(elem, "onchange", calculateCosts);
   });
+
+  forEach(getElementsByTagAndClassName("h3", "toggle-control"), function(elem) {
+    connect(elem, "onclick", updateToggleDisplayOnClick);
+  });
+
   var assn_form = $("assignment-form");
   connect(assn_form, "onreset", resetBudget);
   connect(assn_form, "onsubmit", validateFundingChoices);

@@ -156,10 +156,6 @@ function initFunding() {
     connect(elem, "onchange", calculateCosts);
   });
 
-  forEach(getElementsByTagAndClassName("h3", "toggle-control"), function(elem) {
-    connect(elem, "onclick", updateToggleDisplayOnClick);
-  });
-
   var assn_form = $("assignment-form");
   connect(assn_form, "onreset", resetBudget);
   connect(assn_form, "onsubmit", validateFundingChoices);
@@ -173,6 +169,11 @@ function initFunding() {
 
   updateBudget();  // run once after loading saved data
   
+  forEach(getElementsByTagAndClassName("h3", "toggle-control"), function(elem) {
+    connect(elem, "onclick", updateToggleDisplayOnClick);
+    updateToggleDisplay(elem.id);
+  });
+
   // disable ineligible interventions, if any
   if(typeof ineligible == 'object') {
     for(var i=0; i<ineligible.length; i++) {

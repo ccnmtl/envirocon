@@ -652,15 +652,15 @@
 </table>
 {% endif %}
 
-{% if "agricultural-high"|in_list:funded or "agricultural-med"|in_list:funded or "agricultural-low"|in_list:funded or "desertification-high"|in_list:funded or "desertification-med"|in_list:funded or "desertification-low"|in_list:funded %}
+{% if "agriculture-high"|in_list:funded or "agriculture-med"|in_list:funded or "agriculture-low"|in_list:funded or "desertification-high"|in_list:funded or "desertification-med"|in_list:funded or "desertification-low"|in_list:funded %}
     <h2>Agriculture</h2>
 {% endif %}
 
-{% if "agricultural-high"|in_list:funded or "agricultural-med"|in_list:funded or "agricultural-low"|in_list:funded %}
+{% if "agriculture-high"|in_list:funded or "agriculture-med"|in_list:funded or "agriculture-low"|in_list:funded %}
 <h3>Agricultural Practices</h3>
 {% endif %}
 
-{% if "agricultural-high"|in_list:funded %}
+{% if "agriculture-high"|in_list:funded %}
 <table class="interventions" id='agricultural-high'>
    <tr>
     <th colspan=2>Package of new policies that provide subsidized fertilizer, improved seeds, irrigation infrastructure, farm machinery, and agricultural extension services.</th>
@@ -688,7 +688,7 @@
 </table>
 {% endif %}
 
-{% if "agricultural-med"|in_list:funded %}
+{% if "agriculture-med"|in_list:funded %}
 <table class="interventions" id='agricultural-med'>
    <tr>
     <th colspan=2>Provision of improved seeds to East and Northern areas.</th>
@@ -716,7 +716,7 @@
 </table>
 {% endif %}
 
-{% if "agricultural-low"|in_list:funded %}
+{% if "agriculture-low"|in_list:funded %}
 <table class="interventions" id='agricultural-low'>
    <tr>
     <th colspan=2>Development of an agricultural plan.</th>

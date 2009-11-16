@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}About{%endblock%}
+
+{% block content %}
+<div class='textblock'>
+<h3 style="padding-top:10px;margin-top:0px;">CREATE NEW CLASS</h3>
+<b>{{message}}</b>
+
+<p>This creates a new course with the assignments from Ground|Work.  No survey 
+will be created.  The first team will include you (the creator of the class).  You will be the only member of the class.  (From admin, you can add other users to the '[Title] Students' group.  Due dates will default to a month from now.</p>
+<p>
+<form method="POST">
+  <ul>
+    <li>Class Title (required and must be unique) <input type="text" size="60" name="title" /></li>
+    <li><input type="submit" value="Create new Class" /></li>
+  </ul>
+</form>
+</p>
+<p>
+  <a href="/?unset_course">Switch Course</a>
+</p>
+
+</div>
+{% endblock %}

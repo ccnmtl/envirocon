@@ -1,5 +1,5 @@
 from django.template import RequestContext, loader
-from django.http import HttpResponse,Http404
+from django.http import HttpResponse,Http404,HttpResponseForbidden
 from django.conf import settings
 from django.shortcuts import get_object_or_404, render_to_response,redirect
 from django.db import models
@@ -8,7 +8,7 @@ Survey = models.get_model('survey','survey')
 Answer = models.get_model('survey','answer')
 from game.installed_games import InstalledGames
 from statefulgame.views import team_view_data
-
+from envirocon_main.models import GroundWorkClass
 
 def home(request):
     todo = filled_out_a_profile(request)
@@ -50,3 +50,18 @@ def filled_out_a_profile(request):
         return tuple()
         
         
+def new_envirocon_class(request):
+    if not request.user.is_staff:
+        return HttpResponseForbidden('Only accounts marked as staff have access to create classes.')
+    message = ''
+    if request.method == 'POST':
+        if request.POST.has_key('title'):
+            g = GroundWorkClass(title=request.POST['title'],
+                                creator=request.user)
+            message = 'Course Created.  At the moment, the survey part is not added by default.  Also, remember that you need to open the assignments to begin.'
+
+    return render_to_response('envirocon_main/new_class.html', 
+                              {'message':message
+                               },
+                              context_instance=RequestContext(request)
+                              )

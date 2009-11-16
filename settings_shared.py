@@ -77,7 +77,7 @@ INSTALLED_APPS = (
     'game',
     'game_sample',
     'courseaffils',
-    'envirocon_controller',
+    'envirocon_main',
     'statefulgame',
     'teams',
 

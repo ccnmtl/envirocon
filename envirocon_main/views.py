@@ -26,18 +26,18 @@ def home(request):
     if request.method == 'POST':
         #so reloads on posts aren't annoying
         return redirect('/')
-    return render_to_response('envirocon_controller/home.html',
+    return render_to_response('envirocon_main/home.html',
                               state,
                               context_instance=RequestContext(request))
 
 def about(request):
-    return render_to_response('envirocon_controller/about.html', context_instance=RequestContext(request))
+    return render_to_response('envirocon_main/about.html', context_instance=RequestContext(request))
 
 def help(request):
-    return render_to_response('envirocon_controller/help.html', context_instance=RequestContext(request))
+    return render_to_response('envirocon_main/help.html', context_instance=RequestContext(request))
 
 def contact(request):
-    return render_to_response('envirocon_controller/contact.html', context_instance=RequestContext(request))
+    return render_to_response('envirocon_main/contact.html', context_instance=RequestContext(request))
 
 #NOT A VIEW
 def filled_out_a_profile(request):

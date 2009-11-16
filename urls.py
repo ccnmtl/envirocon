@@ -28,10 +28,10 @@ urlpatterns = patterns('',
                        (r'',include(statefulgame.urls)), #import at root
                        (r'^teams/',include(teams.urls)),
 
-                       (r'^about','envirocon_controller.views.about'),
-                       (r'^help','envirocon_controller.views.help'),
-                       (r'^contact','envirocon_controller.views.contact'),
+                       (r'^about','envirocon_main.views.about'),
+                       (r'^help','envirocon_main.views.help'),
+                       (r'^contact','envirocon_main.views.contact'),
 
                        
-                       (r'', 'envirocon_controller.views.home'),
+                       (r'', 'envirocon_main.views.home'),
 )

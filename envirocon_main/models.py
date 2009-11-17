@@ -1,11 +1,11 @@
 from django.db import models
 import datetime
+#not sure why get_model doesn't work--the bowels of django app loading?
+from statefulgame.models import Game,Assignment
+
 Course = models.get_model('courseaffils','course')
 Group = models.get_model('auth','group')
 Team = models.get_model('teams','team')
-
-Game = models.get_model('statefulgame','game')
-Assignment = models.get_model('statefulgame','assignment')
 
 class GroundWorkClass:
     def __init__(self,title='Another Test Class',creator=None):
@@ -28,6 +28,7 @@ class GroundWorkClass:
         # remove pks of leaves
         # create objects in order of inheritance and
         # replace pks
+
         self.game = Game.objects.create(course=self.course)
         #activity1,2,3,4,5,6...
         self.faculty_team = Team(course=self.course,

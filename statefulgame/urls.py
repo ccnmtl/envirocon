@@ -14,6 +14,11 @@ urlpatterns = patterns(
         'get_assignment_data',
         name='get-assignment'),
 
+    #url(r'^get_assignment_csv/(?P<assignment_id>\d+[^/]+)/$',
+    url(r'^get_assignment_csv/(?P<assignment_id>[^/]+)/$',
+        'get_assignment_csv',
+        name='get-assignment-csv'),
+
     url(r'^current',
         'current_turn',
         name='current-turn'),

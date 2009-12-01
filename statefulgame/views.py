@@ -10,9 +10,11 @@ from django.core.urlresolvers import reverse
 from django.forms.models import inlineformset_factory
 
 import simplejson as json
+import csv
 
 from game.views import game
 Team = models.get_model('teams','team')
+from django.contrib.auth.models import Group
 
 def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id=None):
   assignment = get_object_or_404(Assignment,pk=assignment_id,game__course=getattr(request,"course",None))
@@ -134,6 +136,113 @@ def get_assignment_data(request,turn_id,user_id):
   if request.GET.has_key("jsonp"):
     return HttpResponse("%s(%s)" % (request.GET["jsonp"], serialized_data))
   return HttpResponse(serialized_data)
+
+# helper function for get_assignment_csv
+def format_data(data):
+  formatted = {}
+  filter_list = ["published", "turn_id", "author"]
+  
+  app_key = data.keys()[0]
+  app_data = data[app_key]
+  
+  # dictionary stored
+  if type(app_data) == type({}):
+    for key in app_data.keys():
+      if key not in filter_list:
+        formatted[key] = app_data[key]
+     
+  else:
+    formatted[app_key] = app_data
+
+  return formatted
+  
+def get_assignment_csv(request,assignment_id):
+  if not request.course.is_faculty(request.user):
+    return HttpResponseForbidden()
+
+  assignment = Assignment.objects.get(pk=assignment_id)
+  course = request.course
+
+  response = HttpResponse(mimetype='text/csv')
+  response['Content-Disposition'] = 'attachment; filename="%s.csv"' % assignment.name
+  writer = csv.writer(response)
+
+  headers = []
+  rows = []
+
+  if assignment.individual:
+    default_headers = ["UNI", "Full Name"]
+    headers = default_headers[:]
+
+    for student in course.students:
+      team = Team.objects.by_user(student, course)
+      turn = Turn.objects.get(team=team, assignment=assignment)
+      row = [student, student.get_full_name() ]
+      data = {}
+      try:
+        sub = Submission.objects.get(author=student,turn=turn)
+        data = json.loads(sub.data)
+
+      except (Submission.DoesNotExist, ValueError):
+        row.append("Nothing submitted.")
+
+      if data:
+        formatted = format_data(data)
+        
+        for header in formatted.keys():
+          if header not in headers:
+            headers.append(header)
+            
+        # add to row -- being careful of order (so headers match data)
+        for header in headers:
+          try:
+            row.append(formatted[header])
+          except:
+            if header not in default_headers:
+              row.append("")
+
+      rows.append(row)
+
+  else:  # group assignment
+    default_headers = ["Team", "Team Members"]
+    headers = default_headers[:]
+
+    for team in course.team_set.all():
+      group = Group.objects.get(name=team.name)
+      members = ', '.join(["%s (%s)" % (member, member.get_full_name()) for member in group.user_set.all()])
+      turn = Turn.objects.get(team=team, assignment=assignment)
+      row = [team.name, members]
+      data = {}
+      
+      try:
+        sub = Submission.objects.get(turn=turn)
+        data = json.loads(sub.data)
+
+      except (Submission.DoesNotExist, ValueError):
+        row.append("Nothing submitted.")
+
+      if data:
+        formatted = format_data(data)
+        
+        for header in formatted.keys():
+          if header not in headers:
+            headers.append(header)
+
+        # add to row -- being careful of order (so headers match data)
+        for header in headers:
+          try:
+            row.append(formatted[header])
+          except:
+            if header not in default_headers:
+              row.append("")
+
+      rows.append(row)
+      
+  writer.writerow(headers)
+  for row in rows:
+    writer.writerow(row)
+      
+  return response
   
 def current_turn(request):
   user = request.user

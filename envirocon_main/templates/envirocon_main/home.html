@@ -185,6 +185,10 @@ Good luck and please don't hesitate to ask for assistance throughout the process
 	      <div id="teamstatus-{{ateam.data.id}}-{{assn.data.id}}" data-status="{{ateam.sub.0.published}}"></div>
 	    {%endif%}
 	  {%endfor%}
+
+     {% if is_faculty %}
+	    <a href="{%url get-assignment-csv assignment_id=assn.data.id%}">Download CSV</a>
+	  {% endif %}
 	</td>
       </tr>
       {%endif%}

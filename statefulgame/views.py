@@ -176,6 +176,9 @@ def get_assignment_csv(request,assignment_id):
 
     for student in course.students:
       team = Team.objects.by_user(student, course)
+      if not team:  # ignore students who have not been assigned to a team
+        pass
+
       turn = Turn.objects.get(team=team, assignment=assignment)
       row = [student, student.get_full_name() ]
       data = {}

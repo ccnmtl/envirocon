@@ -141,7 +141,7 @@ def de_html(maybe_string):
   if not isinstance(maybe_string,unicode):
     return maybe_string #not string
   #avoiding entities, we could probably use a library for fancier stuff
-  return re.sub('<[/\w][^>]*>','',maybe_string) #remove tags naively
+  return re.sub('<[/\w][^>]*>','',maybe_string).encode("utf-8") #remove tags naively
 
 # helper function for get_assignment_csv
 def format_data(data):
@@ -249,7 +249,7 @@ def get_assignment_csv(request,assignment_id):
       
   writer.writerow(headers)
   for row in rows:
-    writer.writerow([s.encode("utf-8") for s in row])
+    writer.writerow(row)
       
   return response
   

@@ -11,7 +11,7 @@ from django.forms.models import inlineformset_factory
 
 import simplejson as json
 import csv
-
+import re
 from game.views import game
 Team = models.get_model('teams','team')
 from django.contrib.auth.models import Group
@@ -137,6 +137,12 @@ def get_assignment_data(request,turn_id,user_id):
     return HttpResponse("%s(%s)" % (request.GET["jsonp"], serialized_data))
   return HttpResponse(serialized_data)
 
+def de_html(maybe_string):
+  if not isinstance(maybe_string,unicode):
+    return maybe_string #not string
+  #avoiding entities, we could probably use a library for fancier stuff
+  return re.sub('<[/\w][^>]*>','',maybe_string) #remove tags naively
+
 # helper function for get_assignment_csv
 def format_data(data):
   formatted = {}
@@ -146,13 +152,13 @@ def format_data(data):
   app_data = data[app_key]
   
   # dictionary stored
-  if type(app_data) == type({}):
+  if isinstance(app_data,dict):
     for key in app_data.keys():
       if key not in filter_list:
-        formatted[key] = app_data[key]
+        formatted[key] = de_html(app_data[key])
      
   else:
-    formatted[app_key] = app_data
+    formatted[app_key] = de_html(app_data)
 
   return formatted
   
@@ -165,7 +171,7 @@ def get_assignment_csv(request,assignment_id):
 
   response = HttpResponse(mimetype='text/csv')
   response['Content-Disposition'] = 'attachment; filename="%s.csv"' % assignment.name
-  writer = csv.writer(response)
+  writer = csv.writer(response)#,quoting=csv.QUOTE_NONNUMERIC)
 
   headers = []
   rows = []
@@ -243,7 +249,7 @@ def get_assignment_csv(request,assignment_id):
       
   writer.writerow(headers)
   for row in rows:
-    writer.writerow(row)
+    writer.writerow([s.encode("utf-8") for s in row])
       
   return response
   

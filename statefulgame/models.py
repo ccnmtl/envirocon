@@ -141,8 +141,11 @@ class StateManager(models.Manager):
     try:
       return super(StateManager, self).get(*args,**kwargs)
     except State.DoesNotExist:
-      if kwargs.has_key('team__pk'):
+      team = kwargs.get('team',None)
+      if not team and kwargs.has_key('team__pk'):
         team = Team.objects.get(pk=kwargs['team__pk'])
+
+      if team:
         state = State(team=team,game=Game.objects.filter(course=team.course)[0])
         state.save()
         return state

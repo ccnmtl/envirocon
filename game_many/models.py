@@ -358,7 +358,7 @@ class FinalPaper(GameInterface):
             week4points = funding_points(game_state['funding_interventions'])
           week6points = funding_points(game_state['donors_conference'], 6)
           points = week4points + week6points
-
+          #print points
           # teams who choose the 3-point option in any of the first 3 categories automatically get wb2
           funded = game_state['donors_conference']
           wb2_choices = [intervention for intervention in funded if intervention in ['water-supply-low', 'sanitation-low', 'waste-low']]

@@ -16,7 +16,7 @@ def home(request):
              'games':InstalledGames,
              }
 
-    if hasattr(request,'course'):
+    if getattr(request,'course',None) is not None:
         if request.user in request.course.faculty:
             state['is_faculty'] = True
             

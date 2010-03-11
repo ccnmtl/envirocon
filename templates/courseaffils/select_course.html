@@ -11,5 +11,8 @@
  </li>
 {% endfor %}
 </ul>
+{% if user.is_staff %}
+<p><a href="{%url new-envirocon-class %}">Create new course</a> (for demo or real class)</p>
+{% endif %}
 </div>
 {% endblock %}

@@ -345,7 +345,7 @@ def team_view_data(request,teams=None,game=None):
       teams = [team]
 
   for tm in teams:
-    just_advanced = (tm.state.advance_turn() or just_advanced)
+    just_advanced = (State.objects.get(team=tm).advance_turn() or just_advanced)
 
 
   assignment_forms = AssignmentFormSet(instance=game)

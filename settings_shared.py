@@ -126,6 +126,7 @@ TINYMCE_DEFAULT_CONFIG = {'cols': 80,
 COURSEAFFILS_EXEMPT_PATHS = ('/accounts/',
                              '/site_media/',
                              '/admin/',
+                             '/new',
                              )
 ANONYMOUS_PATHS = ('/accounts/',
                    '/site_media/',

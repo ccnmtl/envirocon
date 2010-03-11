@@ -39,11 +39,14 @@
 			  <a href="/logout">LOGOUT</a>			  
 			  {%endif%}
 			</li>
+                        {%if user.is_staff %}
 			<li>
-			  {%if user.is_staff %}
 			  <a href="/admin/">ADMIN</a>
-			  {%endif%}
 			</li>
+			<li>
+			  <a href="{%url new-envirocon-class %}">New Course</a>
+			</li>
+                        {%endif%}
 			<li><a href="/about">About</a></li>
 			<li><a href="/help">Help</a></li>
 			<li><a href="/contact">Contact</a></li>

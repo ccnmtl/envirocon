@@ -136,3 +136,6 @@ ANONYMOUS_PATHS = ('/accounts/',
                    '/contact',
                    re.compile(r'^/$'),
                    )
+
+from courseaffils.columbia import CourseStringMapper
+COURSEAFFILS_COURSESTRING_MAPPER = CourseStringMapper

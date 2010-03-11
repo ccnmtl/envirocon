@@ -7,8 +7,13 @@ Course = models.get_model('courseaffils','course')
 Group = models.get_model('auth','group')
 Team = models.get_model('teams','team')
 
+
+Survey = models.get_model('survey','survey')
+Question = models.get_model('survey','question')
+QuestionChoices = models.get_model('survey','choices')
+
 class GroundWorkClass:
-    def __init__(self,title='Another Test Class',creator=None):
+    def __init__(self,title='Another Test Class',creator=None,copy_survey=False):
         
         self.faculty_group = Group.objects.create(name=title+' Faculty')
         self.course_group = Group.objects.create(name=title+' Students')
@@ -17,8 +22,9 @@ class GroundWorkClass:
                                             faculty_group=self.faculty_group,
                                             title = title
                                             )
-
+        
         if creator:
+            self.creator = creator
             self.faculty_group.user_set.add(creator)
             self.course_group.user_set.add(creator)
 
@@ -36,18 +42,48 @@ class GroundWorkClass:
                                  )
         self.faculty_team.save()
 
-        d = datetime.datetime.today()
-        next_month = datetime.datetime(d.year + (d.month+2)/12,(d.month+2) %12,d.day)
-
         for a in activities:
             ass = Assignment.objects.create(app=a['app'],
                                             name=a['name'],
                                             game=self.game,
                                             individual=a['individual'],
                                             open=False,
-                                            close_date=next_month,
+                                            close_date=self.next_month(),
                                             )
 
+    def next_month(self): 
+        d = datetime.datetime.today()
+        return datetime.datetime(d.year + (d.month+2)/12,(d.month+2) %12,d.day)
+
+       
+    def copy_survey(self,orig=None):
+        if orig is None:
+            orig = Survey.objects.all()[0]
+        if orig:
+            self.survey = Survey(title=orig.title,
+                                 slug='survey'+str(self.course.pk) ,
+                                 description=orig.description,
+                                 opens=datetime.datetime.today(),
+                                 closes=self.next_month(),
+                                 visible=True,
+                                 public=False,
+                                 restricted=True,
+                                 allows_multiple_interviews=orig.allows_multiple_interviews,
+                                 created_by=self.creator,
+                                 editable_by=self.creator,
+                                 recipient_type=orig.recipient_type,
+                                 recipient_id = self.course.id,
+                                 )
+            self.survey.save()
+            for q in orig.questions.all():
+                choices = q.choices.all()
+                q.survey = self.survey
+                q.id = None
+                x = q.save(force_insert=True)
+                for c in choices:
+                    c.question = q
+                    c.id = None
+                    c.save(force_insert=True)
 
 activities = [
     {'app':'conflict_assessment',

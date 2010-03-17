@@ -69,12 +69,12 @@ def team_admin(request):
 #not view
 def course_survey(course):
     if Survey:
-        studs = dict([(st.id,{'record':st,'surveys':[]}) for st in course.students])
+        studs = dict([(st.id,{'record':st,'surveys':[]}) for st in course.members])
         
         surveys = Survey.objects.surveys_for(course)
         for sy in surveys:
             questions = Question.objects.filter(survey=sy).order_by('order')
-            for st in course.students:
+            for st in course.members:
                 ans = []
                 for q in questions:
                     a = Answer.objects.filter(user=st,question=q)

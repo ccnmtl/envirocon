@@ -38,7 +38,8 @@ class GroundWorkClass:
         self.game = Game.objects.create(course=self.course)
         #activity1,2,3,4,5,6...
         self.faculty_team = Team(course=self.course,
-                                 group=self.faculty_group
+                                 group=self.faculty_group,
+                                 name = 'Team 1: Faculty of %s' % self.course.title
                                  )
         self.faculty_team.save()
 

@@ -86,7 +86,14 @@
       </thead>
       <tbody>
 	{% for student in surveys.values %}
-	  <tr data-member="{{student.record.id}}"><td>{{student.record.get_full_name|default:student.record.username}}
+	  <tr data-member="{{student.record.id}}"><td>
+             {%if student.record in course.faculty%}
+               FACULTY <b>{{student.record.get_full_name|default:student.record.username}}</b>
+             {%else%}
+                {{student.record.get_full_name|default:student.record.username}}
+             {%endif%}
+
+
 	  {#PROFILE FIELDS#}
 	  {% if not student.surveys.0 %}
 	     </td><!--did not fill out survey-->

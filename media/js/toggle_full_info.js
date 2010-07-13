@@ -3,12 +3,10 @@ function toggleInfo(e) {
   var child = getFirstElementByTagAndClassName("*", "toggle", parent);
   var visible = getStyle(child, "display");
   if(visible == "block") {
-    setStyle(child, {'display':'none'});
-    setStyle(e.src(), {'background-image':'url(/site_media/img/toggle_closed.gif)'});
+      toggleClose(child, e.src());
   }
   else {
-    setStyle(child, {'display':'block'});
-    setStyle(e.src(), {'background-image':'url(/site_media/img/toggle_open.gif)'});
+      toggleOpen(child, e.src());
   }
 }
 
@@ -16,6 +14,34 @@ function initToggleInfo() {
   forEach(getElementsByTagAndClassName("*", "toggle-control"), function(elem) {
     connect(elem, "onclick", toggleInfo);
   });
+    var toggleall_checkbox = $('toggle-all');
+    if (toggleall_checkbox != null) {
+        connect(toggleall_checkbox, "onclick", toggleAll);
+    }
+}
+
+function toggleOpen(child, widget) {
+    widget = widget || getFirstElementByTagAndClassName(
+        "*", "toggle-control",
+        getFirstParentByTagAndClassName(child, "div"));
+    setStyle(child, {'display':'block'});
+    setStyle(widget, {'background-image':'url(/site_media/img/toggle_open.gif)'});
+}
+
+function toggleClose(child, widget) {
+    widget = widget || getFirstElementByTagAndClassName(
+        "*", "toggle-control",
+        getFirstParentByTagAndClassName(child, "div"));
+    setStyle(child, {'display':'none'});
+    setStyle(widget, {'background-image':'url(/site_media/img/toggle_closed.gif)'});
+}
+
+function toggleAll(evt) {
+    if (evt.src().checked) {
+        forEach(getElementsByTagAndClassName("*", "toggle", 'assignment-form'), toggleOpen);
+    } else {
+        forEach(getElementsByTagAndClassName("*", "toggle", 'assignment-form'), toggleClose);
+    }
 }
 
 addLoadEvent(initToggleInfo);

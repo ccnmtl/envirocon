@@ -132,6 +132,10 @@ Good luck and please don't hesitate to ask for assistance throughout the process
 	      Review
 	      {%endif%}
 	    </a>
+            {%if assn.current and assn.data.individual and not assn.data.turn.complete %}
+               <span class="allmembers">(You cannot proceed to the next activity until all of your teammates have completed this one.)</span>
+            {%endif%}
+
 	    {%endif%}
 	    {%if is_faculty%}
 	       <br />

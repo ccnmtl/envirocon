@@ -448,7 +448,8 @@ ol li { margin-left: 0px; }
 	color: #336699;
 }
 
-.toggle-control
+.toggle-control,
+.intervention_choices h2.toggle-control
 {
 	cursor: pointer;
 	padding-left: 20px;

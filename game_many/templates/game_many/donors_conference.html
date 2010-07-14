@@ -31,12 +31,13 @@
 
 {% block form-instructions %}
 <div class="budget">Budget Remaining: <span id='budget'>$165,000,000</span></div>
-<input type="checkbox" id="toggle-all" />Open/Close All
+<!-- input type="checkbox" id="toggle-all" />Open/Close All -->
 {% endblock %}
 
 {% block form-inputs %}
 <div class="intervention_choices">
-<h2>Environmental Health and Basic Services</h2>
+<div>
+<h2 class='toggle-control'>Environmental Health and Basic Services</h2>
 <div>
 <h3 class='toggle-control' id='water-supply'>Water Supply <span id='water-supply-budget' /></h3>
 <div class='toggle'>
@@ -147,8 +148,8 @@
   </tr>
 </table>
 </div></div>
-
-<h2>Forestry</h2>
+</div><div>
+<h2 class='toggle-control'>Forestry</h2>
 <div>
 <h3 class='toggle-control' id='timber'>Illegal Timber <span id='timber-budget' /></h3>
 <div class='toggle'>
@@ -223,8 +224,8 @@
   </tr>
 </table>
 </div></div>
-
-<h2>Land Management</h2>
+</div><div>
+<h2 class='toggle-control'>Land Management</h2>
 <div>
 <h3 class='toggle-control' id='tenure'>Land Tenure <span id='tenure-budget' /></h3>
 <div class='toggle'>
@@ -298,8 +299,8 @@
   </tr>
 </table>
 </div></div>
-
-<h2>Agriculture</h2>
+</div><div>
+<h2 class='toggle-control'>Agriculture</h2>
 <div>
 <h3 class='toggle-control' id='agriculture'>Agricultural Practices <span id='agriculture-budget' /></h3>
 <div class='toggle'>
@@ -374,8 +375,8 @@
 </table>
 </div>
 </div>
-
-<h2>Wildlife and Biodiversity</h2>
+</div><div>
+<h2 class='toggle-control'>Wildlife and Biodiversity</h2>
 <div>
 <h3 class='toggle-control' id='habitat'>Habitat Protection <span id='habitat-budget' /></h3>
 <div class='toggle'>
@@ -413,9 +414,8 @@
 </table>
 </div>
 </div>
-
-<div>
-<h2>Water Resources</h2>
+</div><div>
+<h2 class='toggle-control'>Water Resources</h2>
 <h3 class='toggle-control' id='water'>Integrated Water Resource Management <span id='water-budget' /></h3>
 <div class='toggle'>
 <table class="interventions">
@@ -452,8 +452,8 @@
 </table>
 </div>
 </div>
-
-<h2>Environmental Institutions</h2>
+</div><div>
+<h2 class='toggle-control'>Environmental Institutions</h2>
 <div>
 <h3 class='toggle-control' id='capacity'>Capacity Building <span id='capacity-budget' /></h3>
 <div class='toggle'>
@@ -490,6 +490,6 @@
   </tr>
 </table>
 </div></div>
-
+</div>
 </div>
 {% endblock %}

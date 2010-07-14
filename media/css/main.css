@@ -1031,3 +1031,7 @@ tr.current
 .module table {
     border-collapse: collapse;
 }
+
+.allmembers {
+    font-style:italic; 
+}

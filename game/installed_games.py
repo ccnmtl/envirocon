@@ -50,6 +50,12 @@ class GameInterface:
         #        {"page_id":"foo","type":"map"}]
         return []
 
+    def consequences(self,game_state):
+        """documentation of data objects that result from this turn.
+        This will probably call other games' resources() values.
+        This is fed to faculty views to spot-check/debug the proper consequences
+        """
+        return False
 
 
 class InstalledGamesLazySingleton:
@@ -87,6 +93,9 @@ class InstalledGamesLazySingleton:
 
     def resources(self,game_code,game_state,onopen=False,onclosed=False):
         return self.GAME_OBJECTS[game_code].resources(game_state,onopen,onclosed)
+
+    def consequences(self,game_code,game_state):
+        return self.GAME_OBJECTS[game_code].consequences(game_state)
 
 
     #UTILS #HACK #HACK #HACK

@@ -114,7 +114,9 @@ def save_assignment(request):
 
 def get_assignment_data(request,turn_id,user_id):
   user = request.user
-  if user_id and request.course.is_faculty(request.user):
+  is_faculty = request.course.is_faculty(request.user)
+
+  if user_id and is_faculty:
     user = User.objects.get(pk=user_id)
 
   team = Team.objects.by_user(user, getattr(request,"course",None))
@@ -133,8 +135,14 @@ def get_assignment_data(request,turn_id,user_id):
   serialized_data = '{}'
   if data:
     serialized_data = json.dumps(data)
+  protected_data = False
+  if is_faculty:
+    protected_data = turn.assignment.gameconsequences(data)
+
   if request.GET.has_key("jsonp"):
-    return HttpResponse("%s(%s)" % (request.GET["jsonp"], serialized_data))
+    return HttpResponse("%s(%s,%s)" % (request.GET["jsonp"], 
+                                       serialized_data, 
+                                       json.dumps(protected_data)))
   return HttpResponse(serialized_data)
 
 def de_html(maybe_string):

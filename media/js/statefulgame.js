@@ -151,7 +151,7 @@ if (typeof GameSystem == 'undefined') {
       this.formlistener = connect(this.assignment_form,'onsubmit',bind(this.saveState,GameSystem));
       this.admin.init();
   }
-  GameSystemClass.prototype.loadState = function(state) {
+  GameSystemClass.prototype.loadState = function(state, protected_state) {
      var self = this;
      update(this.my_vars, state);
      ///ASSUME: document is loaded by now!
@@ -177,6 +177,21 @@ if (typeof GameSystem == 'undefined') {
 	  this.stateLoaded();
      } else {
 	 addLoadEvent(bind(this.stateLoaded,this));
+     }
+
+     if (protected_state && protected_state.length) {
+         showElement('instructor-debug');
+         var ul = $('instructor-debug-list');
+         for (var i=0;i<protected_state.length; i++) {
+             var p = protected_state[i];
+             var txt = '';
+             if (p.page_id) 
+                 txt += p.page_id;
+             if (p.value) 
+                 txt += ': '+p.value;
+             if (txt) 
+                 ul.appendChild(LI({},txt));
+         }
      }
   }
 

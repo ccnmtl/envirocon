@@ -102,11 +102,9 @@ function validateFundingChoices(e) {
 
 function updateCategoryTallies() {
   forEach(getElementsByTagAndClassName('span','category-budget'),function(cat_budg) {
-      console.log(cat_budg);
       var sum = 0;
       forEach(getElementsByTagAndClassName('span','intervention-budget',cat_budg.parentNode.parentNode), 
               function(sub_budg) {
-                  console.log(sum);
                   sum += parseFloat(sub_budg.getAttribute('data-cost'))||0;
               });
       cat_budg.innerHTML = (sum > 0) ? " ($" + sum + " million)" : '';

@@ -37,3 +37,6 @@ class Activity(models.Model):
 
     def gameresources(self, game_state, onopen=False,onclosed=False):
         return InstalledGames.resources(self.app,game_state,onopen=onopen,onclosed=onclosed)
+
+    def gameconsequences(self, game_state):
+        return InstalledGames.consequences(self.app,game_state)

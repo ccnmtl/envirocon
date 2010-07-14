@@ -14,36 +14,47 @@ def funding_points(funded_interventions, week=4):
              'water-supply-high':1,
              'water-supply-med' :2,
              'water-supply-low' :3,
+
              'sanitation-high'  :1,
              'sanitation-med'   :2,
              'sanitation-low'   :3,
+
              'waste-high'       :2,
              'waste-med'        :1,
              'waste-low'        :3,
+
              'timber-high'      :2,
              'timber-med'       :2,
              'timber-low'       :1,
+
              'deforestation-high':2,
              'deforestation-med':1,
              'deforestation-low':3,
+
              'tenure-high'      :3,
              'tenure-med'       :2,
              'tenure-low'       :1,
+
              'nomadic-high'     :3,
              'nomadic-med'      :2,
              'nomadic-low'      :1,
+
              'agriculture-high' :2,
              'agriculture-med'  :3,
              'agriculture-low'  :1,
+
              'desertification-high':3,
              'desertification-med':2,
              'desertification-low':1,
+
              'habitat-high'     :3,
              'habitat-med'      :2,
              'habitat-low'      :1,
+
              'water-high'       :2,
              'water-med'        :1,
              'water-low'        :3,
+
              'capacity-high'    :1,
              'capacity-med'     :2,
              'capacity-low'     :3,
@@ -51,12 +62,16 @@ def funding_points(funded_interventions, week=4):
   if week == 6:
     value['timber-med'] = 1
     value['timber-low'] = 3
+
     value['tenure-med'] = 1
     value['tenure-low'] = 2
+
     value['nomadic-high'] = 1
     value['nomadic-low'] = 3
+
     value['agricultural-med'] = 1
     value['agricultural-low'] = 3
+
     value['desertification-high'] = 2
     value['desertification-med'] = 1
     value['desertification-low'] = 3
@@ -168,6 +183,9 @@ class FundingInterventions(GameInterface):
 
     def public_variables(self):
         return ['funding_interventions']
+
+    def consequences(self, game_state):
+        return DonorsConference().resources(game_state, onopen=True)
 
 
 InstalledGames.register_game('funding_interventions',
@@ -312,6 +330,10 @@ class DonorsConference(GameInterface):
                   ]
         else:
             return []
+
+    def consequences(self, game_state):
+        return FinalPaper().resources(game_state, onopen=True)
+
 
 InstalledGames.register_game('donors_conference',
                              'Donors Conference',

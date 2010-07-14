@@ -100,6 +100,20 @@ function validateFundingChoices(e) {
   e.stop()
 }
 
+function updateCategoryTallies() {
+  forEach(getElementsByTagAndClassName('span','category-budget'),function(cat_budg) {
+      console.log(cat_budg);
+      var sum = 0;
+      forEach(getElementsByTagAndClassName('span','intervention-budget',cat_budg.parentNode.parentNode), 
+              function(sub_budg) {
+                  console.log(sum);
+                  sum += parseFloat(sub_budg.getAttribute('data-cost'))||0;
+              });
+      cat_budg.innerHTML = (sum > 0) ? " ($" + sum + " million)" : '';
+  });
+
+}
+
 function updateBudgetDisplay() {
   $("budget").innerHTML = format_money(budget);
   if(budget < 0) {
@@ -142,12 +156,15 @@ function updateToggleDisplay(id) {
       cost = $(id+level+"-cost").innerHTML;
     }
   }
+  var spending = $(id+'-budget');
+  spending.setAttribute('data-cost',cost);
   if(cost != "") {
-    $(id+'-budget').innerHTML = "($" + cost + " million)";
+    spending.innerHTML = "($" + cost + " million)";
   }
   else {
-    $(id+'-budget').innerHTML = "";
+    spending.innerHTML = "";
   }
+    updateCategoryTallies();
 }
 
 function initFunding() {

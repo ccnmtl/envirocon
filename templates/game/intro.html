@@ -43,15 +43,8 @@
 </ul>
 </div></div>
 
- <div id="instructions">
-<h2>Instructions:</h2>
-
-{% block instructions %}
-{% endblock %}
-</div>
-
  <div id="grouping">
-<h2>Note:</h2>
+<h2>Activity:</h2>
   {% if world_state.individual %}
       This is an individual activity.
   {% endif %}
@@ -59,6 +52,14 @@
       This is a group activity. You and your team members will submit a single group response.
   {% endif %}
 </div>
+
+ <div id="instructions">
+<h2>Instructions:</h2>
+
+{% block instructions %}
+{% endblock %}
+</div>
+
 <br />
 <button type="button" id="go_activity" onclick="document.location='page2';">Go to Activity</button>
 

@@ -166,15 +166,31 @@
 		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="parks">Protected Areas</input></li>
 		     {%endif%}
 		     {%if appres.obtain_additional_information.political or appres.recommending_interventions.watching_brief %}
-		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="conflict">Conflict Incidents</input></li>
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="conflict">Initial Conflicts</input></li>
 		     {%endif%}
-           {% if appres.donors_conference.wb2.value %}
-		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb2">Watching Brief 2</input></li>
+
+                     {#THESE ARE related to the WB _numbers_ they receive #}
+                     {% if appres.donors_conference.watching_brief_1 %}
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb2_peace">2nd Watching Brief: Conflicts</input></li>
+                     {% endif %}
+                     {% if appres.donors_conference.watching_brief_2 %}
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb2_humanitarian">2nd Watching Brief: Conflicts</input></li>
+                     {% endif %}
+                     {% if appres.donors_conference.watching_brief_3 %}
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb2">2nd Watching Brief: Conflicts</input></li>
 		     {% endif %}
-           {% if appres.final_paper.wb3.value %}
-		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb3">Watching Brief 3</input></li>
+
+                     {% if appres.final_paper.watching_brief_1 %}
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb3_peace">3rd Watching Brief: Conflicts</input></li>
+                     {% endif %}
+                     {% if appres.final_paper.watching_brief_2 %}
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb3_humanitarian">3rd Watching Brief: Conflicts</input></li>
+                     {% endif %}
+                     {% if appres.final_paper.watching_brief_3 %}
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb3">3rd Watching Brief: Conflicts</input></li>
 		     {%endif%}
-		   </ul>
+
+                   </ul>
 		 </td></tr></table>
 	       </form>
 	     </div>
@@ -186,14 +202,32 @@
 		 <div class="layer parks" id="layer-parks"></div>
 		 <div class="layer conflict_basic" id="layer-conflict"></div>
 		 
-       {% if appres.donors_conference.wb2.value %}
+                 {#CORRESPONDS TO CHECKBOXES ABOVE #}
+                 {#THESE ARE related to the WB _numbers_ they receive #}
+
+                 {% if appres.donors_conference.watching_brief_1 %}
+		   <div class="layer wb2_peace" id="layer-wb2_peace"></div>
+		 {% endif %}
+                 {% if appres.donors_conference.watching_brief_2 %}
+		   <div class="layer wb2_humanitarian" id="layer-wb2_humanitarian"></div>
+		 {% endif %}
+                 {% if appres.donors_conference.watching_brief_3 %}
 		   <div class="layer wb2_conflict" id="layer-wb2-conflict"></div>
 		 {% endif %}
-       {% if appres.final_paper.wb3.value %}
+
+                 {% if appres.final_paper.watching_brief_1 %}
+		   <div class="layer wb3_peace" id="layer-wb3_peace"></div>
+		 {% endif %}
+                 {% if appres.final_paper.watching_brief_2 %}
+		   <div class="layer wb3_humanitarian" id="layer-wb3_humanitarian"></div>
+		 {% endif %}
+                 {% if appres.final_paper.watching_brief_3 %}
 		   <div class="layer wb3_conflict" id="layer-wb3-conflict"></div>
 		 {% endif %}
-		 		<div class="layer labels" id="layer-labels"></div>
-		 		<div class="layer refugee" id="layer-refugee"></div>
+
+
+                 <div class="layer labels" id="layer-labels"></div>
+                 <div class="layer refugee" id="layer-refugee"></div>
 		 </div>
 	     </div>
      

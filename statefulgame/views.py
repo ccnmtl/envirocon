@@ -225,7 +225,10 @@ def get_assignment_csv(request,assignment_id):
     headers = default_headers[:]
 
     for team in course.team_set.all():
-      group = Group.objects.get(name=team.name)
+      try:
+        group = Group.objects.get(name=team.name)
+      except Group.DoesNotExist:
+        continue
       members = ', '.join(["%s (%s)" % (member, member.get_full_name()) for member in group.user_set.all()])
       turn = Turn.objects.get(team=team, assignment=assignment)
       row = [team.name, members]

@@ -208,6 +208,12 @@ table.interventions td textarea{
 	background-repeat: no-repeat;
 }
 
+#basemap.population
+{
+	background-image: url(../img/maps/map_base_population.jpg);
+	background-repeat: no-repeat;
+}
+
 #basemap.ethnicgroups
 {
 	background-image: url(../img/maps/map_base_ethnicgroups.jpg);
@@ -365,6 +371,16 @@ table.interventions td textarea{
 .legend.rainfall
 {
 	background-image: url(../img/maps/map_legend_rainfall.jpg);
+	background-repeat: no-repeat;
+	border: 1px solid #ccc;
+		background-position: .5em 1.5em;
+		height: 93px;
+	display: none;
+}
+
+.legend.population
+{
+	background-image: url(../img/maps/map_legend_population.jpg);
 	background-repeat: no-repeat;
 	border: 1px solid #ccc;
 		background-position: .5em 1.5em;

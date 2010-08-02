@@ -143,6 +143,9 @@
 		 {%if appres.obtain_additional_information.water %}
 		 <option value="rainfall">Rainfall</option>
 		 {%endif%}
+		 {%if appres.obtain_additional_information.population %}
+		 <option value="population">Population</option>
+		 {%endif%}
 		 {%if appres.obtain_additional_information.disasters %}
 		 <option value="droughtflood">Drought/Flood Hotspots</option>
 		 {%endif%}
@@ -203,6 +206,7 @@
  		 <div class="legend cholera" id="legend-cholera"><h2>Cholera Outbreaks</h2></div>
 		 <div class="legend parks" id="legend-parks"><h2>Protected Areas</h2></div>
 		 <div class="legend conflict" id="legend-conflict"><h2>Conflict Instances</h2></div>
+		 <div class="legend population" id="legend-population"><h2>Population</h2></div>
 
 	       </div>
 	     </div><!-- end map div -->

@@ -43,6 +43,13 @@ class Assignment(Activity):
     else:
       return None
 
+  def is_last(self):
+    try:
+      self.get_next_in_order()
+      return False
+    except self.DoesNotExist:
+      return True
+
   def any_submission(self):
     subs = Submission.objects.filter(turn__assignment=self)[:1]
     return (subs and subs[0] or None)

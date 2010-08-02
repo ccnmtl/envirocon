@@ -132,7 +132,7 @@ Good luck and please don't hesitate to ask for assistance throughout the process
 	      Review
 	      {%endif%}
 	    </a>
-            {%if assn.current and assn.data.individual and not assn.data.turn.complete %}
+            {%if assn.current and assn.data.individual and not assn.data.turn.complete and not assn.data.is_last %}
                <div class="allmembers">Note that you cannot proceed to the next activity until all of your teammates have completed this activity.</div>
             {%endif%}
 

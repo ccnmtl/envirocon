@@ -31,8 +31,8 @@ def funding_points(funded_interventions, week=4):
              'deforestation-med':1,
              'deforestation-low':3,
 
-             'tenure-high'      :3,
-             'tenure-med'       :2,
+             'tenure-high'      :6,
+             'tenure-med'       :3,
              'tenure-low'       :1,
 
              'nomadic-high'     :3,
@@ -40,7 +40,7 @@ def funding_points(funded_interventions, week=4):
              'nomadic-low'      :1,
 
              'agriculture-high' :2,
-             'agriculture-med'  :3,
+             'agriculture-med'  :5,
              'agriculture-low'  :1,
 
              'desertification-high':3,
@@ -51,18 +51,19 @@ def funding_points(funded_interventions, week=4):
              'habitat-med'      :2,
              'habitat-low'      :1,
 
-             'water-high'       :2,
+             'water-high'       :3,
              'water-med'        :1,
-             'water-low'        :3,
+             'water-low'        :6,
 
              'capacity-high'    :1,
              'capacity-med'     :2,
-             'capacity-low'     :3,
+             'capacity-low'     :6,
             }
   if week == 6:
     value['timber-med'] = 1
     value['timber-low'] = 3
 
+    value['tenure-high'] = 3
     value['tenure-med'] = 1
     value['tenure-low'] = 2
 
@@ -71,6 +72,11 @@ def funding_points(funded_interventions, week=4):
 
     value['agricultural-med'] = 1
     value['agricultural-low'] = 3
+
+    value['water-low'] = 3
+    value['water-high'] = 2
+
+    value['capacity-low'] = 3
 
     value['desertification-high'] = 2
     value['desertification-med'] = 1

@@ -409,9 +409,9 @@ table.interventions td textarea{
 }
 
 #form-block {
-  max-height: 500px;
-  overflow-y: auto;
-  overflow-x: hidden;
+
+
+
 }
                    
 #game-content {
@@ -421,6 +421,7 @@ table.interventions td textarea{
                    float: left;
                    background-color: #eaeaea;
                 color: #000;
+                margin-bottom: 1em;
                   }
                    
 #game-content h1{

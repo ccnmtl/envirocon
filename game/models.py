@@ -40,3 +40,6 @@ class Activity(models.Model):
 
     def gameconsequences(self, game_state):
         return InstalledGames.consequences(self.app,game_state)
+
+    def game_autoshock(self, game_state):
+        return InstalledGames.autoshock(self.app,game_state)

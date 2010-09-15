@@ -97,6 +97,10 @@ class InstalledGamesLazySingleton:
     def consequences(self,game_code,game_state):
         return self.GAME_OBJECTS[game_code].consequences(game_state)
 
+    def autoshock(self,game_code,game_state):
+        if hasattr(self.GAME_OBJECTS[game_code],'autoshock'):
+            return self.GAME_OBJECTS[game_code].autoshock(game_state)
+
 
     #UTILS #HACK #HACK #HACK
     def absolute_path(self,app,path):

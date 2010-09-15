@@ -283,8 +283,26 @@ class Submission(models.Model):
 
   archival = models.BooleanField(default=False)
 
+  def save(self,*args,**kwargs):
+    rv = super(Submission,self).save(*args,**kwargs)
+    if self.published and self.data:
+      sh = self.turn.assignment.game_autoshock(self.turn.team.state.world_slice())
+      next_turn = self.turn.next()
+      if sh and next_turn:
+        shock_name = "%s %s" % (self.turn.team.name, self.turn.pk)
+        if not next_turn.shock_id or next_turn.shock.name != shock_name:
+          next_turn.shock = Shock.objects.create(name=shock_name, outcome=sh)
+          next_turn.save()
+        else:
+          next_turn.shock.outcome = sh
+          next_turn.shock.save()
+    return rv
+
+
   def __unicode__(self):
     return u'Submission:' + unicode(self.turn.team) + ':' + unicode(self.turn.assignment)
+
+  
 
 
 #SIGNAL SUPPORT

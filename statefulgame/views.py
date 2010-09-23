@@ -372,8 +372,10 @@ def team_view_data(request,teams=None,game=None):
       turn = d['data'].turn(tm)
       if turn.visible:
         d['hidden'] = False
-      if tm==team and turn == tm.state.turn and turn.open:
-        d['current'] = True
+      if tm==team:
+        if turn == tm.state.turn and turn.open:
+          d['current'] = True
+        d['my_submission'] = d['data'].submission(team, request.user)
       d['teams'].append({'turn':turn,
                          'data':tm,
                          'sub':d['data'].submission(tm, request.user, is_faculty)

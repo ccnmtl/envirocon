@@ -119,7 +119,9 @@ Good luck and please don't hesitate to ask for assistance throughout the process
 	      {%if assn.current %}
 	      Open
 	      {%else%}
-	      Review
+                 {% if assn.my_submission %}
+	           Review
+                 {% endif %}
 	      {%endif%}
 	    </a>
             {%if assn.current and assn.data.individual and not assn.data.turn.complete and not assn.data.is_last %}

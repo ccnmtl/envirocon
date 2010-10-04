@@ -117,9 +117,6 @@ class FundingInterventions(GameInterface):
     def consequences(self, game_state):
         return DonorsConference().resources(game_state, onopen=True)
 
-    def autoshock(self, game_state):
-        return funding_autoshocks('funding_interventions',game_state['funding_interventions'])
-              
               
 
 
@@ -151,6 +148,11 @@ class TrackingYourProjects(GameInterface):
         if onopen and game_state.has_key('funding_interventions'):
           funded = game_state['funding_interventions']
           return [{"page_id":'funded', "type":'data', 'value':funded.keys()}]
+
+    def autoshock(self, game_state):
+        #to appear in Results Framework
+        return funding_autoshocks('funding_interventions',game_state['funding_interventions'])
+              
 
 
 InstalledGames.register_game('tracking_your_projects',

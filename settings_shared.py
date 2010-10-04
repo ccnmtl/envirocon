@@ -139,3 +139,5 @@ ANONYMOUS_PATHS = ('/accounts/',
 
 from courseaffils.columbia import CourseStringMapper
 COURSEAFFILS_COURSESTRING_MAPPER = CourseStringMapper
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

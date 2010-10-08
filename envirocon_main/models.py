@@ -54,7 +54,8 @@ class GroundWorkClass:
 
     def next_month(self): 
         d = datetime.datetime.today()
-        return datetime.datetime(d.year + (d.month+2)/12,(d.month+2) %12,d.day)
+        #month value is 1..12
+        return datetime.datetime(d.year + (d.month+1)/12,((d.month+1)%12)+1,d.day)
 
        
     def copy_survey(self,orig=None):

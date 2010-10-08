@@ -127,6 +127,7 @@ COURSEAFFILS_EXEMPT_PATHS = ('/accounts/',
                              '/site_media/',
                              '/admin/',
                              '/new',
+                             '/logout',
                              )
 ANONYMOUS_PATHS = ('/accounts/',
                    '/site_media/',

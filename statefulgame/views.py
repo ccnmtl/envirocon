@@ -81,6 +81,13 @@ def save_assignment(request):
   turn.assignment.auto_close()
   
   state = turn.team.state
+
+  SubmissionBackup.objects.create(
+    author=request.user,
+    turn=turn,
+    data=data,
+    )
+
   if not turn.open:
     return HttpResponseForbidden()
   if turn.assignment.individual:
@@ -388,6 +395,48 @@ def team_view_data(request,teams=None,game=None):
           'just_advanced':just_advanced,
           }
   
+def split_team(request):
+  """divide a team into two new teams"""
+  if not request.user.is_staff:
+    return HttpResponseForbidden('Only staff can split a team.')
+  if request.method == "POST":
+    old_team = get_object_or_404(Team,pk=request.POST['team_id'],course=request.course)
+    splitter = get_object_or_404(User,username=request.POST['splitter'])
+    
+    new_team = Team.objects.create(course=request.course)
+    old_team.group.user_set.remove(splitter)
+    new_team.group.user_set.add(splitter)
+    
+    #duplicate shocks, state, submissions, 
+    for old_turn in old_team.turn_set.all():
+      new_turn = Turn.objects.get(team=new_team, assignment=old_turn.assignment)
+      new_turn.shock = old_turn.shock
+      new_turn.save()
+
+      if old_turn.assignment.individual:
+        old_turn.submission_set.filter(author=splitter).update(turn=new_turn)
+      else: #probably just one
+        for sub in old_turn.submission_set.all():
+          sub.id = None
+          sub.turn = new_turn
+          author = splitter
+          sub.save(force_insert=True)
+
+    new_state = State.objects.get(team=new_team)
+    new_state.world_state=old_team.state.world_state
+    new_state.turn =Turn.objects.get(team=new_team, 
+                                     assignment=old_team.state.turn.assignment)
+    new_state.save()
+    return HttpResponseRedirect('/')
+  else:
+    return render_to_response('statefulgame/split_team.html',
+                              {'course':request.course,
+                               'game':game,
+                               },
+                              context_instance=RequestContext(request))
+                                     
+    
+
 def set_turn(request):
   """team_id,assignment_id,shock_id
   OR team_id,assignment_id,shock_name,shock_outcome

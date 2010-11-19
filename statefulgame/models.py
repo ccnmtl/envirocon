@@ -302,7 +302,18 @@ class Submission(models.Model):
   def __unicode__(self):
     return u'Submission:' + unicode(self.turn.team) + ':' + unicode(self.turn.assignment)
 
-  
+class SubmissionBackup(models.Model):
+  author = models.ForeignKey(User)
+  data = models.TextField()  # submitted data
+  modified = models.DateTimeField('date modified', auto_now=True,editable=True)
+  turn = models.ForeignKey(Turn)
+
+  def __unicode__(self):
+    return '%s for %s at %s'% (
+      self.author.get_full_name(),
+      self.turn.assignment.name,
+      self.modified.isoformat(),
+      )
 
 
 #SIGNAL SUPPORT

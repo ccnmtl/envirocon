@@ -37,6 +37,9 @@ urlpatterns = patterns(
     url(r'^set_turn/?',#same as above
         'set_turn',
         name='set-turn'),
+    url(r'^split_team/?',#admin only
+        'split_team',
+        name='split-team'),
     url(r'^jsi18n/$',
         null_javascript_catalog,
         name='jsi18n'),

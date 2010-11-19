@@ -6,8 +6,6 @@ from django.conf import settings
 
 from models import *
 
-
-
 class BasicAssignmentForm(forms.ModelForm):
     close_date = forms.DateTimeField(widget=AdminSplitDateTime)
 

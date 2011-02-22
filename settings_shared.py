@@ -74,6 +74,7 @@ INSTALLED_APPS = (
     'typogrify',
     'survey',
     'tinymce',
+    'sentry.client',
     'game',
     'game_sample',
     'courseaffils',
@@ -142,3 +143,17 @@ from courseaffils.columbia import CourseStringMapper
 COURSEAFFILS_COURSESTRING_MAPPER = CourseStringMapper
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+#Sentry setup
+#  see: http://wiki.ccnmtl.columbia.edu/Sentry
+import logging
+from sentry.client.handlers import SentryHandler
+logger = logging.getLogger()
+if SentryHandler not in map(lambda x: x.__class__, logger.handlers):
+       logger.addHandler(SentryHandler())
+       logger = logging.getLogger('sentry.errors')
+       logger.propagate = False
+       logger.addHandler(logging.StreamHandler())
+SENTRY_REMOTE_URL = 'http://sentry.ccnmtl.columbia.edu/sentry/store/'
+SENTRY_KEY = 'EWv5EELZnZIrOY'
+SENTRY_SITE = 'envirocon' # can't rely on the sites framework when a transaction is aborted

@@ -269,7 +269,7 @@ class State(models.Model):
         turn = a.turn(self.team)
         sub = a.submission(self.team, user)
         res.append({'a':a,
-                    'complete': True if len(sub) > 0 else False,
+                    'complete': True if len(sub) > 0 and sub[0].published else False,
                     'res':self.activity_resources(a,turn,sub,world_state),
                     })
     return res

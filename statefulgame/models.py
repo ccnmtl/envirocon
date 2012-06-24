@@ -269,6 +269,7 @@ class State(models.Model):
         turn = a.turn(self.team)
         sub = a.submission(self.team, user)
         res.append({'a':a,
+                    'complete': turn.complete(),
                     'res':self.activity_resources(a,turn,sub,world_state),
                     })
     return res

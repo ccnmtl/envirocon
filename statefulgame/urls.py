@@ -27,6 +27,10 @@ urlpatterns = patterns(
     url(r'^assignment/(?P<assignment_id>\d+)(?P<faculty_view>/instructor/)?(?P<user_id>[^/]+)?/(?P<page_id>[^/]+)?$',
         'assignment_page',
         name='assignment-page'),
+                       
+    url(r'^assignment/(?P<assignment_id>\d+)/video/$',
+        'assignment_video',
+        name='assignment-video'),
 
     url(r'^faculty_view/(?P<game_id>[^/]*)',
         'faculty_view',

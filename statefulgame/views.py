@@ -68,6 +68,32 @@ def assignment_page(request,assignment_id,faculty_view=None,user_id=None,page_id
   
   return game(request,assignment,page_id=page_id,
               extra_world_state=world_state)
+  
+def assignment_video(request, assignment_id): 
+    assignment = get_object_or_404(Assignment,pk=assignment_id,game__course=getattr(request,"course",None))
+
+    user = request.user
+  
+    team = Team.objects.by_user(user, getattr(request,"course",None))
+    if team is None:
+        raise Http404
+
+    #if not team.state.resource_access(assignment,page_id,user):
+    #    return HttpResponseForbidden('You do not have access to this activity resource at this time.')
+
+    turn = assignment.turn(team)
+    if turn and not turn.visible:
+        return HttpResponseForbidden()
+        
+    video = assignment.activity_ptr.gamevideo()
+    if not video:
+        raise Http404
+        
+    return render_to_response('game/video.html',
+                              { 'video': video,
+                                'user_id':user.id, 
+                              },
+                              context_instance=RequestContext(request))
 
 # saves an assignment blob to the database
 def save_assignment(request):
@@ -117,7 +143,9 @@ def save_assignment(request):
      submission.published = (request.REQUEST.get('published','Draft').find('Draft') < 0 )
   submission.save()
 
-  return HttpResponse(created)
+  video_page = reverse('assignment-video', args=[turn.assignment.id])
+  doc = { 'created': created, 'redirect': video_page if turn.assignment.activity_ptr.gamevideo() else '/' }
+  return HttpResponse(json.dumps(doc), 'application/json')
 
 def get_assignment_data(request,turn_id,user_id):
   user = request.user

@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load smartif %}
+
 
 {% block title %}{{game.gamename}}{% endblock %}
 
@@ -249,22 +251,39 @@
  
  
      <div id="files_panel" class="tabbertab tabbertabhide" title="Files">   
-       
-       {%for activity in world_state.resources %}
-       {%ifequal activity.res.0.type "file" %}
-       <div class="week"><!--not really a week-->
-	 <h2>{{activity.a.name}}</h2>
-	 <ul>
-	   {%for res in activity.res %}
-	     {%ifequal res.type "file" %}
-	   <li><a href="{%url assignment-page activity.a.id res.page_id %}">{{res.title|default:"File"}}</a></li>
-	     {%endifequal %}
-	   {%endfor%}
-	 </ul>
-       </div>
-       {%endifequal%}
+       {% for activity in world_state.resources %}
+           {% with activity.a.activity_ptr.gamevideo as gamevideo %} 
+                {% if activity.res.0.type == "file" %}
+                    <div class="week"><!--not really a week-->
+    	            <h2>{{activity.a.name}}</h2>
+                    <ul>
+                {% else %}{% if gamevideo and activity.complete %}
+                    <div class="week"><!--not really a week-->
+                    <h2>{{activity.a.name}}</h2>
+                    <ul>
+                {% endif %}{% endif %}
+     	        
+                {% if activity.res.0.type == "file" %}
+    	           {% for res in activity.res %}
+    	               {% ifequal res.type "file" %}
+    	                   <li><a href="{%url assignment-page activity.a.id res.page_id %}">{{res.title|default:"File"}}</a></li>
+    	               {%endifequal %}
+    	           {%endfor%}
+                {% endif %}
+               
+                {% if gamevideo and activity.complete %}
+                   <li><a href="#" onclick="document.getElementById('{{activity.a.id}}_video').style.display='block';">{{gamevideo.title|default:"Video"}}</a></li>
+                {% endif %}
+                   
+    	        {% if activity.res.0.type == "file" %}
+                   </ul>
+                   </div>
+                {% else %}{% if gamevideo and activity.complete %}
+                    </ul>
+                    </div>
+                {% endif %}{% endif %}
+           {% endwith %}
        {%endfor%}
-  
      </div>
    </div>
 </div>
@@ -343,4 +362,20 @@
 {% endblock %}
 
    </div>
+   
+     
+     {% for activity in world_state.resources %}
+           {% with activity.a.activity_ptr.gamevideo as gamevideo %}
+              {% if gamevideo and activity.complete %}
+                <div id="{{activity.a.id}}_video" class="video-container video-container-absolute" style="display: none">
+                    <a href="#" class="finished" onclick="document.getElementById('{{activity.a.id}}_video').style.display='none';"><h3>X</h3></a>  
+                    <h2>{{gamevideo.title}}</h2>
+                    <div class="description">{{gamevideo.description}}</div>
+                    <div class="video-frame">
+                        <center>{{gamevideo.video_embed_code|safe}}</center>
+                    </div>
+                </div>
+              {% endif %}
+           {% endwith %}
+     {% endfor %}   
 {% endblock %}

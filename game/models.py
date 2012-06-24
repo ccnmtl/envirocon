@@ -37,9 +37,26 @@ class Activity(models.Model):
 
     def gameresources(self, game_state, onopen=False,onclosed=False):
         return InstalledGames.resources(self.app,game_state,onopen=onopen,onclosed=onclosed)
+    
+    def gamevideo(self):
+        try:
+            return ActivityVideo.objects.get(app=self.app)
+        except:
+            # Not all activities have videos
+            return None
 
     def gameconsequences(self, game_state):
         return InstalledGames.consequences(self.app,game_state)
 
     def game_autoshock(self, game_state):
         return InstalledGames.autoshock(self.app,game_state)
+    
+class ActivityVideo(models.Model):
+    def __unicode__(self):
+        return unicode(self.app)
+
+    app = models.CharField(max_length=64, choices=InstalledGames)
+    title = models.CharField(max_length=512)
+    description = models.TextField()
+    video_embed_code = models.TextField()
+    

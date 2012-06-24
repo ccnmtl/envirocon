@@ -121,12 +121,12 @@ if (typeof GameSystem == 'undefined') {
 	  console.log(err);
       }
       finally {
-	  //return false;
 	  if (evt) evt.stop();
-	  if (! this.quiet) {
+	  if (!this.quiet) {
 	    if (this.published=='Submit') {
-	      def.addCallback(function() {
-		      document.location = '/';
+	      def.addCallback(function(response) {
+	          var doc = JSON.parse(response.responseText, null);
+	          window.location = doc.redirect;
 	      });
 	    } else {
 	      def.addCallback(function() {

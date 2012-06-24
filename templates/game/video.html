@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{game.gamename}}{% endblock %}
+
+{% block js %}
+   <script type="text/javascript" src="{{GAME_MEDIA}}/js/mochikit/MochiKit/MochiKit.js"></script>
+   {% block game_js %}{% endblock %}
+{% endblock %}
+
+{% block css %}
+   <link href="{{GAME_MEDIA}}css/game.css" rel="stylesheet" type="text/css" />
+
+   <!-- Delegate to the particular game extra CSS it needs -->
+   {% block game_css %}{% endblock %}
+{% endblock %}
+
+{% block breadcrumbs %}
+{% endblock %}
+
+{% block content %}
+    <div class="video-container">
+        <a href="/" class="finished"><h3>OK, I'm done.</h3></a>  
+        <h2>Nice Work!</h2>
+        <div class="description">You've successfully completed this activity.<br /><br /></div>
+        <div class="description">In this video &mdash; "{{video.title}}" &mdash; {{video.description}}</div>
+        <div class="description">(This video is now also listed under your "Files" tab for review later.)</div>
+        <div class="video-frame">
+            <center>{{video.video_embed_code|safe}}</center>
+        </div>
+    </div>
+{% endblock %}

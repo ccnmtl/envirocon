@@ -1,7 +1,7 @@
 from settings_shared import *
 
 ADMINS = (
-    ('CCNMTL-Kodos', 'ccnmtl-sysadmin+staging@columbia.edu'),
+    ('CCNMTL-Kang', 'ccnmtl-sysadmin+staging@columbia.edu'),
 )
 
 DATABASE_ENGINE = 'postgresql_psycopg2'

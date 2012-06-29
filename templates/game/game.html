@@ -368,9 +368,9 @@
            {% with activity.a.activity_ptr.gamevideo as gamevideo %}
               {% if gamevideo and activity.complete %}
                 <div id="{{activity.a.id}}_video" class="video-container video-container-absolute" style="display: none">
-                    <a href="#" class="finished" onclick="document.getElementById('{{activity.a.id}}_video').style.display='none';"><h3>X</h3></a>  
+                    <a href="#" class="finished" onclick="document.getElementById('{{activity.a.id}}_video').style.display='none';"><h3>Ok, I'm done</h3></a>  
                     <h2>{{gamevideo.title}}</h2>
-                    <div class="description">{{gamevideo.description}}</div>
+                    <div class="description"><p>{{gamevideo.description}}</p></div>
                     <div class="video-frame">
                         <center>{{gamevideo.video_embed_code|safe}}</center>
                     </div>

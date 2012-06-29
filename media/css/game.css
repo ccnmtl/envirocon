@@ -633,6 +633,8 @@ div.video-container {
 div.video-container-absolute {
     position: absolute;
     top: 100px;
+    left: 50%;
+    margin-left: -330px;
 }
 
 div.video-container a.finished {

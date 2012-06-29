@@ -98,7 +98,7 @@ SERVER_EMAIL = "envirocon@ccnmtl.columbia.edu"
 
 AUTHENTICATION_BACKENDS = ('djangowind.auth.WindAuthBackend','django.contrib.auth.backends.ModelBackend',)
 WIND_BASE = "https://wind.columbia.edu/"
-WIND_SERVICE = "cnmtl_full_np"
+WIND_SERVICE = "cnmtl_full_p"
 WIND_PROFILE_HANDLERS = ['djangowind.auth.CDAPProfileHandler']
 WIND_AFFIL_HANDLERS = ['djangowind.auth.AffilGroupMapper',
                        'djangowind.auth.StaffMapper',

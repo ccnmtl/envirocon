@@ -44,3 +44,5 @@ function toggleAll(evt) {
         forEach(getElementsByTagAndClassName("*", "toggle", 'assignment-form'), toggleClose);
     }
 }
+
+connect(GameSystem, 'stateLoaded', initToggleInfo);

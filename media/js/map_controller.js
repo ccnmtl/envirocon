@@ -68,3 +68,5 @@ function initMapController() {
   });
     updateMap();
 }
+
+connect(GameSystem, 'stateLoaded', initMapController);

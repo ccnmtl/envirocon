@@ -17,6 +17,8 @@
           
           initToggleInfo();
           
+          tabberAutomatic();
+          
           // load the data now
           
           if (!GameSystem.loaded) {
@@ -37,6 +39,7 @@
 {% block css %}
    <!-- Delegate to the particular game which extra JS it needs -->
    <script type="text/javascript">
+     var tabberOptions = { 'manualStartup': true };
      var game_variables = {{game.gamevariables|safe}};
      var editable_view = false;
      {% if world_state.editable %}

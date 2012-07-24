@@ -50,4 +50,4 @@ function initValidateReports() {
     });
 }
 
-addLoadEvent(initValidateReports);
+connect(GameSystem, 'stateLoaded', initValidateReports);

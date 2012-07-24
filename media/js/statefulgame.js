@@ -162,16 +162,17 @@ if (typeof GameSystem == 'undefined') {
 		 self.turn_id = elt.value;
              }
              if (elt.name=='data') {
-		 //easy default
-		 self.textarea_default = elt;
-		 if (game_variables.length == 1 && typeof self.my_vars[game_variables[0]]!='undefined') {
-		     elt.value = self.my_vars[game_variables[0]];
-		 }
+        		 //easy default
+        		 self.textarea_default = elt;
+        		 if (game_variables.length == 1 && typeof self.my_vars[game_variables[0]]!='undefined') {
+        		     elt.value = self.my_vars[game_variables[0]];
+        		 }
              }        
 	 });
         this.action = this.assignment_form.action;
      }
      this.loaded = true;
+     signal(this, 'stateLoaded');
 
      if (this.windowloaded) {
 	  this.stateLoaded();
@@ -196,13 +197,4 @@ if (typeof GameSystem == 'undefined') {
   }
 
   window.GameSystem = new GameSystemClass();
-  window.GameSystem.init();
-  addLoadEvent(function() {
-      GameSystem.windowloaded = true;
-      if (!GameSystem.loaded) {
-	  GameSystem.loadState({});
-      }
-  });
-
-
 }

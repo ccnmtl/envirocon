@@ -197,4 +197,4 @@ function initFunding() {
   }
 }
 
-addLoadEvent(initFunding);
+connect(GameSystem, 'stateLoaded', initFunding);

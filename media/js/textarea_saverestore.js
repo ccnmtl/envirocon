@@ -53,10 +53,10 @@ function initSaveRestore() {
 
     // fix tinyMCE load bugginess
     forEach(getElementsByTagAndClassName("textarea", "wysiwyg"), function(elt) {
-      if( tinyMCE && (tinyMCE.get(elt.id)) ) {
-        tinyMCE.get(elt.id).load();
-      }
+        if (tinyMCE && (tinyMCE.get(elt.id))) {
+            tinyMCE.get(elt.id).load();
+        }
     });
 }
 
-initSaveRestore();
+connect(GameSystem, 'stateLoaded', initSaveRestore);

@@ -44,5 +44,3 @@ function toggleAll(evt) {
         forEach(getElementsByTagAndClassName("*", "toggle", 'assignment-form'), toggleClose);
     }
 }
-
-addLoadEvent(initToggleInfo);

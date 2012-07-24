@@ -99,4 +99,8 @@ forEach(document.getElementsByTagName('select'),function(elt) {
     connect(elt,'onchange',myPlots,'updateLocalState');
 });
 
-myPlots.initialize();
+function initPlots() {
+    myPlots.initialize();
+}
+
+connect(GameSystem, 'stateLoaded', initPlots);

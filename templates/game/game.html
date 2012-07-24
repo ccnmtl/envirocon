@@ -7,9 +7,30 @@
     <script type="text/javascript" src="{{GAME_MEDIA}}js/statefulgame.js"></script>
     <script type="text/javascript" src="{{GAME_MEDIA}}js/toggle_full_info.js"></script>
     <script type="text/javascript" src="{{GAME_MEDIA}}js/map_controller.js"></script>
-    <script type="text/javascript" src="{{GAME_MEDIA}}js/tabber.js"></script>
+    <script type="text/javascript">
+       addLoadEvent(function() {
+          window.GameSystem.init();
+          
+          GameSystem.windowloaded = true;
+          
+          initMapController();
+          
+          initToggleInfo();
+          
+          // load the data now
+          
+          if (!GameSystem.loaded) {
+              var getAssignmentUrl = '{%url get-assignment world_state.turn_id world_state.user_id %}';
+              deferred = loadJSONDoc(getAssignmentUrl)
+              deferred.addCallbacks(function(doc) {
+                  GameSystem.loadState(doc, false);
+              }, function(err) { 
+              });
+          } 
+       });
+   </script>
    
-    <script type="text/javascript" src="{%url get-assignment world_state.turn_id world_state.user_id %}?jsonp=GameSystem.loadState"></script>
+    <script type="text/javascript" src="{{GAME_MEDIA}}js/tabber.js"></script>
    {% block game_js %}{% endblock %}
 {% endblock %}
 
@@ -26,8 +47,6 @@
 
    <script type="text/javascript" src="{{GAME_MEDIA}}js/tiny_mce/tiny_mce.js"></script>
    <script type="text/javascript" src="{{GAME_MEDIA}}js/tiny_mce_init.js"></script>
-   
-    
 
    <link href="{{GAME_MEDIA}}css/game.css" rel="stylesheet" type="text/css" />
    <!-- Delegate to the particular game extra CSS it needs -->

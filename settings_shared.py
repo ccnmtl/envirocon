@@ -11,12 +11,17 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'postgresql_psycopg2' # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'envirocon' # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'envirocon',
+        'HOST': '',
+        'PORT': '',
+        'USER': '',
+        'PASSWORD': '',
+    }
+}
+
 
 TIME_ZONE = 'America/New_York'
 LANGUAGE_CODE = 'en-us'
@@ -51,12 +56,13 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'envirocon.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Put strings here, like "/home/html/django_templates"
+    # or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     # Put application templates before these fallback ones:
     "/var/www/envirocon/templates/",
-    os.path.join(os.path.dirname(__file__),"templates"),
+    os.path.join(os.path.dirname(__file__), "templates"),
 )
 
 INSTALLED_APPS = (
@@ -96,7 +102,8 @@ SERVER_EMAIL = "envirocon@ccnmtl.columbia.edu"
 
 # WIND settings
 
-AUTHENTICATION_BACKENDS = ('djangowind.auth.WindAuthBackend','django.contrib.auth.backends.ModelBackend',)
+AUTHENTICATION_BACKENDS = ('djangowind.auth.WindAuthBackend',
+                           'django.contrib.auth.backends.ModelBackend',)
 WIND_BASE = "https://wind.columbia.edu/"
 WIND_SERVICE = "cnmtl_full_p"
 WIND_PROFILE_HANDLERS = ['djangowind.auth.CDAPProfileHandler']
@@ -106,24 +113,26 @@ WIND_AFFIL_HANDLERS = ['djangowind.auth.AffilGroupMapper',
                        'courseaffils.listener.AutoGroupWindMapper',
                        ]
 WIND_STAFF_MAPPER_GROUPS = ['tlc.cunix.local:columbia.edu']
-WIND_SUPERUSER_MAPPER_GROUPS = ['anp8','jb2410','zm4','sbd12','egr2107','kmh2124','sld2131','amm8','mar227','ed2198']
+WIND_SUPERUSER_MAPPER_GROUPS = ['anp8', 'jb2410', 'zm4', 'sbd12', 'egr2107',
+                                'kmh2124', 'sld2131',
+                                'amm8', 'mar227', 'ed2198']
 
 # TinyMCE settings
 
 TINYMCE_JS_URL = '/site_media/js/tiny_mce/tiny_mce.js'
 TINYMCE_JS_ROOT = 'media/js/tiny_mce'
 
-# if you set this to True, you may have to 
+# if you set this to True, you may have to
 # override TINYMCE_JS_ROOT with the full path on production
-TINYMCE_COMPRESSOR = False 
+TINYMCE_COMPRESSOR = False
 TINYMCE_SPELLCHECKER = True
 
-TINYMCE_DEFAULT_CONFIG = {'cols': 80, 
+TINYMCE_DEFAULT_CONFIG = {'cols': 80,
                           'rows': 30,
-                          'plugins':'table,spellchecker,paste,searchreplace',
-                          'theme' : 'simple',
+                          'plugins': 'table,spellchecker,paste,searchreplace',
+                          'theme': 'simple',
                           }
-#for courseaffils middleware override
+# for courseaffils middleware override
 COURSEAFFILS_EXEMPT_PATHS = ('/accounts/',
                              '/site_media/',
                              '/admin/',
@@ -143,17 +152,3 @@ from courseaffils.columbia import CourseStringMapper
 COURSEAFFILS_COURSESTRING_MAPPER = CourseStringMapper
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
-#Sentry setup
-#  see: http://wiki.ccnmtl.columbia.edu/Sentry
-import logging
-from sentry.client.handlers import SentryHandler
-logger = logging.getLogger()
-if SentryHandler not in map(lambda x: x.__class__, logger.handlers):
-       logger.addHandler(SentryHandler())
-       logger = logging.getLogger('sentry.errors')
-       logger.propagate = False
-       logger.addHandler(logging.StreamHandler())
-SENTRY_REMOTE_URL = 'http://sentry.ccnmtl.columbia.edu/sentry/store/'
-SENTRY_KEY = 'EWv5EELZnZIrOY'
-SENTRY_SITE = 'envirocon' # can't rely on the sites framework when a transaction is aborted

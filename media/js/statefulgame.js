@@ -157,19 +157,23 @@ if (typeof GameSystem == 'undefined') {
      ///ASSUME: document is loaded by now!
      //this.assignment_form = this.getForm();
      if (this.assignment_form) {
-	 forEach(this.assignment_form.elements, function(elt) {
+    	 forEach(this.assignment_form.elements, function(elt) {
              if (elt.name=='turn_id') {
-		 self.turn_id = elt.value;
+                 self.turn_id = elt.value;
              }
              if (elt.name=='data') {
         		 //easy default
         		 self.textarea_default = elt;
-        		 if (game_variables.length == 1 && typeof self.my_vars[game_variables[0]]!='undefined') {
+        		 if (game_variables.length == 1 && typeof self.my_vars[game_variables[0]] != 'undefined') {
         		     elt.value = self.my_vars[game_variables[0]];
         		 }
+        		 if (editable_view) {
+        		     // transfer data to tinymce
+        		     tinyMCE.activeEditor.setContent(elt.value);
+        		 }
              }        
-	 });
-        this.action = this.assignment_form.action;
+    	 });
+         this.action = this.assignment_form.action;
      }
      this.loaded = true;
      signal(this, 'stateLoaded');

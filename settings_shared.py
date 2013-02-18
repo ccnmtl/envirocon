@@ -1,6 +1,7 @@
 # Django settings for envirocon project.
 import os.path
 import re
+import sys
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -21,6 +22,25 @@ DATABASES = {
         'PASSWORD': '',
     }
 }
+
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:',
+            'HOST': '',
+            'PORT': '',
+            'USER': '',
+            'PASSWORD': '',
+            }
+        }
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=envirocon_main,game,game_many,game_plot_sectors,game_sample,obtain_additional_information,statefulgame,teams,user_profile,week1',
+]
 
 
 TIME_ZONE = 'America/New_York'
@@ -93,6 +113,8 @@ INSTALLED_APPS = (
     'game_many',
     # week 2 activities
     'game_plot_sectors',
+
+    'django_nose',
 )
 
 THUMBNAIL_SUBDIR = "thumbs"

@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="/site_media/js/mochikit/MochiKit/MochiKit.js"></script>
+<script type="text/javascript" src="/site_media/js/mochikit/MochiKit/DragAndDrop.js"></script>
+<script type="text/javascript" src="/site_media/js/moveteams.js"></script>
+{% endblock %}
+
+{% block css %}
+{{formset.media}}
+{% endblock %}
+
+{% block breadcrumbs %}
+{% endblock %}
+
+
+{% block content %}
+  {%if user.is_anonymous%}
+  <div class="textblock">
+    <h1>Welcome!</h1>
+    <p>
+      <a href="{%url djangowind.views.login %}?next=/">LOGIN!</a>
+    </p>
+<p>
+{%include "envirocon_main/welcome_text.html" %}
+
+</p><p>
+Good luck and please don't hesitate to ask for assistance throughout the process. 
+</p>
+  </div>
+  {%else%}
+  <div class="textblock">
+  <h1>{{user.get_full_name|default:user.username}}'s Dashboard</h1>
+  
+  {%if is_faculty%}
+  <h2>Team Details</h2>
+  <a href="{%url team-admin %}">Team Administration and Assignment</a>
+  {%endif%}
+
+   {%if not is_faculty%}
+   <div id="alertbox">
+   
+     {%if team%}
+     <h2>Your Team</h2>
+  
+     <ul>
+       {%for member in team.group.user_set.all %}
+       <li>{{member.get_full_name|default:member.username}}</li>
+       {%endfor%}
+     </ul>
+     {%else%}
+     <p>You have not yet been assigned to a team.</p>
+     {%endif%}
+   </div>
+   {%endif%}
+
+  <p>
+    <h2>Welcome!</h2>
+    {%for survey in todo %}
+    <p><b> Please fill out your <a href="{%url survey-detail survey.slug %}">{{survey.title}}</a></b></p>
+    {%endfor%}
+    {%if not team.state.turn.open and not todo %}
+       <p>
+	 Thank you for your submission.
+	 There are no current activities for you to complete. Please check back soon to continue the simulation.
+       </p>
+    {%endif%}
+  </p>
+ <h2>Assignments</h2>
+  <!--fake table-->
+
+  {%if is_faculty%}
+  
+  <ul>
+    <lh><h3>Instructor Information</h3></lh>
+    <li>Teams can only edit an assignment if it is both marked open and their team-marker is on that assignment.  Therefore, only one at a time.  Colored team-markers indicate that the team has submitted that assignment for instructor review.</li>
+    <li>If the next assignment is open, teams can auto-advance by submitting their current assignment.</li>
+    <li>The due date auto-closes the assignment.</li>
+    <li>You can manually move a team to a particular assignment by dragging the markers.
+        <br /><br />
+	<p>For instance, if you want to give one team an extension on an assignment that is now closed, then:
+	<ol>
+	  <li>Move the other team-markers to the next assignment (which you can leave closed, if you don't want anyone to start that one yet).</li>
+	  <li>Leave the exception-team on the extension-assignment (or move it back, manually to that assignment).</li>
+	  <li>Re-open the extension-assignment.  Since the other teams are on a later assignment, they will not be able to edit it.</li>
+	</ol>
+	</p>
+    </li>
+  </ul>
+
+     <form method="POST">
+     <input type="submit" value="Save" />
+       {{ formset.management_form }}
+  {%endif%}
+  <table>
+    <thead>
+      <tr>
+	<th>Activity Name</th>
+	<th>Type</th>
+	<th>Due Date</th>
+	<th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%for assn in assignments %}
+      {%if not assn.hidden or is_faculty %}
+      <tr 
+	  {%if assn.current %}
+	  class="current"
+	  {%endif%}
+	  >
+	<td>
+	    {{assn.data.name}}
+	    {%if team and not assn.hidden %}
+	    <br />
+	    <a href="{%url assignment-page assn.data.id %}">
+	      {%if assn.current %}
+	      Open
+	      {%else%}
+                 {% if assn.my_submission %}
+	           Review
+                 {% endif %}
+	      {%endif%}
+	    </a>
+            {%if assn.current and assn.data.individual and not assn.data.turn.complete and not assn.data.is_last %}
+               <div class="allmembers">Note that you cannot proceed to the next activity until all of your teammates have completed this activity.</div>
+            {%endif%}
+
+	    {%endif%}
+	    {%if is_faculty%}
+	       <br />
+	       {%with assn.data.any_submission as first_submission %}
+		  <br />
+	          {%if first_submission %}
+		  <a href="{%url assignment-page assignment_id=assn.data.id,faculty_view="/instructor/",user_id=first_submission.author.id %}">Review Submissions</a>
+		  {%endif%}
+	       {%endwith%}
+	       Open: {{assn.form.visible_fields.1}}
+               <a href="{%url game-page assn.data.app %}">view turn</a>
+	    {%endif%}
+	</td>
+	<td>{{assn.data.individual|yesno:"Individual,Group"}}
+	</td>
+	<td style="width:15em;">
+	  {%if is_faculty%}
+	    {% for hidden in assn.form.hidden_fields %}
+	       {{ hidden }}
+	    {% endfor %}
+
+	    {{assn.form.visible_fields.0}}
+          {%else%}
+            {{assn.data.close_date|date:"l, n/j/y, P"}}
+	  {%endif%}
+	</td>
+	<td class="teamstatus" data-assn="{{assn.data.id}}">
+	  {%for ateam in assn.teams %}
+	    {%ifequal team ateam.data %}
+	    <!--STUDENT-->
+	      {%if ateam.sub %}
+	         {%if ateam.sub.0.published %}
+		    Submitted
+		    {{ateam.sub.0.modified|date:"n/j/y, P"}}
+		 {%else%}
+		    Draft
+		 {%endif%}
+	      {%endif%}
+	    {%endifequal%}
+	    {%if is_faculty %}
+	      {%ifequal ateam.data.state.turn ateam.turn %}
+	        <div id="teammarker-{{ateam.data.id}}" data-team="{{ateam.data.id}}" class="teamoptions markerparent"><div data-current="{{assn.data.id}}"
+		   {%if ateam.sub.0.published %}
+		   class="team-marker on" title="published"
+		   {%else%}
+		   class="team-marker"
+		   {%endif%}
+		  >{{ateam.data.index}}</div></div>
+	      {%endifequal%}
+	      <div id="teamstatus-{{ateam.data.id}}-{{assn.data.id}}" data-status="{{ateam.sub.0.published}}"></div>
+	    {%endif%}
+	  {%endfor%}
+
+     {% if is_faculty %}
+	    <a href="{%url get-assignment-csv assignment_id=assn.data.id%}">Download CSV</a>
+	  {% endif %}
+	</td>
+      </tr>
+      {%endif%}
+      {%endfor%}
+    </tbody>
+  </table>
+  {%if is_faculty%}
+  <input type="submit" value="Save" />
+  </form>  
+  {%endif%}
+
+<!--end real table  -->
+  
+  
+  
+  
+  
+  
+  </div>
+
+  {%endif%}
+
+  {% endblock %}

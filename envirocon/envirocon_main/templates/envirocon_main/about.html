@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}About{%endblock%}
+
+{% block content %}
+<div class='textblock'>
+<h3 style="padding-top:10px;margin-top:0px;">ABOUT</h3>
+<p>
+  {%include "envirocon_main/welcome_text.html" %}
+</p>
+
+<hr />
+
+<h3 style="padding-top:10px;margin-top:0px;">CREDITS</h3>
+
+<h5>Columbia Center for New Media Teaching and Learning</h5>
+
+<ul>
+  <li><strong>Executive Producers:</strong> Frank Moretti, Maurice Matiz</li>
+  <li><strong>Producer:</strong> Ryan Kelsey</li>
+  <li><strong>Project Manager:</strong> Maria Janelli</li>
+  <li><strong>Lead Designer:</strong> Elizabeth Day</li>
+  <li><strong>Web Designer:</strong> Marc Raymond</li>
+  <li><strong>Lead Technical Architect:</strong> Jonah Bossewitch</li>
+  <li><strong>Programmers:</strong> Schuyler Duveen and Kathryn Hagan</li>
+  <li><strong>QA:</strong> Ken Petricig</li>
+</ul>
+
+<h5>Educational Partners</h5>
+
+<ul>
+  <li>Marc Levy, Deputy Director, Center for International Earth Science Information Network</li>
+  <li>Alex Fischer, Program Coordinator, Center for International Earth Science Information Network</li>
+</ul>
+
+</div>
+{% endblock %}

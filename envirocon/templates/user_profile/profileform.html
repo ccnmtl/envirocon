@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+  <div class="textblock">
+{% block js %}
+   <!-- Delegate to the particular game which extra JS it needs -->
+   <script type="text/javascript" src="/site_media/js/mochikit/MochiKit/MochiKit.js"></script>
+   <script type="text/javascript" src="/site_media/js/user_profile/profileform.js"></script>
+{% endblock %}
+
+{% block content %}
+<form id="profile_data" name="profile_data" method="POST"
+      action="">
+<br />
+1. Please list your current program of study.
+<br />
+<input type="radio" name="program" value="" />
+<br />
+
+<br />
+<input type="radio" name="program" value="SIPA MIA EPS" />SIPA MIA EPS
+<br />
+<input type="radio" name="program" value="SIPA MIA EPD" />SIPA MIA EPD
+<br />
+<input type="radio" name="program" value="SIPA MIA IPS" />SIPA MIA IPS
+<br />
+<input type="radio" name="program" value="SIPA MIA Other" />SIPA MIA Other
+<br />
+<input type="radio" name="program" value="MPA-ESP" />MPA-ESP
+<br />
+<input type="radio" name="program" value="Climate and Society" />Climate and Society
+<br />
+<input type="radio" name="program" value="E3B" />E3B
+<br />
+<input type="radio" name="program" value="Teacher's College" />Teacher's College
+<br />
+<input type="radio" name="program" value="" />Other: <input type="text" name="program" value="" />
+<br />
+
+<br />
+2. Please describe your previous academic experience and interests.
+<br />
+<textarea name="previous_experience"></textarea>
+<br />
+
+<br />
+3. Please check the box that best describes your area of expertise:
+<br />
+<input type="radio" name="expertise" value="environment resource management" />environment resource management
+<br />
+<input type="radio" name="expertise" value="conflict resolution/prevention" />conflict resolution/prevention
+<br />
+<input type="radio" name="expertise" value="development" />development
+<br />
+<input type="radio" name="expertise" value="reconstruction" />reconstruction
+<br />
+<input type="radio" name="expertise" value="humanitarian aid/services" />humanitarian aid/services
+<br />
+<input type="radio" name="expertise" value="" />Other: <input type="text" name="expertise" value="" />
+<br />
+
+<br />
+4. Have you participated in previous training programs related to this course? If yes please detail, Conflict resolution courses, natural resource management, development projects, or general project management etc.
+<br />
+<input type="radio" name="previous_training" value="Yes" />Yes
+<br />
+<input type="radio" name="previous_training" value="No" />No
+<br />
+<textarea name="previous_training_details"></textarea>
+<br />
+
+<br />
+5. Do you have previous professional experience focusing specifically on positions that are relevant to the topics in this course and any development project management or design. If yes, please detail and note how much time.
+<br />
+<input type="radio" name="previous_professional" value="Yes" />Yes
+<br />
+<input type="radio" name="previous_professional" value="No" />No
+<br />
+<textarea name="previous_professional_details"></textarea>
+<br />
+
+<br />
+6. Have you had any previous fieldwork in a post-conflict context or direct experiences in a conflict zone? If yes please detail.
+<br />
+<input type="radio" name="previous_fieldwork" value="Yes" />Yes
+<br />
+<input type="radio" name="previous_fieldwork" value="No" />No
+<br />
+<textarea name="previous_fieldwork_details"></textarea>
+<br />
+   </form>
+<form id="user_data" name="user_data" method="POST"
+      action="">
+First Name:  <input type="text" name="first_name" value="{{user.first_name}}" />
+<br />
+Last Name:  <input type="text" name="last_name" value="{{user.last_name}}" />
+<br />
+Email:  <input type="text" name="email" value="{{user.email}}" />
+<br />
+<input type="submit" value="Submit Profile" />
+
+</form>
+{% endblock %}
+

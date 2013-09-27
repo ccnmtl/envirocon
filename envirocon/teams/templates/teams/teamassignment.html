@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% load smartif %}
+
+{% block js %}
+  <script type="text/javascript" src="/site_media/js/mochikit/MochiKit/MochiKit.js"></script>
+  <script type="text/javascript" src="/site_media/js/tablesort.js"></script>
+  <script type="text/javascript" src="/site_media/js/teams/teamassignment.js"></script>
+{% endblock %}
+
+{% block css %}
+    <style type="text/css">
+      td.teamlist {white-space:nowrap; background-color: #fff;}
+      div.teamoptions {white-space:nowrap; background-color: #fff;}
+      th {cursor:pointer;}
+      div.teamoptions div.on {border:1px solid red;
+              background-color:#FF9999;
+      }
+      td div.teamoptions div {width:1.3em;
+                  display:inline-block;
+		  border:1px solid black;
+		  text-align:center;
+		  cursor:pointer;
+		  }
+
+    </style>
+
+{% endblock %}
+
+{% block breadcrumbs %}
+{% endblock %}
+
+
+{% block content %}
+<div class="textblock">
+  <h1>Team Administration</h1>
+
+    <p>
+      <form name="team-addmember" method="POST" 
+	    action='{%url team-addmember user_id="user_id" %}'>
+	<!--empty on purpose!!! -->
+      </form>
+      <form method="POST" action="{%url team-create course_id=course.id %}">
+	<select name="count">
+	  <option value="1">1</option>
+	  <option value="2">2</option>
+	  <option value="3">3</option>
+	  <option value="4">4</option>
+	  <option value="5">5</option>
+	  <option value="6">6</option>
+	  <option value="7">7</option>
+	  <option value="8">8</option>
+	  <option value="9">9</option>
+	  <option value="10">10</option>
+	  <option value="11">11</option>
+	  <option value="12">12</option>
+	</select>
+	<input type="submit" value="Add Teams" />
+      </form>
+      <button>Assign Remaining Students Randomly</button>
+    </p>
+    <table id="membertable" class="sortable" border="1" onclick="sortColumn(event)">
+      <thead>
+	<tr>
+	  <th>Name</th>
+	  {% for answer in surveys.values.0.surveys.0 %}
+	      {%if answer.qtype %}	      
+	         {%if answer.qtype not in "AT" %}
+		    <th>{{answer.text}}</th>
+	         {%endif%} 
+	         {%if "academic experience" in answer.text %}
+		    <th>{{answer.text}}</th>
+	         {%endif%} 
+	      {%else%}
+	         {%if answer.0.question.qtype not in "AT" %}
+		    <th>{{answer.0.question.text}}</th>
+	         {%endif%} 
+	         {%if "academic experience" in answer.0.question.text %}
+		    <th>{{answer.0.question.text}}</th>
+	         {%endif%} 
+	      {%endif%}
+	      <!--th class="Number">Another Number</th-->
+	  {% endfor %}
+	  <th class="Team">Team</th>
+
+	</tr>
+      </thead>
+      <tbody>
+	{% for student in surveys.values %}
+	  <tr data-member="{{student.record.id}}"><td>
+             {%if student.record in course.faculty%}
+               FACULTY <b>{{student.record.get_full_name|default:student.record.username}}</b>
+             {%else%}
+                {{student.record.get_full_name|default:student.record.username}}
+             {%endif%}
+
+
+	  {#PROFILE FIELDS#}
+	  {% if not student.surveys.0 %}
+	     </td><!--did not fill out survey-->
+	  {%endif%}
+	  {% for answers in student.surveys.0 %}
+	   {%if not answers.qtype %}
+	      {%if answers.0.question.qtype not in "AT" %}
+	         </td><td>
+	      {%endif%}
+	      {%if "academic experience" in answers.0.question.text %}
+	          </td><td>
+	      {%endif%}
+	    {% for a in answers%}
+	      {%if a.question.qtype in "AT" %}
+	        <a src="" title="{{a.text}}">(more)</a>
+	      {% else %} 
+	        {{a.text}}{%if not forloop.last%}, {%endif%}
+	      {%endif%}
+	    {%endfor%}
+	   {%else%}
+	     {%if answers.qtype not in "AT"%}
+	          </td><td>
+	      {%endif%}
+	     {%if "academic experience" in answers.text %}
+	          </td><td>
+	      {%endif%}
+	   {%endif%}
+	   {%if forloop.last %}</td>{%endif%}
+	  {% endfor %}
+	  {#END PROFILE FIELDS#}
+	  <td class="teamlist"
+	      ><div class="teamoptions" 
+		    {%for g in student.record.groups.all %}
+		    {%if g.team%}
+		    data-team="{{g.team.index}}"
+		    {%endif%}
+		    {%endfor%}
+		    >{% for t in teams %}<div
+	        {%if t.group in student.record.groups.all %}
+		  class="on"
+	        {%endif %}
+		data-teamid="{{t.id}}"
+	      >{{t.index}}</div>{% endfor %}</div
+	      ></td>
+	  </tr>
+	{%endfor%}
+      </tbody>
+    </table>
+
+    
+    <h2>Delete Teams</h2>
+    <div id="team-delete">
+      {% for t in teams %}
+        <div id="team-delete-{{t.id}}">
+	  <form method="POST" 
+		action="{%url team-delete t.id %}"
+		onsubmit="return confirm('Are you sure?')"
+		>
+	    <input type="submit" value="Delete Team {{t.index}}" />
+	  </form>
+	</div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

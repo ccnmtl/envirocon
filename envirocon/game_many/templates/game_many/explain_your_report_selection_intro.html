@@ -1,0 +1,22 @@
+{% extends "game/intro.html" %}
+
+{% block instructions %}
+<p>Please write a one or two page justification for your selection of information reports.</p>
+
+<p>Discuss the rationale for which reports you selected, how they will support your decision-making process and what information you needed to support the prioritization of needs in the Nimpala.</p>
+
+<p>Also, summarize key points from the discussion your group had while trying to reach the decision of which reports to select.</p> 
+{% endblock %}
+
+{% block resources %}
+{% for resource in world_state.resources %}
+  {% ifequal resource.a.app "obtain_additional_information" %}
+    {% for file in resource.res %}
+      {% ifequal file.type "file" %}
+        <li class="probably-pdf"><a href="{%url assignment-page resource.a.id file.page_id %}">{{ file.title }}</a></li>
+      {% endifequal %}
+    {% endfor %}
+  {% endifequal %}
+{% endfor %}
+
+{% endblock %}

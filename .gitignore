@@ -7,3 +7,6 @@ deploy_specific
 \#*
 local_settings.py
 .coverage
+.pydevproject
+.project
+reports

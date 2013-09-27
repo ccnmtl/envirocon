@@ -1,0 +1,399 @@
+{% extends "base.html" %}
+{% load smartif %}
+
+{% block title %}{{game.gamename}}{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{GAME_MEDIA}}js/statefulgame.js"></script>
+    <script type="text/javascript" src="{{GAME_MEDIA}}js/toggle_full_info.js"></script>
+    <script type="text/javascript" src="{{GAME_MEDIA}}js/map_controller.js"></script>
+    <script type="text/javascript" src="{{GAME_MEDIA}}js/tabber.js"></script>
+    
+    <script type="text/javascript">
+       addLoadEvent(function() {
+          window.GameSystem.init();
+          
+          GameSystem.windowloaded = true;
+          
+          if (!GameSystem.loaded) {
+              var getAssignmentUrl = '{%url get-assignment world_state.turn_id world_state.user_id %}';
+              deferred = loadJSONDoc(getAssignmentUrl)
+              deferred.addCallbacks(function(doc) {
+                  GameSystem.loadState(doc, false);
+                  tabberAutomatic();
+              }, function(err) { 
+              });
+          } 
+       });
+   </script>
+    
+   {% block game_js %}{% endblock %}
+{% endblock %}
+
+{% block css %}
+   <!-- Delegate to the particular game which extra JS it needs -->
+   <script type="text/javascript">
+     var tabberOptions = { 'manualStartup': true };
+     var game_variables = {{game.gamevariables|safe}};
+     var editable_view = false;
+     {% if world_state.editable %}
+       editable_view = {{world_state.editable|lower}};
+     {% endif %}
+   </script>
+   <script type="text/javascript" src="{{GAME_MEDIA}}js/mochikit/MochiKit/MochiKit.js"></script>
+
+   <script type="text/javascript" src="{{GAME_MEDIA}}js/tiny_mce/tiny_mce.js"></script>
+   <script type="text/javascript" src="{{GAME_MEDIA}}js/tiny_mce_init.js"></script>
+
+   <link href="{{GAME_MEDIA}}css/game.css" rel="stylesheet" type="text/css" />
+   <!-- Delegate to the particular game extra CSS it needs -->
+   {% block game_css %}{% endblock %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {%if game %}
+      <li><a href="{% url game-page game.app game.page_id %}">{{game.gamename}}</a></li>
+    {%endif%}  
+{% endblock %}
+
+{% block content %}
+   <div id="country-info">
+   <div class="tabber">
+
+     {%if world_state.faculty_info %}
+     <div id="instructor_panel" class="tabbertab" title="Instructor">
+
+       {%for otherteam in world_state.faculty_info.teams %}
+	 <h2>
+	   {%ifnotequal world_state.team otherteam.r %}
+	     {%if otherteam.r.group.user_set.all.0 %}
+	     <a href="{%url assignment-page assignment_id=world_state.assignment.id,faculty_view="/instructor/",user_id=otherteam.r.group.user_set.all.0.id %}">
+	     {%else%}
+	     <em class="nomembers"><span class="teamname">
+	     {%endif%}
+	   {%endifnotequal%}
+
+	  Team: {{otherteam.r}}
+	   {%ifnotequal world_state.team otherteam.r %}
+	     {%if otherteam.r.group.user_set.all.0 %}	   
+	     </a>
+	     {%else%}
+	     </span> --no team members</em>
+	     {%endif%}
+	   {%endifnotequal%}
+       </h2>
+	 
+       {%endfor%}
+       <p>
+       {%if world_state.assignment.individual %}
+       <h1>Team Members</h1>
+       <ul>
+	 {%for member in world_state.team.group.user_set.all %}
+	 <li>
+	   {%ifnotequal member.id world_state.user_id %}
+	   <a href="{%url assignment-page assignment_id=world_state.assignment.id,faculty_view="/instructor/",user_id=member.id %}">
+	   {%else%}<b>{%endifnotequal%}
+	   {{member.get_full_name|default:member.username}}
+	   {%ifnotequal member.id world_state.user_id %}
+	 </a>{%else%}</b>{%endifnotequal%}
+         </li>
+	 {%endfor%}
+       </ul>
+       {%endif%}
+
+       
+       {%with world_state.turn.next as next_turn %}
+       {%if next_turn %}
+       <h1>Add outcome for team</h1>
+       <div>
+	 <form id="shockform" name="shockform" method="POST" action="{%url set-shock %}">
+	   <input type="hidden" name="assignment_id" value="{{next_turn.assignment.id}}" />
+	   <input type="hidden" name="team_id" value="{{world_state.team.id}}" />
+
+	   <h3>Seen at next assignment: {{next_turn.assignment.name}}</h3>
+	   <ul id="shocklist" style="display:none">
+	     {%for shock in world_state.faculty_info.shocks%}
+	     <li id="shock-{{shock.id}}">{{shock.name}}|{{shock.outcome}}</li>
+	     {%endfor%}
+	   </ul>
+	   <select id="shockselect" name="shock_id">
+	     <option value="none">No Shock</option>
+	     <option value="">--New Shock--</option>
+	     {%for shock in world_state.faculty_info.shocks%}
+	     <option class="shock" 
+		     {%ifequal shock next_turn.shock %}
+		     selected="selected"
+		     {%endifequal%}
+		     value="{{shock.id}}">{{shock.name}}</li>
+	     {%endfor%}
+	   </select>
+	   <input type="text" name="shock_name" />
+	   <textarea name="shock_outcome" 
+		     rows="10" cols="50"
+		     class="mceNoEditor"></textarea>
+	   <input type="submit" value="Save outcome for team" />
+	   <p>
+	     NOTE: you don't have to submit if you do not add a shock
+	   </p>
+           <div id="instructor-debug" style="display:none">
+             <h4 class="toggle-control">Debug Info</h4>
+             <ul id="instructor-debug-list" class="toggle">
+             </ul>
+           </div>
+	 </form>
+       </div>
+       {%endif%}
+       {%endwith%}
+     </p>
+     </div>
+     {%endif%}
+
+     <div id="data_panel" class="tabbertab tabbertabhide" title="Geographic Data">
+       <div id="maps">
+	 {%with world_state.resources_by_app as appres %}
+	 <h2>Map</h2>
+	 <div>
+	   <form>
+	     <table id="choose_layers">
+	       <tr><td>Choose base map:
+	       <select type="dropdown" id="base-map-dropdown" >
+		 <option value="basic" selected="selected">Basic Geography</option>
+		 <option value="ethnicgroups">Ethnic Group Distribution</option>
+		 {%if appres.obtain_additional_information.water %}
+		 <option value="rainfall">Rainfall</option>
+		 {%endif%}
+		 {%if appres.obtain_additional_information.population %}
+		 <option value="population">Population</option>
+		 {%endif%}
+		 {%if appres.obtain_additional_information.disasters %}
+		 <option value="droughtflood">Drought/Flood Hotspots</option>
+		 {%endif%}
+	       </select>
+
+	       </td></tr>
+	       <tr>
+		 <td>
+		   Show Layers: <br />
+		   <ul>
+		     {%if appres.obtain_additional_information.humanitarian %}
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="refugee">Refugee Camps</input></li>
+		     {%endif%}
+		     {%if appres.obtain_additional_information.environment %}
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="cholera">Cholera Outbreaks</input></li>
+		     {%endif%}
+		     {%if appres.obtain_additional_information.wildlife %}
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="parks">Protected Areas</input></li>
+		     {%endif%}
+		     {%if appres.obtain_additional_information.political or appres.recommending_interventions.watching_brief %}
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="conflict">Initial Conflicts</input></li>
+		     {%endif%}
+
+                     {#THESE ARE related to the WB _numbers_ they receive #}
+                     {% if appres.donors_conference.watching_brief_1 %}
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb2_peace">2nd Watching Brief: Conflicts</input></li>
+                     {% endif %}
+                     {% if appres.donors_conference.watching_brief_2 %}
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb2_humanitarian">2nd Watching Brief: Conflicts</input></li>
+                     {% endif %}
+                     {% if appres.donors_conference.watching_brief_3 %}
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb2">2nd Watching Brief: Conflicts</input></li>
+		     {% endif %}
+
+                     {% if appres.final_paper.watching_brief_1 %}
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb3_peace">3rd Watching Brief: Conflicts</input></li>
+                     {% endif %}
+                     {% if appres.final_paper.watching_brief_2 %}
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb3_humanitarian">3rd Watching Brief: Conflicts</input></li>
+                     {% endif %}
+                     {% if appres.final_paper.watching_brief_3 %}
+		     <li class="layer_choice"><input type="checkbox" name="layer" class="layer-choice" value="wb3">3rd Watching Brief: Conflicts</input></li>
+		     {%endif%}
+
+                   </ul>
+		 </td></tr></table>
+	       </form>
+	     </div>
+	     <div id="basemap" class="basic">
+		 <div id="layers">
+
+		
+		 <div class="layer cholera" id="layer-cholera"></div>
+		 <div class="layer parks" id="layer-parks"></div>
+		 <div class="layer conflict_basic" id="layer-conflict"></div>
+		 
+                 {#CORRESPONDS TO CHECKBOXES ABOVE #}
+                 {#THESE ARE related to the WB _numbers_ they receive #}
+
+                 {% if appres.donors_conference.watching_brief_1 %}
+		   <div class="layer wb2_peace" id="layer-wb2_peace"></div>
+		 {% endif %}
+                 {% if appres.donors_conference.watching_brief_2 %}
+		   <div class="layer wb2_humanitarian" id="layer-wb2_humanitarian"></div>
+		 {% endif %}
+                 {% if appres.donors_conference.watching_brief_3 %}
+		   <div class="layer wb2_conflict" id="layer-wb2-conflict"></div>
+		 {% endif %}
+
+                 {% if appres.final_paper.watching_brief_1 %}
+		   <div class="layer wb3_peace" id="layer-wb3_peace"></div>
+		 {% endif %}
+                 {% if appres.final_paper.watching_brief_2 %}
+		   <div class="layer wb3_humanitarian" id="layer-wb3_humanitarian"></div>
+		 {% endif %}
+                 {% if appres.final_paper.watching_brief_3 %}
+		   <div class="layer wb3_conflict" id="layer-wb3-conflict"></div>
+		 {% endif %}
+
+
+                 <div class="layer labels" id="layer-labels"></div>
+                 <div class="layer refugee" id="layer-refugee"></div>
+		 </div>
+	     </div>
+     
+	     <div id="legends">
+ 		 <div class="legend basic"></div>
+ 		 <div class="legend ethnicgroups" id="legend-ethnicgroups"><h2>Ethnic Group Distribution</h2></div>
+ 		 <div class="legend rainfall" id="legend-rainfall"><h2>Rainfall</h2></div>
+ 		 <div class="legend droughtflood" id="legend-droughtflood"><h2>Drought/Flood Hotspots</h2></div>
+ 		 <div class="legend refugee" id="legend-refugee"><h2>Refugee Camps</h2></div>
+ 		 <div class="legend cholera" id="legend-cholera"><h2>Cholera Outbreaks</h2></div>
+		 <div class="legend parks" id="legend-parks"><h2>Protected Areas</h2></div>
+		 <div class="legend conflict" id="legend-conflict"><h2>Conflict Instances</h2></div>
+		 <div class="legend population" id="legend-population"><h2>Population</h2></div>
+
+	       </div>
+	     </div><!-- end map div -->
+	     {%endwith%}
+	   </div><!-- end div data_panel -->
+ 
+ 
+     <div id="files_panel" class="tabbertab tabbertabhide" title="Files">   
+       {% for activity in world_state.resources %}
+           {% with activity.a.activity_ptr.gamevideo as gamevideo %} 
+                {% if activity.res.0.type == "file" %}
+                    <div class="week"><!--not really a week-->
+    	            <h2>{{activity.a.name}}</h2>
+                    <ul>
+                {% else %}{% if gamevideo and activity.complete %}
+                    <div class="week"><!--not really a week-->
+                    <h2>{{activity.a.name}}</h2>
+                    <ul>
+                {% endif %}{% endif %}
+     	        
+                {% if activity.res.0.type == "file" %}
+    	           {% for res in activity.res %}
+    	               {% ifequal res.type "file" %}
+    	                   <li><a href="{%url assignment-page activity.a.id res.page_id %}">{{res.title|default:"File"}}</a></li>
+    	               {%endifequal %}
+    	           {%endfor%}
+                {% endif %}
+               
+                {% if gamevideo and activity.complete %}
+                   <li><a href="#" onclick="document.getElementById('{{activity.a.id}}_video').style.display='block';">{{gamevideo.title|default:"Video"}}</a></li>
+                {% endif %}
+                   
+    	        {% if activity.res.0.type == "file" %}
+                   </ul>
+                   </div>
+                {% else %}{% if gamevideo and activity.complete %}
+                    </ul>
+                    </div>
+                {% endif %}{% endif %}
+           {% endwith %}
+       {%endfor%}
+     </div>
+   </div>
+</div>
+   <div id="game-content">
+   <h1><span class="floatright"><a href="/">Review Activities</a></span><a href="/current">Current Activity</a></h1>
+     <!-- Delegate HTML to the particular game -->
+  
+     {% block game_content %}
+   <div>
+       <div id="due_date">
+     {% if world_state.duedate %}
+     DUE: {{ world_state.duedate|date:"D M j Y f A" }}
+     {% endif %}
+   </div>  
+   <div id="activity_title">{{game.gamename}}</div>
+      
+      
+   {% if world_state.published %}
+  
+   {% endif %}
+   
+   <div id="materials">
+     {% block new-materials %}{% endblock %}
+   </div>
+<div id="short_instructions">{%block short-instructions %}{% endblock %}</div>
+
+<h4 class="toggle-control">Full Instructions</h4>
+
+<div id="full_instructions_body" class="toggle">
+{% if world_state.individual %}
+  <p>This is an individual exercise.</p>
+{% endif %}
+{% if not world_state.individual %}
+  <p>This is a group exercise.</p>
+{% endif %}
+
+{% block full-instructions %}{% endblock %}
+</div>
+
+{% block form-instructions %}<p>Write or paste your answer in the box below.</p>{% endblock %}
+     
+    <form action="{%url save-assignment %}" method="POST" id="assignment-form"><div id='form-block'>
+
+  {% block form-inputs %}
+       <textarea rows=17 cols=58 name="data"
+       {% if not world_state.turn_id %}
+       disabled="disabled"
+       {% endif %}
+       ></textarea><br />
+  {% endblock %}
+   </div><!-- end div form-block -->
+  <div id="navbuttons">
+    {% block navbuttons %}
+    {% endblock %}
+  </div>
+
+  {%if world_state.editable %}
+  <div id="buttons">
+  {% block buttons %}
+     <input class="game-system floatright" type="submit" id="submit" name="published" value="Submit" onclick="GameSystem.published='Submit'" />
+     <input class="game-system" type="submit" id="draft" name="published" value="Save Draft" onclick="GameSystem.published='Draft'" />
+  {% endblock %}
+     <input class="game-system" type="hidden" name="turn_id" value="{{ world_state.turn_id }}" />
+     <input class="game-system" type="hidden" name="author" value={{ user }}" />
+  </div>
+  {%endif %}
+   </form>
+   {%if world_state.submission %}
+   <div id="last-submitted" class="last-submitted">
+     Last saved at 
+     <span class="last-date">{{world_state.submission.0.modified|date:"M j Y f A"}}</span> 
+     by <span class="last-author">{{world_state.submission.0.author.get_full_name|default:world_state.submission.0.author.username}}</span>
+   </div>
+   {%endif%}
+   </div>
+{% endblock %}
+
+   </div>
+   
+     
+     {% for activity in world_state.resources %}
+           {% with activity.a.activity_ptr.gamevideo as gamevideo %}
+              {% if gamevideo and activity.complete %}
+                <div id="{{activity.a.id}}_video" class="video-container video-container-absolute" style="display: none">
+                    <a href="#" class="finished" onclick="document.getElementById('{{activity.a.id}}_video').style.display='none';"><h3>Ok, I'm done</h3></a>  
+                    <h2>{{gamevideo.title}}</h2>
+                    <div class="description"><p>{{gamevideo.description}}</p></div>
+                    <div class="video-frame">
+                        <center>{{gamevideo.video_embed_code|safe}}</center>
+                    </div>
+                </div>
+              {% endif %}
+           {% endwith %}
+     {% endfor %}
+     
+{% endblock %}

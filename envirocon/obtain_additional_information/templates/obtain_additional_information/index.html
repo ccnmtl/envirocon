@@ -1,0 +1,29 @@
+{% extends "game/game.html" %}
+
+{% block game_js %}
+  <script type="text/javascript" src="{{GAME_MEDIA}}js/game_obtain_additional_information.js"></script>
+{% endblock %}
+{% block game_css %}
+  <!-- add css link here -->
+{% endblock %}
+
+{% block short-instructions %}Discuss what information you require and select five reports.{% endblock %}
+
+{% block full-instructions %}
+  <p>Please discuss as a group what information you require to make informed decisions about prioritization and allocation of limited reconstruction funding. Based on discussions in the course and readings, what information is critical to addressing both short and long-term needs, as well as confronting continued conflict stressors and potential relapses of conflict?</p>
+
+  <p>Your group will be able to request 5 reports from the following list of potential reports that can be prepared by the existing UN agencies on the ground to help with your decision making process.</p>
+
+  <p>Please think carefully about which reports from the following list you would like to request and why that information is critical to your analysis. Please be prepared to discuss your selection briefly in class and write a memo with your team's rationale for purchasing each report.</p>
+{% endblock %}
+ 
+{% block form-instructions %}{% endblock %}
+    
+{% block form-inputs %}<div class="report_choices">
+
+<h2>Available Reports</h2>
+  {%for report,stuff in game_context.pdfs.items %}
+  <input type='checkbox' name='reports' 
+	 value='{{report}}'/>{{stuff.1}}<br />    
+  {%endfor%}
+</div>{% endblock %}

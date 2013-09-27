@@ -1,0 +1,1107 @@
+{% extends "game/game.html" %}
+{% load ifinlist %}
+
+{% block game_js %}
+   <script type="text/javascript" src="{{GAME_MEDIA}}/js/textarea_saverestore.js"></script>
+{% endblock %}
+{% block game_css %}
+  <!-- add css link here -->
+{% endblock %}
+
+{% block short-instructions %}Complete the following chart to articulate the impacts of your projects.{% endblock %}
+
+{% block full-instructions %}
+<p>Now that you have selected your project allocations, please fill out the following chart to articulate the temporal impacts of these projects.</p>
+
+<p>Please consider the implications of your funding decisions in relation to timeframe for implementation and expected results.</p> 
+
+{% endblock %}
+
+{% block form-instructions %}{% endblock %}
+
+{% block form-inputs %}
+{% with game_context.funded as funded %}
+
+<div class="intervention_choices">
+
+{% if "water-supply-high"|in_list:funded or "water-supply-med"|in_list:funded or "water-supply-low"|in_list:funded or "sanitation-high"|in_list:funded or "sanitation-med"|in_list:funded or "sanitation-low"|in_list:funded or "waste-high"|in_list:funded or "waste-med"|in_list:funded or "waste-low"|in_list:funded %}
+  <h2>Environmental Health and Basic Services</h2>
+{% endif %}
+
+{% if "water-supply-high"|in_list:funded or "water-supply-med"|in_list:funded or "water-supply-low"|in_list:funded %}
+<h3>Water Supply:</h3>
+{% endif %}
+
+{% if "water-supply-high"|in_list:funded %}
+<table class="interventions" id='water-supply-high'>
+   <tr>
+    <th colspan=2>Major improvement in urban water infrastructure; major improvement in rural water infrastructure.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='water-supply-high-baseline' id='water-supply-high-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-supply-high-shorttarget' id='water-supply-high-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-supply-high-medtarget' id='water-supply-high-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-supply-high-longtarget' id='water-supply-high-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='water-supply-high-results' id='water-supply-high-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "water-supply-med"|in_list:funded %}
+<table class="interventions" id='water-supply-med'>
+   <tr>
+    <th colspan=2>Minor improvements to urban infrastructure. Truck clean water into community distribution points. Repair infrastructure. Major rural improvements.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='water-supply-med-baseline' id='water-supply-med-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-supply-med-shorttarget' id='water-supply-med-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-supply-med-medtarget' id='water-supply-med-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-supply-med-longtarget' id='water-supply-med-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='water-supply-med-results' id='water-supply-med-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "water-supply-low"|in_list:funded %}
+<table class="interventions" id='water-supply-low'>
+   <tr>
+    <th colspan=2>Urban infrastructure plan. Limited targeted rural areas.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='water-supply-low-baseline' id='water-supply-low-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-supply-low-shorttarget' id='water-supply-low-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-supply-low-medtarget' id='water-supply-low-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-supply-low-longtarget' id='water-supply-low-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='water-supply-low-results' id='water-supply-low-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "sanitation-high"|in_list:funded or "sanitation-med"|in_list:funded or "sanitation-low"|in_list:funded %}
+<h3>Sanitation Access:</h3>
+{% endif %}
+
+{% if "sanitation-high"|in_list:funded %}
+<table class="interventions" id='sanitation-high'>
+   <tr>
+    <th colspan=2>Secondary waste treatment plant for urban centers over 100,000 people. Large geographic scale rural interventions.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='sanitation-high-baseline' id='sanitation-high-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='sanitation-high-shorttarget' id='sanitation-high-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='sanitation-high-medtarget' id='sanitation-high-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='sanitation-high-longtarget' id='sanitation-high-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='sanitation-high-results' id='sanitation-high-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "sanitation-med"|in_list:funded %}
+<table class="interventions" id='sanitation-med'>
+   <tr>
+    <th colspan=2>Urban: large number of people reached but no city-wide system, e.g. septic tank system. Rural: limited number of people reached.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='sanitation-med-baseline' id='sanitation-med-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='sanitation-med-shorttarget' id='sanitation-med-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='sanitation-med-medtarget' id='sanitation-med-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='sanitation-med-longtarget' id='sanitation-med-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='sanitation-med-results' id='sanitation-med-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "sanitation-low"|in_list:funded %}
+<table class="interventions" id='sanitation-low'>
+   <tr>
+    <th colspan=2>Basic urban sanitation systems (e.g community pit latrines). Rural: education program and limited latrines.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='sanitation-low-baseline' id='sanitation-low-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='sanitation-low-shorttarget' id='sanitation-low-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='sanitation-low-medtarget' id='sanitation-low-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='sanitation-low-longtarget' id='sanitation-low-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='sanitation-low-results' id='sanitation-low-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "waste-high"|in_list:funded or "waste-med"|in_list:funded or "waste-low"|in_list:funded %}
+<h3>Waste Management</h3>
+{% endif %}
+
+{% if "waste-high"|in_list:funded %}
+<table class="interventions" id='waste-high'>
+   <tr>
+    <th colspan=2>Large urban area waste removal and treatment (e.g. lined landfill and national private waste collection company for door to door collection service)</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='waste-high-baseline' id='waste-high-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='waste-high-shorttarget' id='waste-high-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='waste-high-medtarget' id='waste-high-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='waste-high-longtarget' id='waste-high-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='waste-high-results' id='waste-high-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "waste-med"|in_list:funded %}
+<table class="interventions" id='waste-med'>
+   <tr>
+    <th colspan=2>Large urban area but limited collection sites and reduced standards for disposal and treatment facilities (e.g. disposal site with no protective lining, collection from common drop of locations)</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='waste-med-baseline' id='waste-med-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='waste-med-shorttarget' id='waste-med-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='waste-med-medtarget' id='waste-med-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='waste-med-longtarget' id='waste-med-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='waste-med-results' id='waste-med-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "waste-low"|in_list:funded %}
+<table class="interventions" id='waste-low'>
+   <tr>
+    <th colspan=2>Urban areas but small scale collection and no organized system (e.g. neighborhood incinerators, small scale composting)</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='waste-low-baseline' id='waste-low-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='waste-low-shorttarget' id='waste-low-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='waste-low-medtarget' id='waste-low-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='waste-low-longtarget' id='waste-low-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='waste-low-results' id='waste-low-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "timber-high"|in_list:funded or "timber-med"|in_list:funded or "timber-low"|in_list:funded or "deforestation-high"|in_list:funded or "deforestation-med"|in_list:funded or "deforestation-low"|in_list:funded %}
+    <h2>Forestry</h2>
+{% endif %}
+
+{% if "timber-high"|in_list:funded or "timber-med"|in_list:funded or "timber-low"|in_list:funded %}
+<h3>Illegal Timber</h3>
+{% endif %}
+
+{% if "timber-high"|in_list:funded %}
+<table class="interventions" id='timber-high'>
+   <tr>
+    <th colspan=2>Major national reform of forestry sector, contracts, and management (e.g. concession review, training, monitoring, enforcement, and plan for institutional reform. Inter-agency initiative to support National Forest Reform Act)</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='timber-high-baseline' id='timber-high-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='timber-high-shorttarget' id='timber-high-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='timber-high-medtarget' id='timber-high-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='timber-high-longtarget' id='timber-high-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='timber-high-results' id='timber-high-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "timber-med"|in_list:funded %}
+<table class="interventions" id='timber-med'>
+   <tr>
+    <th colspan=2>Full review of existing system and plans for reform with limited actions (e.g. concession review: establish formal review process; monitor harvests; review international sanctions certification and transparency code)</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='timber-med-baseline' id='timber-med-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='timber-med-shorttarget' id='timber-med-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='timber-med-medtarget' id='timber-med-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='timber-med-longtarget' id='timber-med-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='timber-med-results' id='timber-med-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "timber-low"|in_list:funded %}
+<table class="interventions" id='timber-low'>
+   <tr>
+    <th colspan=2>Assessment and study of existing resources (e.g. monitoring harvest, review lumber permits, tax on exports)</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='timber-low-baseline' id='timber-low-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='timber-low-shorttarget' id='timber-low-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='timber-low-medtarget' id='timber-low-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='timber-low-longtarget' id='timber-low-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='timber-low-results' id='timber-low-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "deforestation-high"|in_list:funded or "deforestation-med"|in_list:funded or "deforestation-low"|in_list:funded %}
+<h3>Deforestation (Charcoal Production)</h3>
+{% endif %}
+
+{% if "deforestation-high"|in_list:funded %}
+<table class="interventions" id='deforestation-high'>
+   <tr>
+    <th colspan=2>Create national enforcement system, monitoring system, and design alternative energy options and incentives (e.g. regulation and enforcement of illegal harvest while subsidizing private timber plots on sustainable growth cycle)</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='deforestation-high-baseline' id='deforestation-high-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='deforestation-high-shorttarget' id='deforestation-high-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='deforestation-high-medtarget' id='deforestation-high-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='deforestation-high-longtarget' id='deforestation-high-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='deforestation-high-results' id='deforestation-high-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "deforestation-med"|in_list:funded %}
+<table class="interventions" id='deforestation-med'>
+   <tr>
+    <th colspan=2>Review existing regulations, initiate reforestation, monitoring system, and enable protection of key forested areas.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='deforestation-med-baseline' id='deforestation-med-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='deforestation-med-shorttarget' id='deforestation-med-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='deforestation-med-medtarget' id='deforestation-med-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='deforestation-med-longtarget' id='deforestation-med-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='deforestation-med-results' id='deforestation-med-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "deforestation-low"|in_list:funded %}
+<table class="interventions" id='deforestation-low'>
+   <tr>
+    <th colspan=2>Capacity-building for communities, monitoring system, and conservation forest management.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='deforestation-low-baseline' id='deforestation-low-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='deforestation-low-shorttarget' id='deforestation-low-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='deforestation-low-medtarget' id='deforestation-low-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='deforestation-low-longtarget' id='deforestation-low-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='deforestation-low-results' id='deforestation-low-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "tenure-high"|in_list:funded or "tenure-med"|in_list:funded or "tenure-low"|in_list:funded or "nomadic-high"|in_list:funded or "nomadic-med"|in_list:funded or "nomadic-low"|in_list:funded %}
+    <h2>Land Management</h2>
+{% endif %}
+
+{% if "tenure-high"|in_list:funded or "tenure-med"|in_list:funded or "tenure-low"|in_list:funded %}
+<h3>Land Tenure</h3>
+{% endif %}
+
+{% if "tenure-high"|in_list:funded %}
+<table class="interventions" id='tenure-high'>
+   <tr>
+    <th colspan=2>Full review of land ownership records, review legal system, and establish system of national arbitration courts for disputes (create a system of documentation and require new land leases).</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='tenure-high-baseline' id='tenure-high-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='tenure-high-shorttarget' id='tenure-high-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='tenure-high-medtarget' id='tenure-high-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='tenure-high-longtarget' id='tenure-high-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='tenure-high-results' id='tenure-high-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "tenure-med"|in_list:funded %}
+<table class="interventions" id='tenure-med'>
+   <tr>
+    <th colspan=2>Create new legal framework for future land ownership and establish arbitration courts for dispute settlement.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='tenure-med-baseline' id='tenure-med-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='tenure-med-shorttarget' id='tenure-med-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='tenure-med-medtarget' id='tenure-med-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='tenure-med-longtarget' id='tenure-med-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='tenure-med-results' id='tenure-med-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "tenure-low"|in_list:funded %}
+<table class="interventions" id='tenure-med'>
+   <tr>
+    <th colspan=2>Define user rights, control rights, transfer rights.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='tenure-low-baseline' id='tenure-low-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='tenure-low-shorttarget' id='tenure-low-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='tenure-low-medtarget' id='tenure-low-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='tenure-low-longtarget' id='tenure-low-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='tenure-low-results' id='tenure-low-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "nomadic-high"|in_list:funded or "nomadic-med"|in_list:funded or "nomadic-low"|in_list:funded %}
+<h3>Nomadic Rights</h3>
+{% endif %}
+
+{% if "nomadic-high"|in_list:funded %}
+<table class="interventions" id='nomadic-high'>
+   <tr>
+    <th colspan=2>Manage migration routes to protect and utilize environmental resources and mitigate conflict with settled communities using mapping and education programs.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='nomadic-high-baseline' id='nomadic-high-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='nomadic-high-shorttarget' id='nomadic-high-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='nomadic-high-medtarget' id='nomadic-high-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='nomadic-high-longtarget' id='nomadic-high-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='nomadic-high-results' id='nomadic-high-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "nomadic-med"|in_list:funded %}
+<table class="interventions" id='nomadic-med'>
+   <tr>
+    <th colspan=2>Protect existing migration routes and support community awareness programs to reduce conflicts.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='nomadic-med-baseline' id='nomadic-med-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='nomadic-med-shorttarget' id='nomadic-med-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='nomadic-med-medtarget' id='nomadic-med-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='nomadic-med-longtarget' id='nomadic-med-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='nomadic-med-results' id='nomadic-med-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "nomadic-low"|in_list:funded %}
+<table class="interventions" id='nomadic-low'>
+   <tr>
+    <th colspan=2>Land use study and relocation for improved land use practices.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='nomadic-low-baseline' id='nomadic-low-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='nomadic-low-shorttarget' id='nomadic-low-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='nomadic-low-medtarget' id='nomadic-low-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='nomadic-low-longtarget' id='nomadic-low-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='nomadic-low-results' id='nomadic-low-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "agriculture-high"|in_list:funded or "agriculture-med"|in_list:funded or "agriculture-low"|in_list:funded or "desertification-high"|in_list:funded or "desertification-med"|in_list:funded or "desertification-low"|in_list:funded %}
+    <h2>Agriculture</h2>
+{% endif %}
+
+{% if "agriculture-high"|in_list:funded or "agriculture-med"|in_list:funded or "agriculture-low"|in_list:funded %}
+<h3>Agricultural Practices</h3>
+{% endif %}
+
+{% if "agriculture-high"|in_list:funded %}
+<table class="interventions" id='agricultural-high'>
+   <tr>
+    <th colspan=2>Package of new policies that provide subsidized fertilizer, improved seeds, irrigation infrastructure, farm machinery, and agricultural extension services.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='agricultural-high-baseline' id='agricultural-high-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='agricultural-high-shorttarget' id='agricultural-high-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='agricultural-high-medtarget' id='agricultural-high-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='agricultural-high-longtarget' id='agricultural-high-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='agricultural-high-results' id='agricultural-high-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "agriculture-med"|in_list:funded %}
+<table class="interventions" id='agricultural-med'>
+   <tr>
+    <th colspan=2>Provision of improved seeds to East and Northern areas.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='agricultural-med-baseline' id='agricultural-med-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='agricultural-med-shorttarget' id='agricultural-med-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='agricultural-med-medtarget' id='agricultural-med-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='agricultural-med-longtarget' id='agricultural-med-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='agricultural-med-results' id='agricultural-med-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "agriculture-low"|in_list:funded %}
+<table class="interventions" id='agricultural-low'>
+   <tr>
+    <th colspan=2>Development of an agricultural plan.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='agricultural-low-baseline' id='agricultural-low-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='agricultural-low-shorttarget' id='agricultural-low-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='agricultural-low-medtarget' id='agricultural-low-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='agricultural-low-longtarget' id='agricultural-low-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='agricultural-low-results' id='agricultural-low-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "desertification-high"|in_list:funded or "desertification-med"|in_list:funded or "desertification-low"|in_list:funded %}
+<h3>Desertification</h3>
+{% endif %}
+
+{% if "desertification-high"|in_list:funded %}
+<table class="interventions" id='desertification-high'>
+   <tr>
+    <th colspan=2>Develop a Desertification National Action Plan in coordination with forecasting service and baseline studies.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='desertification-high-baseline' id='desertification-high-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='desertification-high-shorttarget' id='desertification-high-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='desertification-high-medtarget' id='desertification-high-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='desertification-high-longtarget' id='desertification-high-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='desertification-high-results' id='desertification-high-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "desertification-med"|in_list:funded %}
+<table class="interventions" id='desertification-med'>
+   <tr>
+    <th colspan=2>Establish a National Weather and Drought Forecasting service, update existing baseline studies.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='desertification-med-baseline' id='desertification-med-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='desertification-med-shorttarget' id='desertification-med-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='desertification-med-medtarget' id='desertification-med-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='desertification-med-longtarget' id='desertification-med-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='desertification-med-results' id='desertification-med-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "desertification-low"|in_list:funded %}
+<table class="interventions" id='desertification-low'>
+   <tr>
+    <th colspan=2>Study to update baseline studies and identify highly prone areas.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='desertification-low-baseline' id='desertification-low-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='desertification-low-shorttarget' id='desertification-low-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='desertification-low-medtarget' id='desertification-low-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='desertification-low-longtarget' id='desertification-low-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='desertification-low-results' id='desertification-low-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "habitat-high"|in_list:funded or "habitat-med"|in_list:funded or "habitat-low"|in_list:funded %}
+<h2>Wildlife and Biodiversity</h2>
+<h3>Habitation Protection</h3>
+{% endif %}
+
+{% if "habitat-high"|in_list:funded %}
+<table class="interventions" id='habitat-high'>
+   <tr>
+    <th colspan=2>Create a monitoring and evaluation system, designate protected areas, identify critical habitats, and coordinate management of these areas.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='habitat-high-baseline' id='habitat-high-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='habitat-high-shorttarget' id='habitat-high-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='habitat-high-medtarget' id='habitat-high-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='habitat-high-longtarget' id='habitat-high-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='habitat-high-results' id='habitat-high-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "habitat-med"|in_list:funded %}
+<table class="interventions" id='habitat-med'>
+   <tr>
+    <th colspan=2>Designate Protected Areas, design eco-tourism strategies, monitoring of critical areas.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='habitat-med-baseline' id='habitat-med-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='habitat-med-shorttarget' id='habitat-med-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='habitat-med-medtarget' id='habitat-med-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='habitat-med-longtarget' id='habitat-med-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='habitat-med-results' id='habitat-med-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+
+{% if "habitat-low"|in_list:funded %}
+<table class="interventions" id='habitat-low'>
+   <tr>
+    <th colspan=2>Provide ecosystem and wildlife assessments, select conservation targets.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='habitat-low-baseline' id='habitat-low-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='habitat-low-shorttarget' id='habitat-low-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='habitat-low-medtarget' id='habitat-low-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='habitat-low-longtarget' id='habitat-low-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='habitat-low-results' id='habitat-low-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "water-high"|in_list:funded or "water-med"|in_list:funded or "water-low"|in_list:funded %}
+<h2>Water Resources</h2>
+<h3>Integrated Water Resource Management</h3>
+{% endif %}
+
+{% if "water-high"|in_list:funded %}
+<table class="interventions" id='water-high'>
+   <tr>
+    <th colspan=2>Design and implement nation-wide water resource management plan (e.g. multi-objective decision support system, national policy reform, strengthen national regulatory bodies, economic pricing instruments, conflict resolution techniques and mechanisms).</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='water-high-baseline' id='water-high-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-high-shorttarget' id='water-high-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-high-medtarget' id='water-high-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-high-longtarget' id='water-high-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='water-high-results' id='water-high-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "water-med"|in_list:funded %}
+<table class="interventions" id='water-med'>
+   <tr>
+    <th colspan=2>Design nation-wide water resource management plan (e.g. mutli-objective decision support system, management and intervention plan including planning and coordination, water allocation, discharge regulation, monitoring, enforcement and information dissemination).</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='water-med-baseline' id='water-med-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-med-shorttarget' id='water-med-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-med-medtarget' id='water-med-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-med-longtarget' id='water-med-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='water-med-results' id='water-med-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "water-low"|in_list:funded %}
+<table class="interventions" id='water-low'>
+   <tr>
+    <th colspan=2>Water Resource Assessment: user requirements (demand) and water quantity (supply), risk and vulnerability assessment.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='water-low-baseline' id='water-low-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-low-shorttarget' id='water-low-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-low-medtarget' id='water-low-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='water-low-longtarget' id='water-low-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='water-low-results' id='water-low-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "capacity-high"|in_list:funded or "capacity-med"|in_list:funded or "capacity-low"|in_list:funded %}
+<h2>Environmental Institutions</h2>
+<h3>Capacity Building</h3>
+{% endif %}
+
+{% if "capacity-high"|in_list:funded %}
+<table class="interventions" id='capacity-high'>
+   <tr>
+    <th colspan=2>Capacity building in Environment Ministry, review existing environmental legal framework with recommendations for changes, build environmental information and monitoring system, training of environmental officials, increase staff of environment and resource agencies.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='capacity-high-baseline' id='capacity-high-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='capacity-high-shorttarget' id='capacity-high-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='capacity-high-medtarget' id='capacity-high-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='capacity-high-longtarget' id='capacity-high-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='capacity-high-results' id='capacity-high-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "capacity-med"|in_list:funded %}
+<table class="interventions" id='capacity-med'>
+   <tr>
+    <th colspan=2>Design environmental information monitoring system, training and capacity building within environment and resource agencies.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='capacity-med-baseline' id='capacity-med-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='capacity-med-shorttarget' id='capacity-med-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='capacity-med-medtarget' id='capacity-med-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='capacity-med-longtarget' id='capacity-med-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='capacity-med-results' id='capacity-med-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+{% if "capacity-low"|in_list:funded %}
+<table class="interventions" id='capacity-low'>
+   <tr>
+    <th colspan=2>Training and capacity building of existing Environmental Ministry and related agencies staff and create national environmental resource management strategic plan.</th>
+  </tr>
+  <tr>
+    <td>Baseline Description</td>
+    <td><textarea class="mceNoEditor" name='capacity-low-baseline' id='capacity-low-baseline'></textarea></td>
+  </tr>
+  <tr>
+    <td>Short-Term Target</td>
+    <td><textarea class="mceNoEditor" name='capacity-low-shorttarget' id='capacity-low-shorttarget'></textarea></td>
+  </tr>
+  <tr>
+    <td>Medium-Term Target</td>
+    <td><textarea class="mceNoEditor" name='capacity-low-medtarget' id='capacity-low-medtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Long-Term Target</td>
+    <td><textarea class="mceNoEditor" name='capacity-low-longtarget' id='capacity-low-longtarget'></textarea></td>
+  </tr>
+    <tr>
+    <td>Results/Outcomes</td>
+    <td><textarea class="mceNoEditor" name='capacity-low-results' id='capacity-low-results'></textarea></td>
+  </tr>
+</table>
+{% endif %}
+
+</div>
+
+
+{% endwith %}
+{% endblock %}

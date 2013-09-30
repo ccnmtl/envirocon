@@ -74,6 +74,7 @@ USE_I18N = False
 MEDIA_ROOT = "/var/www/envirocon/uploads/"
 MEDIA_URL = '/uploads/'
 STATIC_URL = '/media/'
+ADMIN_MEDIA_PREFIX = '/media/admin/'
 SECRET_KEY = ')ng#)ef_u@_^zvvu@dxm7ql-yb^_!a6%v3v^j3b(mp+)l+5%@h'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -85,12 +86,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',
     'django.core.context_processors.request',
     'stagingcontext.staging_processor',
-    'game.views.relative_root',
+    'envirocon.game.views.relative_root',
 )
 
 MIDDLEWARE_CLASSES = (
     'django_statsd.middleware.GraphiteRequestTimingMiddleware',
     'django_statsd.middleware.GraphiteMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

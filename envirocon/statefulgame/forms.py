@@ -14,17 +14,19 @@ class BasicAssignmentForm(forms.ModelForm):
         model = Assignment
         fields = ('close_date', 'open')
 
-    css = {'all': ['%s%s' % (settings.ADMIN_MEDIA_PREFIX, url) for url in
+    css = {'all': ['%s%s' % (settings.STATIC_URL, url) for url in
                   [  # 'css/base.css', #need modules stuff
-                   'css/forms.css',
+                   'admin/css/forms.css',
                    ]
                    ]
            }
-    js = ['%s%s' % (settings.ADMIN_MEDIA_PREFIX, url) for url in
-          ['js/core.js',
-           'js/admin/RelatedObjectLookups.js',
-           'js/getElementsBySelector.js',
-           'js/actions.js',
+    js = ['%s%s' % (settings.STATIC_URL, url) for url in
+          ['admin/js/jquery.js',
+           'admin/js/jquery.init.js',
+           'admin/js/core.js',
+           'admin/js/admin/RelatedObjectLookups.js',
+           'admin/js/getElementsBySelector.js',
+           'admin/js/actions.js',
            ]
           ]
 

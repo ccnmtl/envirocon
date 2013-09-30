@@ -8,7 +8,7 @@ import survey.urls
 import djangowind.urls
 
 
-site_media_root = os.path.join(os.path.dirname(__file__), "media")
+site_media_root = os.path.join(os.path.dirname(__file__), "../media")
 
 urlpatterns = patterns('',
                        (r'^logout$',
@@ -34,12 +34,12 @@ urlpatterns = patterns('',
                        (r'^teams/', include('envirocon.teams.urls')),
 
                        url(r'^new',
-                           'envirocon_main.views.new_envirocon_class',
+                           'envirocon.envirocon_main.views.new_envirocon_class',
                            name='new-envirocon-class'),
 
-                       (r'^about', 'envirocon_main.views.about'),
-                       (r'^help', 'envirocon_main.views.help'),
-                       (r'^contact', 'envirocon_main.views.contact'),
+                       (r'^about', 'envirocon.envirocon_main.views.about'),
+                       (r'^help', 'envirocon.envirocon_main.views.help'),
+                       (r'^contact', 'envirocon.envirocon_main.views.contact'),
 
-                       (r'', 'envirocon_main.views.home'),
+                       (r'', 'envirocon.envirocon_main.views.home'),
                        )

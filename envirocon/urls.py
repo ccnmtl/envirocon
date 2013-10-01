@@ -22,6 +22,8 @@ urlpatterns = patterns(
 
     (r'^survey/', include(survey.urls)),
 
+    (r'^smoketest/', include('smoketest.urls')),
+
     (r'^site_media/(?P<path>.*)$',
      'django.views.static.serve',
      {'document_root': site_media_root}),

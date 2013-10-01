@@ -1,3 +1,4 @@
+# flake8: noqa
 from django.core.servers.basehttp import FileWrapper
 from django.http import HttpResponse, Http404
 import os.path
@@ -150,8 +151,9 @@ class TrackingYourProjects(GameInterface):
 
     def template(self, page_id=None, public_state=None):
         funded = {}
-        if public_state['resources_by_app'].has_key('tracking_your_projects'):
-            if public_state['resources_by_app']['tracking_your_projects'].has_key('funded'):
+        if 'tracking_your_projects' in public_state['resources_by_app']:
+            if 'funded' in public_state[
+                    'resources_by_app']['tracking_your_projects']:
                 funded = public_state['resources_by_app'][
                     'tracking_your_projects']['funded']['value']
         game_context = {'funded': funded}
@@ -163,7 +165,7 @@ class TrackingYourProjects(GameInterface):
         return ['tracking_your_projects']
 
     def resources(self, game_state, onopen=False, onclosed=False):
-        if onopen and game_state.has_key('funding_interventions'):
+        if onopen and 'funding_interventions' in game_state:
             funded = game_state['funding_interventions']
             return [{"page_id": 'funded',
                      "type": 'data',
@@ -237,11 +239,13 @@ class DonorsConference(GameInterface):
     def template(self, page_id=None, public_state=None):
         points = 0
         ineligible = {}
-        if public_state['resources_by_app'].has_key('donors_conference'):
-            if public_state['resources_by_app']['donors_conference'].has_key('week4points'):
+        if 'donors_conference' in public_state['resources_by_app']:
+            if 'week4points' in public_state[
+                    'resources_by_app']['donors_conference']:
                 points = public_state['resources_by_app'][
                     'donors_conference']['week4points']['value']
-            if public_state['resources_by_app']['donors_conference'].has_key('ineligible'):
+            if 'ineligible' in public_state[
+                    'resources_by_app']['donors_conference']:
                 ineligible = public_state['resources_by_app'][
                     'donors_conference']['ineligible']['value']
 
@@ -273,7 +277,7 @@ class DonorsConference(GameInterface):
         return ['donors_conference']
 
     def resources(self, game_state, onopen=False, onclosed=False):
-        if onopen and game_state.has_key('funding_interventions'):
+        if onopen and 'funding_interventions' in game_state:
             funded = game_state['funding_interventions']
 
             # certain interventions, if funded in week 4, are ineligible to be
@@ -372,10 +376,10 @@ class FinalPaper(GameInterface):
         return ['final_paper']
 
     def resources(self, game_state, onopen=False, onclosed=False):
-        if onopen and game_state.has_key('donors_conference'):
+        if onopen and 'donors_conference' in game_state:
             # week 4 points carry over
             week4points = 0
-            if game_state.has_key('funding_interventions'):
+            if 'funding_interventions' in game_state:
                 week4points = funding_points(
                     game_state['funding_interventions'])
             week6points = funding_points(game_state['donors_conference'], 6)

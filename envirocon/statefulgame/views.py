@@ -1,6 +1,5 @@
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.core.urlresolvers import reverse
-from django.db import models
 from django.forms.models import inlineformset_factory
 from django.http import HttpResponse, Http404, HttpResponseForbidden, \
     HttpResponseRedirect
@@ -8,18 +7,19 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from envirocon.game.views import game
 from envirocon.statefulgame.forms import BasicAssignmentForm
-from envirocon.statefulgame.models import *
+from envirocon.statefulgame.models import Assignment, Shock, Turn, \
+    SubmissionBackup, Submission, Game, State
+from envirocon.teams.models import Team
 import csv
 import re
 import simplejson as json
 
 
-Team = models.get_model('teams', 'team')
-
-
-def assignment_page(request, assignment_id, faculty_view=None, user_id=None, page_id=None):
+def assignment_page(request, assignment_id, faculty_view=None,
+                    user_id=None, page_id=None):
     assignment = get_object_or_404(
-        Assignment, pk=assignment_id, game__course=getattr(request, "course", None))
+        Assignment, pk=assignment_id,
+        game__course=getattr(request, "course", None))
     assignment.auto_close()
     # we can assume request.course from now on
     user = request.user
@@ -39,16 +39,17 @@ def assignment_page(request, assignment_id, faculty_view=None, user_id=None, pag
         raise Http404
 
     if not team.state.resource_access(assignment, page_id, user):
-        return HttpResponseForbidden('You do not have access to this activity resource at this time.')
+        return HttpResponseForbidden(
+            'You do not have access to this activity resource at this time.')
     turn = assignment.turn(team)
     if turn:
         if not faculty_info and not turn.visible:
             return HttpResponseForbidden()
-        world = team.state.world_slice(assignment.gamepublic_variables())
+        team.state.world_slice(assignment.gamepublic_variables())
         resources = team.state.resources(user)
         resources_by_app = {}
         for act_meta in resources:  # all resources
-            if not resources_by_app.has_key(act_meta['a'].app):
+            if not act_meta['a'].app in resources_by_app:
                 resources_by_app[act_meta['a'].app] = OrderedDict()
             for r in act_meta['res']:  # each resource
                 resources_by_app[act_meta['a'].app][r['page_id']] = r
@@ -74,7 +75,8 @@ def assignment_page(request, assignment_id, faculty_view=None, user_id=None, pag
 
 def assignment_video(request, assignment_id):
     assignment = get_object_or_404(
-        Assignment, pk=assignment_id, game__course=getattr(request, "course", None))
+        Assignment, pk=assignment_id,
+        game__course=getattr(request, "course", None))
 
     user = request.user
 
@@ -185,7 +187,7 @@ def get_assignment_data(request, turn_id, user_id):
     if is_faculty:
         protected_data = turn.assignment.gameconsequences(data)
 
-    if request.GET.has_key("jsonp"):
+    if "jsonp" in request.GET:
         return HttpResponse("%s(%s,%s)" % (request.GET["jsonp"],
                                            serialized_data,
                                            json.dumps(protected_data)))
@@ -196,7 +198,7 @@ def de_html(maybe_string):
     if not isinstance(maybe_string, unicode):
         return maybe_string  # not string
     # avoiding entities, we could probably use a library for fancier stuff
-    #remove tags naively
+    # remove tags naively
     return re.sub('<[/\w][^>]*>', '', maybe_string).encode("utf-8")
 
 # helper function for get_assignment_csv
@@ -229,8 +231,8 @@ def get_assignment_csv(request, assignment_id):
     course = request.course
 
     response = HttpResponse(mimetype='text/csv')
-    response[
-        'Content-Disposition'] = 'attachment; filename="%s.csv"' % assignment.name
+    response['Content-Disposition'] = \
+        'attachment; filename="%s.csv"' % assignment.name
     writer = csv.writer(response)  # ,quoting=csv.QUOTE_NONNUMERIC)
 
     headers = []
@@ -327,7 +329,8 @@ def current_turn(request):
     turn = team.state.current_turn()
 
     if turn:
-        return HttpResponseRedirect(reverse("assignment-page", args=[turn.assignment.id]))
+        return HttpResponseRedirect(reverse("assignment-page",
+                                            args=[turn.assignment.id]))
     else:
         return HttpResponseRedirect('/?message=no+activity+ready')
 
@@ -383,13 +386,10 @@ def team_view_data(request, teams=None, game=None):
     """
     just_advanced = False
     is_faculty = (request.user in request.course.faculty)
-    assignment_forms = None
-    team = None
     AssignmentFormSet = inlineformset_factory(Game, Assignment,
                                               can_delete=False,
                                               form=BasicAssignmentForm,
-                                              extra=0,
-                                              )
+                                              extra=0)
 
     if game is None:
         games = request.course.game_set.all()
@@ -432,10 +432,10 @@ def team_view_data(request, teams=None, game=None):
                 if turn == tm.state.turn and turn.open:
                     d['current'] = True
                 d['my_submission'] = d['data'].submission(team, request.user)
-            d['teams'].append({'turn': turn,
-                               'data': tm,
-                               'sub': d['data'].submission(tm, request.user, is_faculty)
-                               })
+            d['teams'].append({
+                'turn': turn,
+                'data': tm,
+                'sub': d['data'].submission(tm, request.user, is_faculty)})
     return {'teams': teams,
             'assignments': assignments,
             'is_faculty': is_faculty,
@@ -472,13 +472,12 @@ def split_team(request):
                 for sub in old_turn.submission_set.all():
                     sub.id = None
                     sub.turn = new_turn
-                    author = splitter
                     sub.save(force_insert=True)
 
         new_state = State.objects.get(team=new_team)
         new_state.world_state = old_team.state.world_state
-        new_state.turn = Turn.objects.get(team=new_team,
-                                          assignment=old_team.state.turn.assignment)
+        new_state.turn = Turn.objects.get(
+            team=new_team, assignment=old_team.state.turn.assignment)
         new_state.save()
         return HttpResponseRedirect('/')
     else:
@@ -501,7 +500,8 @@ def set_turn(request):
             game__course=request.course)
         turn = assignment.turn(team)
         # no has_key here because shock_id could equal ''
-        if request.POST.get('shock_id', False) or request.POST.has_key('shock_name'):
+        if (request.POST.get('shock_id', False) or
+                'shock_name' in request.POST):
             if request.POST.get('shock_id', False):
                 if request.POST['shock_id'] == 'none':
                     shock = None
@@ -510,7 +510,8 @@ def set_turn(request):
                         Shock, pk=request.POST['shock_id'])
             else:
                 shock = Shock.objects.create(
-                    name=request.POST['shock_name'], outcome=request.POST['shock_outcome'])
+                    name=request.POST['shock_name'],
+                    outcome=request.POST['shock_outcome'])
             turn.shock = shock
             turn.save()
             return HttpResponse(shock)
@@ -519,9 +520,10 @@ def set_turn(request):
             team.state.save()
             # would auto-advance, so make them drafts
             if turn.complete() and turn.next() and turn.next().assignment.open:
-                # we do it to all subs, so if we push back to an individual assn
-                # all the team members are equally fsck'd
-                for sub in Submission.objects.filter(turn=turn, archival=False):
+                # we do it to all subs, so if we push back to an
+                # individual assn all the team members are equally fsck'd
+                subs = Submission.objects.filter(turn=turn, archival=False)
+                for sub in subs:
                     sub.published = False
                     sub.save()
 

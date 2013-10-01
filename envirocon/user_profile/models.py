@@ -18,7 +18,7 @@ class UserProfile(models.Model):
     def save(self, *args, **kwargs):
         # will raise ValueError
         json.loads(self.profile_info)
-        if kwargs.has_key('profile_info'):
+        if 'profile_info' in kwargs:
             json.loads(kwargs['profile_info'])
 
         super(UserProfile, self).save(*args, **kwargs)

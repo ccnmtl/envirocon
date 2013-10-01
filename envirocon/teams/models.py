@@ -50,8 +50,8 @@ class Team(models.Model):
         # TODO: to avoid team removal (without group removal)
         # try name for group and catch it with something alt name
         if self.group_id is None:
-            group_name = ['Team %d: ' %
-                          (Team.objects.filter(course=self.course_id).count() + 1)]
+            group_name = ['Team %d: ' % (Team.objects.filter(
+                course=self.course_id).count() + 1)]
             if self.course_id:
                 group_name.append(self.course.title)
             if self.name:

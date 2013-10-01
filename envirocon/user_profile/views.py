@@ -12,7 +12,7 @@ def profile(request, user_id=None):
     if request.method == 'POST' \
         and not user.is_anonymous() \
             and user.has_perm('user_profile.edit_own_profile'):
-        if request.POST.has_key('profile_info'):
+        if 'profile_info' in request.POST:
             profile_info = request.POST.get('profile_info', '{}')
 
             profile = UserProfile.object.get(user=user)
@@ -25,11 +25,11 @@ def profile(request, user_id=None):
                 profile.save()
 
         user_info = {}  # saved on User record
-        if request.POST.has_key('first_name'):
+        if 'first_name' in request.POST:
             user_info['first_name'] = request.POST['first_name']
-        if request.POST.has_key('last_name'):
+        if 'last_name' in request.POST:
             user_info['last_name'] = request.POST['last_name']
-        if request.POST.has_key('email'):
+        if 'email' in request.POST:
             user_info['email'] = request.POST['email']
 
         if user_info:
@@ -37,7 +37,8 @@ def profile(request, user_id=None):
 
     else:
         template = 'user_profile.profile.html'
-        if user_id == request.user.id or request.user.has_perm('user_profile.view_other_profiles'):
+        if (user_id == request.user.id or
+                request.user.has_perm('user_profile.view_other_profiles')):
             if user_id == request.user.id:
                 template = 'user_profile.profileform.html'
             if user_id:

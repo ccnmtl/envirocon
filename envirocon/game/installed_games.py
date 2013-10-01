@@ -1,7 +1,5 @@
 import re
-import os.path
 import sys
-from django.conf import settings
 
 
 class GameInterface:
@@ -16,16 +14,17 @@ class GameInterface:
         """return a tuple of template_name and game_context which will be
         available for the template.
         If you return "file" as the template then game_context
-        should be a full http response which can be served directly to the client
-        @param public_state is a dict with keys listed in public_variables
-        if they have been set (by other apps)
+        should be a full http response which can be served directly to the
+        client @param public_state is a dict with keys listed in
+        public_variables if they have been set (by other apps)
         """
         game_context = {'page_id': page_id}
         return ('game/game.html', game_context)
 
     def variables(self, page_id=None):
-        """return a list of strings to declare the variables you will store/retrieve
-        If your variable name conflicts with another game, you will share state
+        """return a list of strings to declare the variables you will
+        store/retrieve. If your variable name conflicts with another game,
+        you will share state
         """
         return []
 
@@ -55,7 +54,8 @@ class GameInterface:
     def consequences(self, game_state):
         """documentation of data objects that result from this turn.
         This will probably call other games' resources() values.
-        This is fed to faculty views to spot-check/debug the proper consequences
+        This is fed to faculty views to spot-check/debug the proper
+        consequences
         """
         return False
 
@@ -72,7 +72,7 @@ class InstalledGamesLazySingleton:
 
         for p in game_obj.pages():
             if re.findall('\W', p):
-                raise "Game pages must have only word (web friendly) characters."
+                raise "Game pages must have only web-friendly characters."
 
     def __iter__(self):
         return iter(self.GAME_NAMES.items())
@@ -85,7 +85,8 @@ class InstalledGamesLazySingleton:
         return self.GAME_OBJECTS[game_code].pages()
 
     def template(self, game_code, page_id, public_state=None):
-        return self.GAME_OBJECTS[game_code].template(page_id, public_state=public_state)
+        return self.GAME_OBJECTS[game_code].template(page_id,
+                                                     public_state=public_state)
 
     def variables(self, game_code, page_id=None):
         return self.GAME_OBJECTS[game_code].variables(page_id)
@@ -94,7 +95,8 @@ class InstalledGamesLazySingleton:
         return self.GAME_OBJECTS[game_code].public_variables()
 
     def resources(self, game_code, game_state, onopen=False, onclosed=False):
-        return self.GAME_OBJECTS[game_code].resources(game_state, onopen, onclosed)
+        return self.GAME_OBJECTS[game_code].resources(game_state,
+                                                      onopen, onclosed)
 
     def consequences(self, game_code, game_state):
         return self.GAME_OBJECTS[game_code].consequences(game_state)

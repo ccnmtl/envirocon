@@ -16,13 +16,12 @@ Answer = models.get_model('survey', 'answer')
 
 def addteam(request, course_id=None):
     # TODO: test for addteam permission or faculty
-    tms = tuple()
     if request.method == "POST":
         if course_id is None:
             course_id = request.course.id
         count = int(request.POST.get('count', 1))
-        tms = [Team.objects.create(course_id=course_id)
-               for i in range(count)]
+        for i in range(count):
+            Team.objects.create(course_id=course_id)
 
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 

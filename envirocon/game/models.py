@@ -39,7 +39,8 @@ class Activity(models.Model):
         return InstalledGames.template(self.app, page_id, public_state)
 
     def gameresources(self, game_state, onopen=False, onclosed=False):
-        return InstalledGames.resources(self.app, game_state, onopen=onopen, onclosed=onclosed)
+        return InstalledGames.resources(self.app, game_state,
+                                        onopen=onopen, onclosed=onclosed)
 
     def gamevideo(self):
         try:

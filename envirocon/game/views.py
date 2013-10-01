@@ -50,7 +50,7 @@ def game(request, activity, page_id=None, extra_world_state=None):
 
     t = loader.get_template(template)
     c = RequestContext(request, {
-        'game':  activity,
+        'game': activity,
         'game_context': game_context,
         'world_state': world_state,
         # probably should query this from urls or something

@@ -1,10 +1,8 @@
 from django import forms
-from django.db import models
+from django.conf import settings
 from django.contrib.admin.widgets import AdminSplitDateTime
 from django.core.urlresolvers import reverse
-from django.conf import settings
-
-from envirocon.statefulgame.models import *
+from envirocon.statefulgame.models import Assignment
 
 
 class BasicAssignmentForm(forms.ModelForm):

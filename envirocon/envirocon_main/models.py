@@ -15,7 +15,8 @@ QuestionChoices = models.get_model('survey', 'choices')
 
 class GroundWorkClass:
 
-    def __init__(self, title='Another Test Class', creator=None, copy_survey=False):
+    def __init__(self, title='Another Test Class',
+                 creator=None, copy_survey=False):
 
         self.faculty_group = Group.objects.create(name=title + ' Faculty')
         self.course_group = Group.objects.create(name=title + ' Students')
@@ -39,50 +40,50 @@ class GroundWorkClass:
 
         self.game = Game.objects.create(course=self.course)
         # activity1,2,3,4,5,6...
-        self.faculty_team = Team(course=self.course,
-                                 group=self.faculty_group,
-                                 name='Team 1: Faculty of %s' % self.course.title
-                                 )
+        self.faculty_team = Team(
+            course=self.course,
+            group=self.faculty_group,
+            name='Team 1: Faculty of %s' % self.course.title)
         self.faculty_team.save()
 
         for a in activities:
-            ass = Assignment.objects.create(app=a['app'],
-                                            name=a['name'],
-                                            game=self.game,
-                                            individual=a['individual'],
-                                            open=False,
-                                            close_date=self.next_month(),
-                                            )
+            Assignment.objects.create(app=a['app'],
+                                      name=a['name'],
+                                      game=self.game,
+                                      individual=a['individual'],
+                                      open=False,
+                                      close_date=self.next_month())
 
     def next_month(self):
         d = datetime.datetime.today()
         # month value is 1..12
-        return datetime.datetime(d.year + (d.month + 1) / 12, ((d.month + 1) % 12) + 1, d.day)
+        return datetime.datetime(d.year + (d.month + 1) / 12,
+                                 ((d.month + 1) % 12) + 1, d.day)
 
     def copy_survey(self, orig=None):
         if orig is None:
             orig = Survey.objects.all()[0]
         if orig:
-            self.survey = Survey(title=orig.title,
-                                 slug='survey' + str(self.course.pk),
-                                 description=orig.description,
-                                 opens=datetime.datetime.today(),
-                                 closes=self.next_month(),
-                                 visible=True,
-                                 public=False,
-                                 restricted=True,
-                                 allows_multiple_interviews=orig.allows_multiple_interviews,
-                                 created_by=self.creator,
-                                 editable_by=self.creator,
-                                 recipient_type=orig.recipient_type,
-                                 recipient_id=self.course.id,
-                                 )
+            self.survey = Survey(
+                title=orig.title,
+                slug='survey' + str(self.course.pk),
+                description=orig.description,
+                opens=datetime.datetime.today(),
+                closes=self.next_month(),
+                visible=True,
+                public=False,
+                restricted=True,
+                allows_multiple_interviews=orig.allows_multiple_interviews,
+                created_by=self.creator,
+                editable_by=self.creator,
+                recipient_type=orig.recipient_type,
+                recipient_id=self.course.id)
             self.survey.save()
             for q in orig.questions.all():
                 choices = q.choices.all()
                 q.survey = self.survey
                 q.id = None
-                x = q.save(force_insert=True)
+                q.save(force_insert=True)
                 for c in choices:
                     c.question = q
                     c.id = None

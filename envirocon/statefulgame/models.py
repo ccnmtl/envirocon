@@ -40,9 +40,11 @@ class Assignment(Activity):
 
     def submission(self, team, user=None, allUsers=False):
         if not self.individual or allUsers:
-            return Submission.objects.filter(turn__assignment=self, turn__team=team)
+            return Submission.objects.filter(turn__assignment=self,
+                                             turn__team=team)
         elif user:
-            return Submission.objects.filter(turn__assignment=self, turn__team=team, author=user)
+            return Submission.objects.filter(turn__assignment=self,
+                                             turn__team=team, author=user)
         else:
             return None
 
@@ -62,14 +64,17 @@ class Assignment(Activity):
         return turn
 
     def auto_close(self):
-        if self.open and not self.auto_closed and self.close_date < datetime.datetime.now():
+        if (self.open and
+            not self.auto_closed and
+                self.close_date < datetime.datetime.now()):
             self.open = False
             self.auto_closed = True
             self.save()
             # auto-publish -- we need this so they're seen as 'complete'
             # and thus reviewable/visible
             for sub in Submission.objects.filter(turn__assignment=self,
-                                                 published=False, archival=False):
+                                                 published=False,
+                                                 archival=False):
                 sub.published = True
                 sub.save()
             return True
@@ -92,13 +97,11 @@ class TurnManager(models.Manager):
         try:
             return super(TurnManager, self).get(*args, **kwargs)
         except Turn.DoesNotExist:
-            if kwargs.has_key('team') and kwargs.has_key('assignment'):
+            if 'team' in kwargs and 'assignment' in kwargs:
                 return Turn.objects.create(team=kwargs['team'],
                                            assignment=kwargs['assignment'])
             else:
                 raise  # re-raise it
-
-# breadcrumb - formerly ActivityTeamNode
 
 
 class Turn(models.Model):
@@ -135,7 +138,8 @@ class Turn(models.Model):
 
     def complete(self):
         subs = [
-            s.author.id for s in Submission.objects.filter(turn=self, published=True)]
+            s.author.id for s in Submission.objects.filter(turn=self,
+                                                           published=True)]
         if not subs:
             return False
         if self.assignment.individual:
@@ -160,7 +164,7 @@ class StateManager(models.Manager):
             return super(StateManager, self).get(*args, **kwargs)
         except State.DoesNotExist:
             team = kwargs.get('team', None)
-            if not team and kwargs.has_key('team__pk'):
+            if not team and 'team__pk' in kwargs:
                 team = Team.objects.get(pk=kwargs['team__pk'])
 
             if team:
@@ -198,13 +202,15 @@ class State(models.Model):
     def world_slice(self, vars=None):
         try:
             world = json.loads(self.world_state)
-            return dict([(k, v) for k, v in world.setdefault('app_vars', {}).items()
+            return dict([(k, v)
+                         for k, v in world.setdefault('app_vars', {}).items()
                          if vars is None or k in vars])
         except:
             return {}
 
     def save_world(self, world):
-        """OK, saving is a bit dump here, but--I really wanted this method name :-)"""
+        """OK, saving is a bit dump here, but--
+        I really wanted this method name :-)"""
         self.world_state = json.dumps(world)
         self.save()
 
@@ -220,7 +226,9 @@ class State(models.Model):
                 return False
         else:
             next_t = self.turn.next()
-            if not next_t or not next_t.assignment.open or not self.turn.complete():
+            if (not next_t or
+                not next_t.assignment.open or
+                    not self.turn.complete()):
                 return False
             next_a = next_t.assignment
         self.turn = next_a.turn(self.team)
@@ -255,12 +263,10 @@ class State(models.Model):
                 onclosed = self.turn.open
                 # note: last game can never have an
                 # exposed onclosed resource.
-        return activity.gameresources(world_state,
-                                      onopen=(
-                                          turn.assignment.id in self.visible_assignments(
-                                          )),
-                                      onclosed=onclosed
-                                      ) or []
+        return activity.gameresources(
+            world_state,
+            onopen=(turn.assignment.id in self.visible_assignments()),
+            onclosed=onclosed) or []
 
     def resource_access(self, activity, page_id, user=None):
         if not page_id or page_id in activity.gamepages():
@@ -282,13 +288,11 @@ class State(models.Model):
             for a in game.assignment_set.all():
                 turn = a.turn(self.team)
                 sub = a.submission(self.team, user)
-                res.append({'a': a,
-                            'complete': True if len(sub) > 0 and sub[0].published else False,
-                            'res': self.activity_resources(a, turn, sub, world_state),
-                            })
+                res.append({
+                    'a': a,
+                    'complete': len(sub) > 0 and sub[0].published,
+                    'res': self.activity_resources(a, turn, sub, world_state)})
         return res
-
-# breadcrumb
 
 
 class Submission(models.Model):
@@ -309,7 +313,8 @@ class Submission(models.Model):
             next_turn = self.turn.next()
             if sh and next_turn:
                 shock_name = "%s %s" % (self.turn.team.name, self.turn.pk)
-                if not next_turn.shock_id or next_turn.shock.name != shock_name:
+                if (not next_turn.shock_id or
+                        next_turn.shock.name != shock_name):
                     next_turn.shock = Shock.objects.create(
                         name=shock_name, outcome=sh)
                     next_turn.save()
@@ -319,7 +324,9 @@ class Submission(models.Model):
         return rv
 
     def __unicode__(self):
-        return u'Submission:' + unicode(self.turn.team) + ':' + unicode(self.turn.assignment)
+        return (u'Submission:' +
+                unicode(self.turn.team) + ':' +
+                unicode(self.turn.assignment))
 
 
 class SubmissionBackup(models.Model):

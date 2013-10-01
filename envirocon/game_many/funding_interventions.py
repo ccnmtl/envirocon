@@ -1,3 +1,4 @@
+# flake8: noqa
 autoshocks = {
     'funding_interventions': {
         1: {'choices': set(['water-supply-low', 'sanitation-low', 'waste-low']),

@@ -62,7 +62,7 @@ class ObtainAdditionalInformation(GameInterface):
         return ['additional_information']
 
     def resources(self, game_state, onopen=False, onclosed=False):
-        if onclosed and game_state.has_key('additional_information'):
+        if onclosed and 'additional_information' in game_state:
             return [{'page_id': report,
                      'type': 'file',
                      'title': '%s.pdf' % pdfs[report][1]}

@@ -49,7 +49,7 @@ def assignment_page(request, assignment_id, faculty_view=None,
         resources = team.state.resources(user)
         resources_by_app = {}
         for act_meta in resources:  # all resources
-            if not resources_by_app.has_key(act_meta['a'].app):
+            if not act_meta['a'].app in resources_by_app:
                 resources_by_app[act_meta['a'].app] = OrderedDict()
             for r in act_meta['res']:  # each resource
                 resources_by_app[act_meta['a'].app][r['page_id']] = r

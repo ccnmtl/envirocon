@@ -42,7 +42,7 @@ class GameInterface:
         """return a list of dicts may not be listed in pages()
         which are global resources for general availability at
         onset of starting the game or at the close of the game
-        
+
         @param game_state: a dict() of the variables saved in
         other applications that the apps put in public_variables()
 

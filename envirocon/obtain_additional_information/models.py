@@ -33,13 +33,13 @@ class ObtainAdditionalInformation(GameInterface):
             return ('obtain_additional_information/index.html', game_context)
         if page_id in pdfs:
             path = InstalledGames.absolute_path(
-                "obtain_additional_information",
+                "envirocon.obtain_additional_information",
                 pdfs[page_id][0])
-            file = open(path, "rb")
+            file_handle = open(path, "rb")
             response = HttpResponse(mimetype='application/pdf')
-            response[
-                'Content-Disposition'] = 'attachment; filename=country_%s.pdf' % page_id
-            response.write(file.read())
+            response['Content-Disposition'] = \
+                'attachment; filename=country_%s.pdf' % page_id
+            response.write(file_handle.read())
 
             return ('file', response)
 

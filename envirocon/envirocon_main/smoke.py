@@ -1,8 +1,8 @@
-from envirocon.envirocon_main.models import GroundWorkClass
+from courseaffils.models import Course
 from smoketest import SmokeTest
 
 
 class DBConnectivity(SmokeTest):
     def test_retrieve(self):
-        cnt = GroundWorkClass.objects.all().count()
+        cnt = Course.objects.all().count()
         self.assertTrue(cnt > 0)

@@ -19,4 +19,4 @@ class SimpleViewTest(TestCase):
         # or fail, we just want to make sure that the
         # smoketests themselves don't have an error
         response = self.c.get("/smoketest/")
-        self.assertEquals(response.status_code, 302)
+        self.assertEquals(response.status_code, 200)

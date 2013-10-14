@@ -13,7 +13,6 @@ simplejson==2.0.9
 smartypants==1.6.0.2
 uuid==1.30
 psycopg2==2.5.1
-Pillow==1.7.8
 nose==1.1.2
 coverage==3.5.3
 statsd==0.5.1
@@ -27,7 +26,6 @@ flake8==1.7.0
 
 django-smartif==0.1
 djangowind==0.11.0
-sorl==3.1
 django-survey-patched==0.0.1
 tagging==0.3-pre
 template_utils==0.4p2

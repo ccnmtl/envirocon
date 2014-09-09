@@ -13,7 +13,7 @@
   {% ifequal resource.a.app "obtain_additional_information" %}
     {% for file in resource.res %}
       {% ifequal file.type "file" %}
-        <li class="probably-pdf"><a href="{%url assignment-page resource.a.id file.page_id %}">{{ file.title }}</a></li>
+        <li class="probably-pdf"><a href="{%url 'assignment-page' resource.a.id file.page_id %}">{{ file.title }}</a></li>
       {% endifequal %}
     {% endfor %}
   {% endifequal %}

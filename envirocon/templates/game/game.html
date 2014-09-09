@@ -16,7 +16,7 @@
           GameSystem.windowloaded = true;
           
           if (!GameSystem.loaded) {
-              var getAssignmentUrl = '{%url get-assignment world_state.turn_id world_state.user_id %}';
+              var getAssignmentUrl = '{%url "get-assignment" world_state.turn_id world_state.user_id %}';
               deferred = loadJSONDoc(getAssignmentUrl)
               deferred.addCallbacks(function(doc) {
                   GameSystem.loadState(doc, false);
@@ -52,7 +52,7 @@
 
 {% block breadcrumbs %}
     {%if game %}
-      <li><a href="{% url game-page game.app game.page_id %}">{{game.gamename}}</a></li>
+      <li><a href="{% url 'game-page' game.app game.page_id %}">{{game.gamename}}</a></li>
     {%endif%}  
 {% endblock %}
 
@@ -67,7 +67,7 @@
 	 <h2>
 	   {%ifnotequal world_state.team otherteam.r %}
 	     {%if otherteam.r.group.user_set.all.0 %}
-	     <a href="{%url assignment-page assignment_id=world_state.assignment.id,faculty_view="/instructor/",user_id=otherteam.r.group.user_set.all.0.id %}">
+	     <a href="{%url 'assignment-page' assignment_id=world_state.assignment.id faculty_view="/instructor/" user_id=otherteam.r.group.user_set.all.0.id %}">
 	     {%else%}
 	     <em class="nomembers"><span class="teamname">
 	     {%endif%}
@@ -91,7 +91,7 @@
 	 {%for member in world_state.team.group.user_set.all %}
 	 <li>
 	   {%ifnotequal member.id world_state.user_id %}
-	   <a href="{%url assignment-page assignment_id=world_state.assignment.id,faculty_view="/instructor/",user_id=member.id %}">
+	   <a href="{%url 'assignment-page' assignment_id=world_state.assignment.id faculty_view="/instructor/" user_id=member.id %}">
 	   {%else%}<b>{%endifnotequal%}
 	   {{member.get_full_name|default:member.username}}
 	   {%ifnotequal member.id world_state.user_id %}
@@ -106,7 +106,7 @@
        {%if next_turn %}
        <h1>Add outcome for team</h1>
        <div>
-	 <form id="shockform" name="shockform" method="POST" action="{%url set-shock %}">
+	 <form id="shockform" name="shockform" method="POST" action="{%url 'set-shock' %}">
 	   <input type="hidden" name="assignment_id" value="{{next_turn.assignment.id}}" />
 	   <input type="hidden" name="team_id" value="{{world_state.team.id}}" />
 
@@ -283,7 +283,7 @@
                 {% if activity.res.0.type == "file" %}
     	           {% for res in activity.res %}
     	               {% ifequal res.type "file" %}
-    	                   <li><a href="{%url assignment-page activity.a.id res.page_id %}">{{res.title|default:"File"}}</a></li>
+    	                   <li><a href="{%url 'assignment-page' activity.a.id res.page_id %}">{{res.title|default:"File"}}</a></li>
     	               {%endifequal %}
     	           {%endfor%}
                 {% endif %}
@@ -342,7 +342,7 @@
 
 {% block form-instructions %}<p>Write or paste your answer in the box below.</p>{% endblock %}
      
-    <form action="{%url save-assignment %}" method="POST" id="assignment-form"><div id='form-block'>
+    <form action="{%url 'save-assignment' %}" method="POST" id="assignment-form"><div id='form-block'>
 
   {% block form-inputs %}
        <textarea rows=17 cols=58 name="data"

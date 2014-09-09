@@ -1,12 +1,13 @@
-from django.conf.urls.defaults import patterns, include, url
-from django.contrib import admin
-from django.conf import settings
 import os.path
-admin.autodiscover()
 
-import survey.urls
+from django.conf import settings
+from django.conf.urls import patterns, include, url
+from django.contrib import admin
 import djangowind.urls
+import survey.urls
 
+
+admin.autodiscover()
 
 site_media_root = os.path.join(os.path.dirname(__file__), "../media")
 

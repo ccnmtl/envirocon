@@ -36,10 +36,10 @@
 
     <p>
       <form name="team-addmember" method="POST" 
-	    action='{%url team-addmember user_id="user_id" %}'>
+	    action='{%url "team-addmember" user_id="user_id" %}'>
 	<!--empty on purpose!!! -->
       </form>
-      <form method="POST" action="{%url team-create course_id=course.id %}">
+      <form method="POST" action="{%url 'team-create' course_id=course.id %}">
 	<select name="count">
 	  <option value="1">1</option>
 	  <option value="2">2</option>
@@ -149,7 +149,7 @@
       {% for t in teams %}
         <div id="team-delete-{{t.id}}">
 	  <form method="POST" 
-		action="{%url team-delete t.id %}"
+		action="{%url 'team-delete' t.id %}"
 		onsubmit="return confirm('Are you sure?')"
 		>
 	    <input type="submit" value="Delete Team {{t.index}}" />

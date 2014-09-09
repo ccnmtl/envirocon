@@ -21,7 +21,7 @@
   <div class="textblock">
     <h1>Welcome!</h1>
     <p>
-      <a href="{%url djangowind.views.login %}?next=/">LOGIN!</a>
+      <a href='{% url "djangowind.views.login" %}?next=/'>LOGIN!</a>
     </p>
 <p>
 {%include "envirocon_main/welcome_text.html" %}
@@ -36,7 +36,7 @@ Good luck and please don't hesitate to ask for assistance throughout the process
   
   {%if is_faculty%}
   <h2>Team Details</h2>
-  <a href="{%url team-admin %}">Team Administration and Assignment</a>
+  <a href='{% url "team-admin" %}'>Team Administration and Assignment</a>
   {%endif%}
 
    {%if not is_faculty%}
@@ -59,7 +59,7 @@ Good luck and please don't hesitate to ask for assistance throughout the process
   <p>
     <h2>Welcome!</h2>
     {%for survey in todo %}
-    <p><b> Please fill out your <a href="{%url survey-detail survey.slug %}">{{survey.title}}</a></b></p>
+    <p><b> Please fill out your <a href='{% url "survey-detail" survey.slug %}'>{{survey.title}}</a></b></p>
     {%endfor%}
     {%if not team.state.turn.open and not todo %}
        <p>
@@ -115,7 +115,7 @@ Good luck and please don't hesitate to ask for assistance throughout the process
 	    {{assn.data.name}}
 	    {%if team and not assn.hidden %}
 	    <br />
-	    <a href="{%url assignment-page assn.data.id %}">
+	    <a href='{% url "assignment-page" assn.data.id %}'>
 	      {%if assn.current %}
 	      Open
 	      {%else%}
@@ -134,11 +134,11 @@ Good luck and please don't hesitate to ask for assistance throughout the process
 	       {%with assn.data.any_submission as first_submission %}
 		  <br />
 	          {%if first_submission %}
-		  <a href="{%url assignment-page assignment_id=assn.data.id,faculty_view="/instructor/",user_id=first_submission.author.id %}">Review Submissions</a>
+		  <a href="{% url 'assignment-page' assignment_id=assn.data.id faculty_view='/instructor/' user_id=first_submission.author.id %}">Review Submissions</a>
 		  {%endif%}
 	       {%endwith%}
 	       Open: {{assn.form.visible_fields.1}}
-               <a href="{%url game-page assn.data.app %}">view turn</a>
+               <a href="{%url 'game-page' assn.data.app %}">view turn</a>
 	    {%endif%}
 	</td>
 	<td>{{assn.data.individual|yesno:"Individual,Group"}}
@@ -182,7 +182,7 @@ Good luck and please don't hesitate to ask for assistance throughout the process
 	  {%endfor%}
 
      {% if is_faculty %}
-	    <a href="{%url get-assignment-csv assignment_id=assn.data.id%}">Download CSV</a>
+	    <a href="{%url 'get-assignment-csv' assignment_id=assn.data.id%}">Download CSV</a>
 	  {% endif %}
 	</td>
       </tr>

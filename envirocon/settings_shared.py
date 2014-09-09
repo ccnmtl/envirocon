@@ -39,8 +39,9 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 NOSE_ARGS = [
     '--with-coverage',
+    '--with-doctest',
     ('--cover-package=envirocon_main,game,game_many,game_plot_sectors,'
-     'game_sample,obtain_additional_information,statefulgame,teams')
+     'game_sample,obtain_additional_information,statefulgame,teams,survey')
 ]
 
 
@@ -60,7 +61,8 @@ PROJECT_APPS = ['envirocon.envirocon_main',
                 'envirocon.game_sample',
                 'envirocon.obtain_additional_information',
                 'envirocon.statefulgame',
-                'envirocon.teams']
+                'envirocon.teams',
+                'survey']
 
 ALLOWED_HOSTS = [".ccnmtl.columbia.edu", "localhost"]
 

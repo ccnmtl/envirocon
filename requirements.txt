@@ -27,7 +27,7 @@ Pillow==1.7.8
 
 django-smartif==0.1
 djangowind==0.11.0
-django-survey-patched==0.0.1
+django-survey==0.1.0-ccnmtl
 tagging==0.3-pre
 template_utils==0.4p2
 typogrify==1.0

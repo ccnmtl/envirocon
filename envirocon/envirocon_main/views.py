@@ -46,8 +46,6 @@ def contact(request):
     return render_to_response('envirocon_main/contact.html',
                               context_instance=RequestContext(request))
 
-# NOT A VIEW
-
 
 def filled_out_a_profile(request):
     c = getattr(request, 'course', None)
@@ -69,15 +67,12 @@ def new_envirocon_class(request):
         if 'title' in request.POST:
             g = GroundWorkClass(title=request.POST['title'],
                                 creator=request.user)
-            # transaction.commit()
+
             message = ('Course Created. At the moment, the survey part is not '
                        'added by default. Also, remember that you need to '
                        'open the assignments to begin.')
             g.copy_survey()
-            # transaction.commit()
 
     return render_to_response('envirocon_main/new_class.html',
-                              {'message': message
-                               },
-                              context_instance=RequestContext(request)
-                              )
+                              {'message': message},
+                              context_instance=RequestContext(request))

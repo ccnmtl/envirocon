@@ -12,11 +12,21 @@ from envirocon.envirocon_main.models import GroundWorkClass
 
 
 def home(request):
+    print request.user
+    print request.course
+    print request.user.is_staff
     todo = filled_out_a_profile(request)
     state = {'todo': todo,
              'games': InstalledGames,
              }
-
+    print todo
+    for s in todo:
+        print 's'
+        print s
+    if request.user.is_superuser:
+        return render_to_response('envirocon_main/superuser_home.html',
+                            state,
+                            context_instance=RequestContext(request))
     if getattr(request, 'course', None) is not None:
         if request.user in request.course.faculty:
             state['is_faculty'] = True
@@ -48,7 +58,12 @@ def contact(request):
 
 
 def filled_out_a_profile(request):
+    print "filled_out_a_profile"
     c = getattr(request, 'course', None)
+    if request.user.is_superuser:
+        surveys = Survey.objects.all()
+        print surveys
+        return surveys
     if Survey and c:
         surveys = Survey.objects.surveys_for(c)
         return [sy for sy in surveys

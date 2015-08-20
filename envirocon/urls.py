@@ -34,7 +34,8 @@ urlpatterns = patterns(
      {'document_root': settings.MEDIA_ROOT}),
 
     (r'^gamepages/', include('envirocon.game.urls')),
-    (r'', include('envirocon.statefulgame.urls')),
+    (r'', 'envirocon.envirocon_main.views.home'),
+    #(r'', include('envirocon.statefulgame.urls')),
     (r'^teams/', include('envirocon.teams.urls')),
 
     url(r'^new',
@@ -45,5 +46,5 @@ urlpatterns = patterns(
     (r'^help', 'envirocon.envirocon_main.views.help'),
     (r'^contact', 'envirocon.envirocon_main.views.contact'),
 
-    (r'', 'envirocon.envirocon_main.views.home'),
+    # (r'', 'envirocon.envirocon_main.views.home'),
 )

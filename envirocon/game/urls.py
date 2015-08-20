@@ -1,5 +1,6 @@
-from django.conf.urls.defaults import patterns, url
 import os.path
+from django.conf.urls import patterns, url
+
 
 media_root = os.path.join(os.path.dirname(__file__), "media")
 rootdir = os.path.join(os.path.dirname(__file__), "../")

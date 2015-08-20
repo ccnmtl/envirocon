@@ -1,5 +1,5 @@
-from django.db import models
 import datetime
+from django.db import models
 # not sure why get_model doesn't work--the bowels of django app loading?
 from envirocon.statefulgame.models import Game, Assignment
 

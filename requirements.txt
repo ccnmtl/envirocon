@@ -33,7 +33,7 @@ template_utils==0.4p2
 typogrify==1.0
 django-tinymce==1.5.1b4
 djangohelpers==0.3dev
-requirements/src/django_courseaffils-0.3dev.tar.gz
+django-courseaffils==0.4.1
 django-indexer==0.2.1
 django-templatetag-sugar==0.1
 django-paging==0.2.2

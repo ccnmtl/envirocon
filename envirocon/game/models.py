@@ -4,8 +4,7 @@ from envirocon.game.installed_games import InstalledGames
 
 class Activity(models.Model):
 
-    """Something which has a game
-    """
+    """Something which has a game"""
     app = models.CharField(
         max_length=64, choices=InstalledGames, blank=True, null=True)
 

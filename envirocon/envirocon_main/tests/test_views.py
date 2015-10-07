@@ -20,3 +20,21 @@ class SimpleViewTest(TestCase):
         # smoketests themselves don't have an error
         response = self.c.get("/smoketest/")
         self.assertEquals(response.status_code, 200)
+
+    def test_about(self):
+        response = self.c.get("/about")
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response,
+                                'envirocon_main/about.html')
+
+    def test_help(self):
+        response = self.c.get("/help")
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response,
+                                'envirocon_main/help.html')
+
+    def test_contact(self):
+        response = self.c.get("/contact")
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response,
+                                'envirocon_main/contact.html')
